@@ -1,0 +1,30 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 5vmin;
+  pointer-events: none;
+}
+
+main {
+  background-color: #00181c;
+  font-family: Ppneuemontreal,sans-serif;
+}
+
+.App-header {
+  background-color: #00181c;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  font-family: Ppneuemontreal,sans-serif;
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
