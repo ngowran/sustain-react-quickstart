@@ -31,7 +31,7 @@ Home screen
 
 ![App Screenshot](https://i.imgur.com/Zta1dKQ.png)
 
-When you click submit
+When you click submit after entering in all the fields
 
 ![App Screenshot](https://i.imgur.com/2bYZz6S.png)
 
