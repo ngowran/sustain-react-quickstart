@@ -8,8 +8,8 @@ import React, { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
 
-
 function AddHouseEmissions() {
+  // POST variables
   const[total, setTotal]= useState("");
   const[recyleMetal, setMetal]= useState("");
   const[recylePlastic, setPlastic]= useState("") ;
@@ -18,7 +18,26 @@ function AddHouseEmissions() {
   const[numberOfPeople, setNumPeople]= useState("");
   const[countryIsoCode, setCountryIso]= useState("");
   const access_token = "00c112e599ff4c85bad0cfdacd3bb795";
+  const[countries, setCountries]=useState([]);
+  const[country, setCountry]=useState([]);
 
+// GET request for country name options 
+  function fetchCountries() {
+    axios
+    .get('https://api.sustain.life/v1/reference/countries',
+      { headers: {
+      'Ocp-Apim-Subscription-Key': "00c112e599ff4c85bad0cfdacd3bb795"
+    }})
+    .then(res => {
+      console.log(res.data)
+      setCountries(res.data.items)
+    })
+    .catch(err => {
+        console.log(err)
+    })
+  };
+
+  // Sending household emissions POST request
   const handleClick=(e)=>{
     const emissions = {recyleMetal, recylePlastic, recyleGlass, recyleMagazines, numberOfPeople, countryIsoCode}
     console.log(emissions)
@@ -29,6 +48,7 @@ function AddHouseEmissions() {
           'Ocp-Apim-Subscription-Key': "00c112e599ff4c85bad0cfdacd3bb795"
          }})
         .then(res => {
+            console.log(res.data.totalHouseholdWasteEmissionsCO2e)
             alert(`Your total household emissions are: ${res.data.totalHouseholdWasteEmissionsCO2e}`)
         })
         .catch(err => {
@@ -36,7 +56,10 @@ function AddHouseEmissions() {
         })
   };
 
-
+  useEffect(() => {
+    fetchCountries();
+    console.log(`This ${countries}`)
+  }, []);
 
   return (
     <>
@@ -123,8 +146,12 @@ function AddHouseEmissions() {
           id="input-group-dropdown-1"
           onSelect={(e)=>setCountryIso(e)}
         >
-          <Dropdown.Item  eventKey="usa">usa</Dropdown.Item>
-          <Dropdown.Item  eventKey="uk">uk</Dropdown.Item>
+          {countries.map((country) => (
+                <Dropdown.Item eventkey={country.isoCode}>{country.name}
+                </Dropdown.Item>
+              )
+            )};
+
         </DropdownButton>
       </InputGroup>
       </div>
