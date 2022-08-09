@@ -29,11 +29,16 @@ Must be signed into the developer portal to access.
 
 Home screen
 
-![App Screenshot](https://i.imgur.com/Zta1dKQ.png)
+![App Screenshot](https://i.imgur.com/5BC5cQq.png)
 
-When you click submit after entering in all the fields
+POST result when you click submit after entering in all the fields
 
-![App Screenshot](https://i.imgur.com/2bYZz6S.png)
+![App Screenshot](https://i.imgur.com/3LoOlXA.png)
+
+Country names recieved from GET request
+
+![App Screenshot](https://i.imgur.com/qEyqUo0.png)
+
 
 ## Author
 
