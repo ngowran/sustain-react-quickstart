@@ -147,10 +147,11 @@ function AddHouseEmissions() {
           onSelect={(e)=>setCountryIso(e)}
         >
           {countries.map((country) => (
-                <Dropdown.Item eventkey={country.isoCode}>{country.name}
+                <Dropdown.Item eventKey={`${country.isoCode}`}>{country.name}
                 </Dropdown.Item>
               )
             )};
+
 
         </DropdownButton>
       </InputGroup>
