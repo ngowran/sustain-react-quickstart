@@ -70,13 +70,13 @@ function AddHouseEmissions() {
       <InputGroup className="mb-3  ">
         <DropdownButton
           variant="outline-warning"
-          title="Recyle Metal"
+          title="Recyles Metal?"
           id="input-group-dropdown-1"
           onSelect={(e)=>setMetal(e)}
           
         >
-          <Dropdown.Item eventKey="true">True</Dropdown.Item>
-          <Dropdown.Item eventKey="false">False</Dropdown.Item>
+          <Dropdown.Item eventKey="true">Yes</Dropdown.Item>
+          <Dropdown.Item eventKey="false">No</Dropdown.Item>
         </DropdownButton>
       </InputGroup>
       </div>
@@ -85,12 +85,12 @@ function AddHouseEmissions() {
       <InputGroup className="mb-3">
         <DropdownButton
           variant="outline-warning"
-          title="Recyle Plastic"
+          title="Recyles Plastic?"
           id="input-group-dropdown-1"
           onSelect={(e)=>setPlastic(e)}
         >
-          <Dropdown.Item eventKey="true">True</Dropdown.Item>
-          <Dropdown.Item eventKey="false">False</Dropdown.Item>
+          <Dropdown.Item eventKey="true">Yes</Dropdown.Item>
+          <Dropdown.Item eventKey="false">No</Dropdown.Item>
         </DropdownButton>
       </InputGroup>
       </div>
@@ -99,12 +99,12 @@ function AddHouseEmissions() {
       <InputGroup className="mb-3">
         <DropdownButton
           variant="outline-warning"
-          title="Recyle Glass"
+          title="Recyles Glass?"
           id="input-group-dropdown-1"
           onSelect={(e)=>setGlass(e)}>
 
-          <Dropdown.Item eventKey="true">True</Dropdown.Item>
-          <Dropdown.Item eventKey="false">False</Dropdown.Item>
+          <Dropdown.Item eventKey="true">Yes</Dropdown.Item>
+          <Dropdown.Item eventKey="false">No</Dropdown.Item>
         </DropdownButton>
       </InputGroup>
       </div>
@@ -115,12 +115,12 @@ function AddHouseEmissions() {
       <InputGroup className="mb-3">
         <DropdownButton
           variant="outline-warning"
-          title="Recyle Magazines"
+          title="Recyles Magazines?"
           id="input-group-dropdown-1"
           onSelect={(e)=>setMagazines(e)}
         >
-          <Dropdown.Item eventKey="true">True</Dropdown.Item>
-          <Dropdown.Item eventKey="false">False</Dropdown.Item>
+          <Dropdown.Item eventKey="true">Yes</Dropdown.Item>
+          <Dropdown.Item eventKey="false">No</Dropdown.Item>
         </DropdownButton>
       </InputGroup>
       </div>
@@ -129,32 +129,34 @@ function AddHouseEmissions() {
       <InputGroup className="mb-3">
         <DropdownButton
           variant="outline-warning"
-          title="Enter Number of People"
+          title="People in Household"
           id="input-group-dropdown-1"
           
         >
-           <Form.Control onChange={(e)=>setNumPeople(e.target.value)} aria-label="Text input with dropdown button" />
+           <Form.Control onChange={(e)=>setNumPeople(e.target.value)} aria-label="Text input with dropdown button" defaultValue="1" />
         </DropdownButton>
       </InputGroup>
       </div>
 
-      <div class="col-sm">
+      <div  className="col-sm overflow-auto" >
+        <div style={{"height": "150px", "display":"inline-block"}}>
       <InputGroup className="mb-3 text-center">
         <DropdownButton
           variant="outline-warning"
-          title="Country Iso Code"
+          title="Country of Residence"
           id="input-group-dropdown-1"
           onSelect={(e)=>setCountryIso(e)}
         >
+      
           {countries.map((country) => (
-                <Dropdown.Item eventKey={`${country.isoCode}`}>{country.name}
+                <Dropdown.Item  eventKey={`${country.isoCode}`}>{country.name}
                 </Dropdown.Item>
               )
-            )};
-
-
+            )}
+  
         </DropdownButton>
       </InputGroup>
+      </div>
       </div>
 
       </div>
