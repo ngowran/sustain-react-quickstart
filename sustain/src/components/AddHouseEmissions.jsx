@@ -9,7 +9,6 @@ import Button from 'react-bootstrap/Button';
 import axios from 'axios';
 
 function AddHouseEmissions() {
-  // POST variables
   const[total, setTotal]= useState("");
   const[recyleMetal, setMetal]= useState("");
   const[recylePlastic, setPlastic]= useState("") ;
@@ -36,6 +35,10 @@ function AddHouseEmissions() {
     })
   };
 
+  useEffect(() => {
+    fetchCountries();
+  }, []);
+
   const handleClick=(e)=>{
     const emissions = {recyleMetal, recylePlastic, recyleGlass, recyleMagazines, numberOfPeople, countryIsoCode}
     console.log(emissions)
@@ -53,10 +56,6 @@ function AddHouseEmissions() {
             console.log(err)
         })
   };
-
-  useEffect(() => {
-    fetchCountries();
-  }, []);
 
   return (
     <>
@@ -79,84 +78,84 @@ function AddHouseEmissions() {
       </div>
 
       <div class="col-sm">
-      <InputGroup className="mb-3">
-        <DropdownButton
-          variant="outline-warning"
-          title="Recyles Plastic?"
-          id="input-group-dropdown-1"
-          onSelect={(e)=>setPlastic(e)}
-        >
-          <Dropdown.Item eventKey="true">Yes</Dropdown.Item>
-          <Dropdown.Item eventKey="false">No</Dropdown.Item>
-        </DropdownButton>
-      </InputGroup>
+        <InputGroup className="mb-3">
+          <DropdownButton
+            variant="outline-warning"
+            title="Recyles Plastic?"
+            id="input-group-dropdown-1"
+            onSelect={(e)=>setPlastic(e)}
+          >
+            <Dropdown.Item eventKey="true">Yes</Dropdown.Item>
+            <Dropdown.Item eventKey="false">No</Dropdown.Item>
+          </DropdownButton>
+        </InputGroup>
       </div>
 
       <div class="col-sm">
-      <InputGroup className="mb-3">
-        <DropdownButton
-          variant="outline-warning"
-          title="Recyles Glass?"
-          id="input-group-dropdown-1"
-          onSelect={(e)=>setGlass(e)}
-          >
-          <Dropdown.Item eventKey="true">Yes</Dropdown.Item>
-          <Dropdown.Item eventKey="false">No</Dropdown.Item>
-        </DropdownButton>
-      </InputGroup>
+        <InputGroup className="mb-3">
+          <DropdownButton
+            variant="outline-warning"
+            title="Recyles Glass?"
+            id="input-group-dropdown-1"
+            onSelect={(e)=>setGlass(e)}
+            >
+            <Dropdown.Item eventKey="true">Yes</Dropdown.Item>
+            <Dropdown.Item eventKey="false">No</Dropdown.Item>
+          </DropdownButton>
+        </InputGroup>
       </div>
-      </div>
+    </div>
 
       <div class="row">
-      <div class="col-sm">
-      <InputGroup className="mb-3">
-        <DropdownButton
-          variant="outline-warning"
-          title="Recyles Magazines?"
-          id="input-group-dropdown-1"
-          onSelect={(e)=>setMagazines(e)}
-        >
-          <Dropdown.Item eventKey="true">Yes</Dropdown.Item>
-          <Dropdown.Item eventKey="false">No</Dropdown.Item>
-        </DropdownButton>
-      </InputGroup>
-      </div>
+        <div class="col-sm">
+          <InputGroup className="mb-3">
+            <DropdownButton
+              variant="outline-warning"
+              title="Recyles Magazines?"
+              id="input-group-dropdown-1"
+              onSelect={(e)=>setMagazines(e)}
+            >
+              <Dropdown.Item eventKey="true">Yes</Dropdown.Item>
+              <Dropdown.Item eventKey="false">No</Dropdown.Item>
+            </DropdownButton>
+          </InputGroup>
+        </div>
 
-      <div class="col-sm">
-      <InputGroup className="mb-3">
-        <DropdownButton
-          variant="outline-warning"
-          title="People in Household"
-          id="input-group-dropdown-1"  
-        >
-           <Form.Control onChange={(e)=>setNumPeople(e.target.value)} aria-label="Text input with dropdown button" defaultValue="1" />
-        </DropdownButton>
-      </InputGroup>
-      </div>
+        <div class="col-sm">
+          <InputGroup className="mb-3">
+            <DropdownButton
+              variant="outline-warning"
+              title="People in Household"
+              id="input-group-dropdown-1"  
+            >
+              <Form.Control onChange={(e)=>setNumPeople(e.target.value)} aria-label="Text input with dropdown button" defaultValue="1" />
+            </DropdownButton>
+          </InputGroup>
+        </div>
 
-      <div  className="col-sm overflow-auto" style={{"height": "8.5rem", "position": "relative"}}>
-      <InputGroup className="mb-3 text-center">
-        <DropdownButton
-          variant="outline-warning"
-          title="Country of Residence"
-          id="input-group-dropdown-1"
-          onSelect={(e)=>setCountryIso(e)}
-        > 
-          {countries.map((country) => (
-                <Dropdown.Item  eventKey={`${country.isoCode}`}>{country.name}
-                </Dropdown.Item>
-              )
-            )}
-        </DropdownButton>
-      </InputGroup>
-       </div>
+        <div  className="col-sm overflow-auto" style={{"height": "8.5rem", "position": "relative"}}>
+          <InputGroup className="mb-3 text-center">
+            <DropdownButton
+              variant="outline-warning"
+              title="Country of Residence"
+              id="input-group-dropdown-1"
+              onSelect={(e)=>setCountryIso(e)}
+            > 
+              {countries.map((country) => (
+                    <Dropdown.Item  eventKey={`${country.isoCode}`}>{country.name}
+                    </Dropdown.Item>
+                  )
+                )}
+            </DropdownButton>
+          </InputGroup>
+        </div>
 
       </div>
 
       <Button variant="warning" type="submit" onClick={handleClick}>
         Submit
       </Button>
-      </div>
+    </div>
       
     </>
   );

@@ -40,7 +40,7 @@ function AddCarEmissions() {
         fetchCountries();
       }, []);
     
-      function fetchDistanceUnits() {
+    function fetchDistanceUnits() {
         axios
         .get('https://api.sustain.life/v1/reference/distance-units',
           { headers: {
@@ -59,7 +59,7 @@ function AddCarEmissions() {
         fetchDistanceUnits();
       }, []);
 
-      const handleClick=(e)=>{
+    const handleClick=(e)=>{
         const emissions = {carId, clientId, totalDistance, totalDistanceUnit, countryIsoCode}
         console.log(emissions)
         axios
@@ -81,87 +81,80 @@ function AddCarEmissions() {
         <> 
         <div class="container">
             <h4>Add your car emissions below</h4>
-
+            <br></br>
             <div class="row">
-
-            <div class="col-sm">
-            <InputGroup className="mb-3">
-                <DropdownButton
-                variant="outline-warning"
-                title="Distance travelled?"
-                id="input-group-dropdown-1"
-            >
-                    <Form.Control onChange={(e)=>setTotalDistance(e.target.value)} aria-label="Text input with dropdown button" defaultValue="1" />
-                </DropdownButton>
-            </InputGroup>
-            </div>
-
-            <div class="col-sm">
-            <InputGroup className="mb-3">
-                <DropdownButton
-                variant="outline-warning"
-                title="Units?"
-                id="input-group-dropdown-1"
-                onSelect={(e)=>setTotalDistanceUnit(e)}
-            >
-                    {distanceUnits.map((distanceUnit) => (
-                <Dropdown.Item  eventKey={`${distanceUnit}`}>{distanceUnit}
-                </Dropdown.Item>
-              )
-            )}
-                </DropdownButton>
-            </InputGroup>
-            </div>
-
-            </div>
-
-            <div className='row'>
-
-            <div class="col-sm">
-                <InputGroup className="mb-3  ">
+                <div class="col-sm-3">
+                <InputGroup className="mb-3">
                     <DropdownButton
                     variant="outline-warning"
-                    title="Car ID?"
+                    title="Distance travelled?"
                     id="input-group-dropdown-1"
-                    //onSelect={(e)=>setCarId(e)}
                 >
-                        <Form.Control onChange={(e)=>setCarId(e.target.value)} aria-label="Text input with dropdown button" defaultValue="1" />
+                        <Form.Control onChange={(e)=>setTotalDistance(e.target.value)} aria-label="Text input with dropdown button" defaultValue="1" />
                     </DropdownButton>
                 </InputGroup>
+                </div>
+
+                <div class="col-sm-2">
+                <InputGroup className="mb-3">
+                    <DropdownButton
+                    variant="outline-warning"
+                    title="Units?"
+                    id="input-group-dropdown-1"
+                    onSelect={(e)=>setTotalDistanceUnit(e)}
+                >
+                        {distanceUnits.map((distanceUnit) => (
+                    <Dropdown.Item  eventKey={`${distanceUnit}`}>{distanceUnit}
+                    </Dropdown.Item>
+                )
+                )}
+                    </DropdownButton>
+                </InputGroup>
+                </div>
+
+                <div class="col-sm-2">
+                    <InputGroup className="mb-3  ">
+                        <DropdownButton
+                        variant="outline-warning"
+                        title="Car ID?"
+                        id="input-group-dropdown-1"
+                        //onSelect={(e)=>setCarId(e)}
+                    >
+                            <Form.Control onChange={(e)=>setCarId(e.target.value)} aria-label="Text input with dropdown button" defaultValue="1" />
+                        </DropdownButton>
+                    </InputGroup>
+                </div>
+                <div class="col-sm-2">
+                <InputGroup className="mb-3">
+                    <DropdownButton
+                    variant="outline-warning"
+                    title="Client ID?"
+                    id="input-group-dropdown-1"
+                    //onSelect={(e)=>setClientId(e)}
+                >
+                        <Form.Control onChange={(e)=>setClientId(e.target.value)} aria-label="Text input with dropdown button" defaultValue="1" />
+                    </DropdownButton>
+                </InputGroup>
+                </div>
+
+                <div  className="col-sm-3 overflow-auto" style={{"height": "8.5rem", "position": "relative"}}>
+                    <InputGroup className="mb-3 text-center">
+                        <DropdownButton
+                        variant="outline-warning"
+                        title="Country of Residence"
+                        id="input-group-dropdown-1"
+                        onSelect={(e)=>setCountryIso(e)}
+                        > 
+                        {countries.map((country) => (
+                                <Dropdown.Item  eventKey={`${country.isoCode}`}>{country.name}
+                                </Dropdown.Item>
+                            )
+                            )}
+                        </DropdownButton>
+                    </InputGroup>
+                </div>
             </div>
 
-            <div class="col-sm">
-            <InputGroup className="mb-3">
-                <DropdownButton
-                variant="outline-warning"
-                title="Client ID?"
-                id="input-group-dropdown-1"
-                //onSelect={(e)=>setClientId(e)}
-            >
-                    <Form.Control onChange={(e)=>setClientId(e.target.value)} aria-label="Text input with dropdown button" defaultValue="1" />
-                </DropdownButton>
-            </InputGroup>
-            </div>
-
-            <div  className="col-sm overflow-auto" style={{"height": "8.5rem", "position": "relative"}}>
-      <InputGroup className="mb-3 text-center">
-        <DropdownButton
-          variant="outline-warning"
-          title="Country of Residence"
-          id="input-group-dropdown-1"
-          onSelect={(e)=>setCountryIso(e)}
-        > 
-          {countries.map((country) => (
-                <Dropdown.Item  eventKey={`${country.isoCode}`}>{country.name}
-                </Dropdown.Item>
-              )
-            )}
-        </DropdownButton>
-      </InputGroup>
-       </div>
-
-            </div>
-            
             <Button variant="warning" type="submit" onClick={handleClick}>
                 Submit
             </Button>

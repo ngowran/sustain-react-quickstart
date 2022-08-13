@@ -1,25 +1,36 @@
 import Accordion from 'react-bootstrap/Accordion';
 import AddCarEmissions from './AddCarEmissions';
 import AddHouseEmissions from './AddHouseEmissions';
+import './Emissions.css';
 
-function FlushExample() {
+function EmissionsDropdown() {
   return (
-    <Accordion defaultActiveKey="0" flush>
-      <Accordion.Item eventKey="0">
-        <Accordion.Header>Accordion Item #1</Accordion.Header>
+    <div >
+    <Accordion defaultActiveKey="0" >
+      <Accordion.Item eventKey="0"  style={{ backgroundColor: '#00181c', color: 'white', border: "none", minWidth: "75vw"}}>
+        <Accordion.Header>Car Emissions</Accordion.Header>
         <Accordion.Body>
          <AddCarEmissions />
         </Accordion.Body>
 
       </Accordion.Item>
-      <Accordion.Item eventKey="1">
-        <Accordion.Header>Accordion Item #2</Accordion.Header>
+      <Accordion.Item eventKey="1"   style={{ backgroundColor: '#00181c', color: 'white', border: "none", minWidth: "75vw"}}>
+        <Accordion.Header>Household Emissions</Accordion.Header>
         <Accordion.Body>
           <AddHouseEmissions />
         </Accordion.Body>
       </Accordion.Item>
+
+      <Accordion.Item eventKey="2" style={{ backgroundColor: '#00181c', color: 'white', border: "none", minWidth: "75vw"}}>
+        <Accordion.Header>Household Emissions</Accordion.Header>
+        <Accordion.Body>
+          <AddHouseEmissions />
+        </Accordion.Body>
+      </Accordion.Item>
+
     </Accordion>
+    </div>
   );
 }
 
-export default FlushExample;
+export default EmissionsDropdown;

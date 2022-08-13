@@ -3,6 +3,7 @@ import './App.css';
 import AddHouseEmissions from './components/AddHouseEmissions';
 import AddCarEmissions from './components/AddCarEmissions';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import EmissionsDropdown from './components/EmissionsDropdowns';
 
 function App() {
   return (
@@ -14,9 +15,8 @@ function App() {
         <h2>Your personal emissions calculator</h2>
         <br></br>
         <div class="text-center" >
-        <AddHouseEmissions />
-        <br></br>
-        <AddCarEmissions />
+        <EmissionsDropdown />
+
         </div>
       </header>
     </div>
