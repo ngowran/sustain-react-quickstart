@@ -21,7 +21,6 @@ function AddHouseEmissions() {
   const[countries, setCountries]=useState([]);
   const[country, setCountry]=useState([]);
 
-// GET request for country name options 
   function fetchCountries() {
     axios
     .get('https://api.sustain.life/v1/reference/countries',
@@ -37,7 +36,6 @@ function AddHouseEmissions() {
     })
   };
 
-  // Sending household emissions POST request
   const handleClick=(e)=>{
     const emissions = {recyleMetal, recylePlastic, recyleGlass, recyleMagazines, numberOfPeople, countryIsoCode}
     console.log(emissions)
@@ -58,13 +56,13 @@ function AddHouseEmissions() {
 
   useEffect(() => {
     fetchCountries();
-    console.log(`This ${countries}`)
   }, []);
 
   return (
     <>
     <div class="container">
       <h4>Add your household emissions below</h4>
+
     <div class="row">
       <div class="col-sm">
       <InputGroup className="mb-3  ">
@@ -73,7 +71,6 @@ function AddHouseEmissions() {
           title="Recyles Metal?"
           id="input-group-dropdown-1"
           onSelect={(e)=>setMetal(e)}
-          
         >
           <Dropdown.Item eventKey="true">Yes</Dropdown.Item>
           <Dropdown.Item eventKey="false">No</Dropdown.Item>
@@ -101,8 +98,8 @@ function AddHouseEmissions() {
           variant="outline-warning"
           title="Recyles Glass?"
           id="input-group-dropdown-1"
-          onSelect={(e)=>setGlass(e)}>
-
+          onSelect={(e)=>setGlass(e)}
+          >
           <Dropdown.Item eventKey="true">Yes</Dropdown.Item>
           <Dropdown.Item eventKey="false">No</Dropdown.Item>
         </DropdownButton>
@@ -130,34 +127,29 @@ function AddHouseEmissions() {
         <DropdownButton
           variant="outline-warning"
           title="People in Household"
-          id="input-group-dropdown-1"
-          
+          id="input-group-dropdown-1"  
         >
            <Form.Control onChange={(e)=>setNumPeople(e.target.value)} aria-label="Text input with dropdown button" defaultValue="1" />
         </DropdownButton>
       </InputGroup>
       </div>
 
-      <div  className="col-sm overflow-auto" >
-        <div style={{"height": "150px", "display":"inline-block"}}>
+      <div  className="col-sm overflow-auto" style={{"height": "8.5rem", "position": "relative"}}>
       <InputGroup className="mb-3 text-center">
         <DropdownButton
           variant="outline-warning"
           title="Country of Residence"
           id="input-group-dropdown-1"
           onSelect={(e)=>setCountryIso(e)}
-        >
-      
+        > 
           {countries.map((country) => (
                 <Dropdown.Item  eventKey={`${country.isoCode}`}>{country.name}
                 </Dropdown.Item>
               )
             )}
-  
         </DropdownButton>
       </InputGroup>
-      </div>
-      </div>
+       </div>
 
       </div>
 
