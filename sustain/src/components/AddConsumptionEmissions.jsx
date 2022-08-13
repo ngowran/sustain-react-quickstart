@@ -76,56 +76,64 @@ function AddConsumptionEmissions() {
     return (
         <> 
         <div class="container">
-            <h4>Add your car emissions below</h4>
-
+            <br></br>
+            <h4>Add your consumption emissions below</h4>
+            <br></br>
             <div class="row">
+              <div class="col-sm">
+              <InputGroup className="mb-3">
+                  <DropdownButton
+                  variant="outline-warning"
+                  title="Heavy Meat Eater"
+                  id="input-group-dropdown-1"
+              >
+                      <Form.Control onChange={(e)=>setFoodDrinkHeavyMeatEaterSpending(e.target.value)} aria-label="Text input with dropdown button" defaultValue="1" />
+                  </DropdownButton>
+              </InputGroup>
+              </div>
 
-            <div class="col-sm">
-            <InputGroup className="mb-3">
-                <DropdownButton
-                variant="outline-warning"
-                title="Distance travelled?"
-                id="input-group-dropdown-1"
-            >
-                    <Form.Control onChange={(e)=>setTotalDistance(e.target.value)} aria-label="Text input with dropdown button" defaultValue="1" />
-                </DropdownButton>
-            </InputGroup>
+              <div class="col-sm">
+              <InputGroup className="mb-3">
+                  <DropdownButton
+                  variant="outline-warning"
+                  title="Medium Meat Eater"
+                  id="input-group-dropdown-1"
+              >
+                      <Form.Control onChange={(e)=>setFoodDrinkHeavyMeatEaterSpending(e.target.value)} aria-label="Text input with dropdown button" defaultValue="1" />
+                  </DropdownButton>
+              </InputGroup>
+              </div>
+
+              <div class="col-sm">
+                <InputGroup className="mb-3  ">
+                    <DropdownButton
+                    variant="outline-warning"
+                    title="Light meat eater"
+                    id="input-group-dropdown-1"
+                    //onSelect={(e)=>setCarId(e)}
+                >
+                        <Form.Control onChange={(e)=>setFoodDrinkLightMeatEaterSpending(e.target.value)} aria-label="Text input with dropdown button" defaultValue="1" />
+                    </DropdownButton>
+                </InputGroup>
             </div>
-
-            <div class="col-sm">
-            <InputGroup className="mb-3">
-                <DropdownButton
-                variant="outline-warning"
-                title="Units?"
-                id="input-group-dropdown-1"
-                onSelect={(e)=>setTotalDistanceUnit(e)}
-            >
-                    {distanceUnits.map((distanceUnit) => (
-                <Dropdown.Item  eventKey={`${distanceUnit}`}>{distanceUnit}
-                </Dropdown.Item>
-              )
-            )}
-                </DropdownButton>
-            </InputGroup>
-            </div>
-
-            </div>
-
-            <div className='row'>
 
             <div class="col-sm">
                 <InputGroup className="mb-3  ">
                     <DropdownButton
                     variant="outline-warning"
-                    title="Car ID?"
+                    title="Vegetarian"
                     id="input-group-dropdown-1"
                     //onSelect={(e)=>setCarId(e)}
                 >
-                        <Form.Control onChange={(e)=>setCarId(e.target.value)} aria-label="Text input with dropdown button" defaultValue="1" />
+                        <Form.Control onChange={(e)=>setFoodDrinkVegetarianSpending(e.target.value)} aria-label="Text input with dropdown button" defaultValue="1" />
                     </DropdownButton>
                 </InputGroup>
             </div>
+            </div>
 
+            <div className='row'>
+
+           
             <div class="col-sm">
             <InputGroup className="mb-3">
                 <DropdownButton
@@ -134,7 +142,7 @@ function AddConsumptionEmissions() {
                 id="input-group-dropdown-1"
                 //onSelect={(e)=>setClientId(e)}
             >
-                    <Form.Control onChange={(e)=>setClientId(e.target.value)} aria-label="Text input with dropdown button" defaultValue="1" />
+                    <Form.Control onChange={(e)=>setFoodDrinkMediumMeatEaterSpending(e.target.value)} aria-label="Text input with dropdown button" defaultValue="1" />
                 </DropdownButton>
             </InputGroup>
             </div>

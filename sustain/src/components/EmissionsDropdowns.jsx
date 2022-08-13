@@ -1,30 +1,31 @@
 import Accordion from 'react-bootstrap/Accordion';
 import AddCarEmissions from './AddCarEmissions';
 import AddHouseEmissions from './AddHouseEmissions';
+import AddConsumptionEmissions from './AddConsumptionEmissions';
 import './Emissions.css';
 
 function EmissionsDropdown() {
   return (
     <div >
-    <Accordion defaultActiveKey="0" >
-      <Accordion.Item eventKey="0"  style={{ backgroundColor: '#00181c', color: 'white', border: "none", minWidth: "75vw"}}>
+    <Accordion>
+      <Accordion.Item eventKey="0"  className='dropdown'>
         <Accordion.Header>Car Emissions</Accordion.Header>
         <Accordion.Body>
          <AddCarEmissions />
         </Accordion.Body>
 
       </Accordion.Item>
-      <Accordion.Item eventKey="1"   style={{ backgroundColor: '#00181c', color: 'white', border: "none", minWidth: "75vw"}}>
+      <Accordion.Item eventKey="1"  className='dropdown'>
         <Accordion.Header>Household Emissions</Accordion.Header>
         <Accordion.Body>
           <AddHouseEmissions />
         </Accordion.Body>
       </Accordion.Item>
 
-      <Accordion.Item eventKey="2" style={{ backgroundColor: '#00181c', color: 'white', border: "none", minWidth: "75vw"}}>
-        <Accordion.Header>Household Emissions</Accordion.Header>
+      <Accordion.Item eventKey="2"  className='dropdown'>
+        <Accordion.Header>Consumption Emissions</Accordion.Header>
         <Accordion.Body>
-          <AddHouseEmissions />
+          <AddConsumptionEmissions />
         </Accordion.Body>
       </Accordion.Item>
 
