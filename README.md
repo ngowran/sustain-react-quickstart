@@ -8,7 +8,7 @@ This Quickstart is a guide on how to interact with our API from a ReactJS fronte
 
 ## Features
 
-- Calculates total household emissions
+- Calculates total household and car emissions
 
 ## Installation
 
