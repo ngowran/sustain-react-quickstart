@@ -78,13 +78,14 @@ function AddConsumptionEmissions() {
         <div class="container">
             <br></br>
             <h4>Add your consumption emissions below</h4>
+            <h5>Spending for each category in USD</h5>
             <br></br>
             <div class="row">
               <div class="col-sm">
               <InputGroup className="mb-3">
                   <DropdownButton
                   variant="outline-warning"
-                  title="Heavy Meat"
+                  title="Heavy Meat Diet"
                   id="input-group-dropdown-1"
               >
                       <Form.Control autoFocus value={foodDrinkHeavyMeatEaterSpending} onChange={(e)=>setFoodDrinkHeavyMeatEaterSpending(e.target.value)} aria-label="Text input with dropdown button" defaultValue="1" />
@@ -96,7 +97,7 @@ function AddConsumptionEmissions() {
               <InputGroup className="mb-3">
                   <DropdownButton
                   variant="outline-warning"
-                  title="Medium Meat"
+                  title="Medium Meat Diet"
                   id="input-group-dropdown-1"
               >
                       <Form.Control onChange={(e)=>setFoodDrinkMediumMeatEaterSpending(e.target.value)} aria-label="Text input with dropdown button" defaultValue="1" />
@@ -108,7 +109,7 @@ function AddConsumptionEmissions() {
                 <InputGroup className="mb-3  ">
                     <DropdownButton
                     variant="outline-warning"
-                    title="Light meat"
+                    title="Light meat Diet"
                     id="input-group-dropdown-1"
                     //onSelect={(e)=>setCarId(e)}
                 >
@@ -121,7 +122,7 @@ function AddConsumptionEmissions() {
                 <InputGroup className="mb-3  ">
                     <DropdownButton
                     variant="outline-warning"
-                    title="Vegetarian"
+                    title="Vegetarian Diet"
                     id="input-group-dropdown-1"
                     //onSelect={(e)=>setCarId(e)}
                 >
@@ -138,7 +139,7 @@ function AddConsumptionEmissions() {
             <InputGroup className="mb-3">
                 <DropdownButton
                 variant="outline-warning"
-                title="Vegan"
+                title="Vegan Diet"
                 id="input-group-dropdown-1"
                 //onSelect={(e)=>setClientId(e)}
             >
