@@ -2,6 +2,7 @@ import Accordion from 'react-bootstrap/Accordion';
 import AddCarEmissions from './AddCarEmissions';
 import AddHouseEmissions from './AddHouseEmissions';
 import AddConsumptionEmissions from './AddConsumptionEmissions';
+import AddFlightEmissions from './AddFlightEmissions';
 import './Emissions.css';
 
 function EmissionsDropdown() {
@@ -26,6 +27,13 @@ function EmissionsDropdown() {
         <Accordion.Header>Consumption Emissions</Accordion.Header>
         <Accordion.Body>
           <AddConsumptionEmissions />
+        </Accordion.Body>
+      </Accordion.Item>
+
+      <Accordion.Item eventKey="3"  className='dropdown'>
+        <Accordion.Header>Flight Emissions</Accordion.Header>
+        <Accordion.Body>
+          <AddFlightEmissions />
         </Accordion.Body>
       </Accordion.Item>
 

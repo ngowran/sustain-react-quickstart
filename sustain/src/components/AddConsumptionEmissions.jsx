@@ -65,8 +65,8 @@ function AddConsumptionEmissions() {
               'Ocp-Apim-Subscription-Key': "00c112e599ff4c85bad0cfdacd3bb795"
              }})
             .then(res => {
-                console.log(res.data.totalCarEmssionsCO2e)
-                alert(`Your total household emissions are: ${res.data.totalCarEmssionsCO2e}`)
+                console.log(res.data)
+                alert(`Your total consumption emissions are: ${res.data}`)
             })
             .catch(err => {
                 console.log(err)
@@ -84,10 +84,10 @@ function AddConsumptionEmissions() {
               <InputGroup className="mb-3">
                   <DropdownButton
                   variant="outline-warning"
-                  title="Heavy Meat Eater"
+                  title="Heavy Meat"
                   id="input-group-dropdown-1"
               >
-                      <Form.Control onChange={(e)=>setFoodDrinkHeavyMeatEaterSpending(e.target.value)} aria-label="Text input with dropdown button" defaultValue="1" />
+                      <Form.Control autoFocus value={foodDrinkHeavyMeatEaterSpending} onChange={(e)=>setFoodDrinkHeavyMeatEaterSpending(e.target.value)} aria-label="Text input with dropdown button" defaultValue="1" />
                   </DropdownButton>
               </InputGroup>
               </div>
@@ -96,10 +96,10 @@ function AddConsumptionEmissions() {
               <InputGroup className="mb-3">
                   <DropdownButton
                   variant="outline-warning"
-                  title="Medium Meat Eater"
+                  title="Medium Meat"
                   id="input-group-dropdown-1"
               >
-                      <Form.Control onChange={(e)=>setFoodDrinkHeavyMeatEaterSpending(e.target.value)} aria-label="Text input with dropdown button" defaultValue="1" />
+                      <Form.Control onChange={(e)=>setFoodDrinkMediumMeatEaterSpending(e.target.value)} aria-label="Text input with dropdown button" defaultValue="1" />
                   </DropdownButton>
               </InputGroup>
               </div>
@@ -108,7 +108,7 @@ function AddConsumptionEmissions() {
                 <InputGroup className="mb-3  ">
                     <DropdownButton
                     variant="outline-warning"
-                    title="Light meat eater"
+                    title="Light meat"
                     id="input-group-dropdown-1"
                     //onSelect={(e)=>setCarId(e)}
                 >
@@ -138,14 +138,178 @@ function AddConsumptionEmissions() {
             <InputGroup className="mb-3">
                 <DropdownButton
                 variant="outline-warning"
-                title="Client ID?"
+                title="Vegan"
                 id="input-group-dropdown-1"
                 //onSelect={(e)=>setClientId(e)}
             >
-                    <Form.Control onChange={(e)=>setFoodDrinkMediumMeatEaterSpending(e.target.value)} aria-label="Text input with dropdown button" defaultValue="1" />
+                    <Form.Control onChange={(e)=>setFoodDrinkVeganSpending(e.target.value)} aria-label="Text input with dropdown button" defaultValue="1" />
                 </DropdownButton>
             </InputGroup>
             </div>
+
+            <div class="col-sm">
+            <InputGroup className="mb-3">
+                <DropdownButton
+                variant="outline-warning"
+                title="Pharmaceutical"
+                id="input-group-dropdown-1"
+                //onSelect={(e)=>setClientId(e)}
+            >
+                    <Form.Control onChange={(e)=>setPharmaceuticalsSpending(e.target.value)} aria-label="Text input with dropdown button" defaultValue="1" />
+                </DropdownButton>
+            </InputGroup>
+            </div>
+
+            <div class="col-sm">
+            <InputGroup className="mb-3">
+                <DropdownButton
+                variant="outline-warning"
+                title="Clothes & Shoes"
+                id="input-group-dropdown-1"
+                //onSelect={(e)=>setClientId(e)}
+            >
+                    <Form.Control onChange={(e)=>setClothesShoesSpending(e.target.value)} aria-label="Text input with dropdown button" defaultValue="1" />
+                </DropdownButton>
+            </InputGroup>
+            </div>
+
+            <div class="col-sm">
+            <InputGroup className="mb-3">
+                <DropdownButton
+                variant="outline-warning"
+                title="Paper products"
+                id="input-group-dropdown-1"
+                //onSelect={(e)=>setClientId(e)}
+            >
+                    <Form.Control onChange={(e)=>setPaperProductsSpending(e.target.value)} aria-label="Text input with dropdown button" defaultValue="1" />
+                </DropdownButton>
+            </InputGroup>
+            </div>
+            </div>
+
+            <div className='row'>
+
+              <div class="col-sm">
+              <InputGroup className="mb-3">
+                  <DropdownButton
+                  variant="outline-warning"
+                  title="Computers & IT"
+                  id="input-group-dropdown-1"
+                  //onSelect={(e)=>setClientId(e)}
+              >
+                      <Form.Control onChange={(e)=>setComputersITEquipmentSpending(e.target.value)} aria-label="Text input with dropdown button" defaultValue="1" />
+                  </DropdownButton>
+              </InputGroup>
+              </div>
+
+              <div class="col-sm">
+              <InputGroup className="mb-3">
+                  <DropdownButton
+                  variant="outline-warning"
+                  title="Fuel"
+                  id="input-group-dropdown-1"
+                  //onSelect={(e)=>setClientId(e)}
+              >
+                      <Form.Control onChange={(e)=>setMotorVehiclesExFuelSpending(e.target.value)} aria-label="Text input with dropdown button" defaultValue="1" />
+                  </DropdownButton>
+              </InputGroup>
+              </div>
+
+              <div class="col-sm">
+              <InputGroup className="mb-3">
+                  <DropdownButton
+                  variant="outline-warning"
+                  title="Furniture"
+                  id="input-group-dropdown-1"
+                  //onSelect={(e)=>setClientId(e)}
+              >
+                      <Form.Control onChange={(e)=>setFurnitureSpending(e.target.value)} aria-label="Text input with dropdown button" defaultValue="1" />
+                  </DropdownButton>
+              </InputGroup>
+              </div>
+
+              <div class="col-sm">
+              <InputGroup className="mb-3">
+                  <DropdownButton
+                  variant="outline-warning"
+                  title="Hotels & Restuarant"
+                  id="input-group-dropdown-1"
+                  //onSelect={(e)=>setClientId(e)}
+              >
+                      <Form.Control onChange={(e)=>setHotelsRestuarantsSpending(e.target.value)} aria-label="Text input with dropdown button" defaultValue="1" />
+                  </DropdownButton>
+              </InputGroup>
+              </div>
+            </div>
+
+            <div className='row'>
+              <div class="col-sm">
+                <InputGroup className="mb-3">
+                    <DropdownButton
+                    variant="outline-warning"
+                    title="Phone"
+                    id="input-group-dropdown-1"
+                    //onSelect={(e)=>setClientId(e)}
+                >
+                        <Form.Control onChange={(e)=>setCellPhonesSpending(e.target.value)} aria-label="Text input with dropdown button" defaultValue="1" />
+                    </DropdownButton>
+                </InputGroup>
+              </div>
+
+              <div class="col-sm">
+                <InputGroup className="mb-3">
+                    <DropdownButton
+                    variant="outline-warning"
+                    title="Banking & Finance"
+                    id="input-group-dropdown-1"
+                    //onSelect={(e)=>setClientId(e)}
+                >
+                        <Form.Control onChange={(e)=>setBankingFinanceSpending(e.target.value)} aria-label="Text input with dropdown button" defaultValue="1" />
+                    </DropdownButton>
+                </InputGroup>
+              </div>
+
+              <div class="col-sm">
+                <InputGroup className="mb-3">
+                    <DropdownButton
+                    variant="outline-warning"
+                    title="Insurance"
+                    id="input-group-dropdown-1"
+                    //onSelect={(e)=>setClientId(e)}
+                >
+                        <Form.Control onChange={(e)=>setInsuranceSpending(e.target.value)} aria-label="Text input with dropdown button" defaultValue="1" />
+                    </DropdownButton>
+                </InputGroup>
+              </div>
+
+              <div class="col-sm">
+                <InputGroup className="mb-3">
+                    <DropdownButton
+                    variant="outline-warning"
+                    title="Education"
+                    id="input-group-dropdown-1"
+                    //onSelect={(e)=>setClientId(e)}
+                >
+                        <Form.Control onChange={(e)=>setEducationSpending(e.target.value)} aria-label="Text input with dropdown button" defaultValue="1" />
+                    </DropdownButton>
+                </InputGroup>
+              </div>
+            </div>
+
+            <div className='row'>
+
+            <div class="col-sm">
+                <InputGroup className="mb-3">
+                    <DropdownButton
+                    variant="outline-warning"
+                    title="Recreation & Culture"
+                    id="input-group-dropdown-1"
+                    //onSelect={(e)=>setClientId(e)}
+                >
+                        <Form.Control onChange={(e)=>setRecreationalAndCultureSpending(e.target.value)} aria-label="Text input with dropdown button" defaultValue="1" />
+                    </DropdownButton>
+                </InputGroup>
+              </div>
 
             <div  className="col-sm overflow-auto" style={{"height": "8.5rem", "position": "relative"}}>
       <InputGroup className="mb-3 text-center">
