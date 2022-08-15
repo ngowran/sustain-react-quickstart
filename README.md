@@ -8,7 +8,7 @@ This Quickstart is a guide on how to interact with our API from a ReactJS fronte
 
 ## Features
 
-- Calculates total household emissions
+- Calculates total household and car emissions
 
 ## Installation
 
@@ -29,16 +29,26 @@ Must be signed into the developer portal to access.
 
 Home screen
 
-![App Screenshot](https://i.imgur.com/5BC5cQq.png)
+![App Screenshot](https://i.imgur.com/5XxceVp.png)
 
-POST result when you click submit after entering in all the fields
+Emission Field expanded
 
-![App Screenshot](https://i.imgur.com/3LoOlXA.png)
+![App Screenshot](https://i.imgur.com/GTqAXJA.png)
 
-Country names recieved from GET request
+##  Errors & Fix
 
-![App Screenshot](https://i.imgur.com/qEyqUo0.png)
+### 401 
 
+#### Error:
+ * "Access denied due to invalid subscription key. Make sure to provide a valid key for an active subscription."
+
+#### Fix:
+  * Make sure to include our API key in the header of your requests. Found in the developer portal.
+  ```
+     { headers: {
+      'Ocp-Apim-Subscription-Key': "********"
+    }}
+  ```
 
 ## Author
 

@@ -1,3 +1,15 @@
 .sustainyellow {
     background-color: #f5e90a;
 }
+
+.main {
+    background-color: #00181c;
+    font-family: Ppneuemontreal,sans-serif;
+  }
+
+.dropdown {
+    background-color: #00181c; 
+    color: white;
+    border: none; 
+    min-width: 75vw;
+}
