@@ -60,11 +60,11 @@ function AddCarEmissions() {
       }, []);
 
     const handleClick=(e)=>{
-        const emissions = {carId, clientId, totalDistance, totalDistanceUnit, countryIsoCode}
-        console.log(emissions)
+        const data = {carId, clientId, totalDistance, totalDistanceUnit, countryIsoCode}
+        console.log(data)
         axios
             .post('https://api.sustain.life/v1/personal-calculator/car',
-             {emissions},
+             {data},
               { headers: {
               'Ocp-Apim-Subscription-Key': "00c112e599ff4c85bad0cfdacd3bb795"
              }})

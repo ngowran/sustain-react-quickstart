@@ -50,9 +50,6 @@ Emission Field expanded
     }}
   ```
 
-
-}
-
 ## Author
 
 - [@ngowran](https://github.com/ngowran)

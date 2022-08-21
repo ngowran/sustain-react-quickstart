@@ -3,6 +3,7 @@ import AddCarEmissions from './AddCarEmissions';
 import AddHouseEmissions from './AddHouseEmissions';
 import AddConsumptionEmissions from './AddConsumptionEmissions';
 import AddFlightEmissions from './AddFlightEmissions';
+import AddUtilityEmissions from './AddUtilityEmissions';
 import './Emissions.css';
 
 function EmissionsDropdown() {
@@ -34,6 +35,13 @@ function EmissionsDropdown() {
         <Accordion.Header>Flight Emissions</Accordion.Header>
         <Accordion.Body>
           <AddFlightEmissions />
+        </Accordion.Body>
+      </Accordion.Item>
+
+      <Accordion.Item eventKey="4"  className='dropdown'>
+        <Accordion.Header>Utlity Emissions</Accordion.Header>
+        <Accordion.Body>
+          <AddUtilityEmissions />
         </Accordion.Body>
       </Accordion.Item>
 
