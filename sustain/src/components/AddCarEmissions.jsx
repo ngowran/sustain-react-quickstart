@@ -4,7 +4,7 @@ import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Emissions.css';
-import React, { useEffect, useState } from 'react';
+import React, { createContext, useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
 
@@ -60,11 +60,11 @@ function AddCarEmissions() {
       }, []);
 
     const handleClick=(e)=>{
-        const emissions = {carId, clientId, totalDistance, totalDistanceUnit, countryIsoCode}
-        console.log(emissions)
+        const data = {carId, clientId, totalDistance, totalDistanceUnit, countryIsoCode}
+        console.log(data)
         axios
             .post('https://api.sustain.life/v1/personal-calculator/car',
-             {emissions},
+             {data},
               { headers: {
               'Ocp-Apim-Subscription-Key': "00c112e599ff4c85bad0cfdacd3bb795"
              }})

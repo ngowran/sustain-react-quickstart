@@ -8,7 +8,7 @@ This Quickstart is a guide on how to interact with our API from a ReactJS fronte
 
 ## Features
 
-- Calculates total household and car emissions
+- Calculates carbon emissions based on different factors.
 
 ## Installation
 
@@ -27,11 +27,11 @@ Must be signed into the developer portal to access.
 
 ## Screenshots
 
-Home screen
+#### Home screen
 
-![App Screenshot](https://i.imgur.com/5XxceVp.png)
+![App Screenshot](https://i.imgur.com/S0wq2Ac.png)
 
-Emission Field expanded
+#### Emission Field expanded
 
 ![App Screenshot](https://i.imgur.com/GTqAXJA.png)
 
