@@ -7,6 +7,7 @@ import './Emissions.css';
 import React, { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
+import { UseTotalContext } from '../hocs/states';
 
 function AddFlightEmissions() {
   const[total, setTotal]= useState("");
@@ -21,6 +22,8 @@ function AddFlightEmissions() {
   const[airport, setAirport]=useState([]);
   const[seats, setSeats]=useState([]);
   const[seat, setSeat]=useState([]);
+
+  const { totals, setTotals } = UseTotalContext();
 
   function fetchAirport() {
     axios
@@ -61,11 +64,11 @@ function AddFlightEmissions() {
   }, []);
 
   const handleClick=(e)=>{
-    const emissions = {clientId, sourceAirportCode, destinationAirportCode, passengerCount, isRoundTrip, cabinType}
-    console.log(emissions)
+    const flights = {clientId, sourceAirportCode, destinationAirportCode, passengerCount, isRoundTrip, cabinType}
+    setTotals({...totals, flights})
     axios
         .post('https://api.sustain.life/v1/personal-calculator/flight',
-         {emissions},
+         {flights},
           { headers: {
           'Ocp-Apim-Subscription-Key': "00c112e599ff4c85bad0cfdacd3bb795"
          }})

@@ -7,6 +7,7 @@ import './Emissions.css';
 import React, { createContext, useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
+import { UseTotalContext } from '../hocs/states';
 
 function AddCarEmissions() {
     // POST variables
@@ -20,6 +21,8 @@ function AddCarEmissions() {
     const[countries, setCountries]=useState([]);
     const[country, setCountry]=useState([]);
     const[distanceUnits, setDistanceUnits]=useState([]);
+
+    const { totals, setTotals } = UseTotalContext();
 
     function fetchCountries() {
         axios
@@ -44,7 +47,9 @@ function AddCarEmissions() {
         axios
         .get('https://api.sustain.life/v1/reference/distance-units',
           { headers: {
-          'Ocp-Apim-Subscription-Key': "00c112e599ff4c85bad0cfdacd3bb795"
+          'Ocp-Apim-Subscription-Key': "00c112e599ff4c85bad0cfdacd3bb795",
+            'content-type': 'application/json'
+          
         }})
         .then(res => {
           console.log(res.data)
@@ -59,23 +64,24 @@ function AddCarEmissions() {
         fetchDistanceUnits();
       }, []);
 
-    const handleClick=(e)=>{
-        const data = {carId, clientId, totalDistance, totalDistanceUnit, countryIsoCode}
-        console.log(data)
-        axios
-            .post('https://api.sustain.life/v1/personal-calculator/car',
-             {data},
-              { headers: {
-              'Ocp-Apim-Subscription-Key': "00c112e599ff4c85bad0cfdacd3bb795"
-             }})
-            .then(res => {
-                console.log(res.data.totalCarEmssionsCO2e)
-                alert(`Your total household emissions are: ${res.data.totalCarEmssionsCO2e}`)
-            })
-            .catch(err => {
-                console.log(err)
-            })
-      };
+      function handleSubmit() {
+        const cars = {carId, clientId, totalDistance, totalDistanceUnit, countryIsoCode}
+        setTotals({...totals, cars})
+        console.log(JSON.stringify({carId, clientId, totalDistance, totalDistanceUnit, countryIsoCode}))
+        fetch("https://api.sustain.life/v1/personal-calculator/car",
+        {
+            method:"POST",
+            headers:{
+              "Ocp-Apim-Subscription-Key": "00c112e599ff4c85bad0cfdacd3bb795",
+              "Content-Type":"application/json"
+            },
+            body:JSON.stringify({carId, clientId, totalDistance, totalDistanceUnit, countryIsoCode})
+        }).then((res) => {
+            console.log(res.data)
+        }).catch((err) => {
+            console.log(err.message)
+        })
+    };
 
     return (
         <> 
@@ -156,7 +162,7 @@ function AddCarEmissions() {
                 </div>
             </div>
 
-            <Button variant="warning" type="submit" onClick={handleClick}>
+            <Button variant="warning" type="submit" onClick={handleSubmit}>
                 Submit
             </Button>
             

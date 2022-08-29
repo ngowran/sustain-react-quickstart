@@ -7,6 +7,7 @@ import './Emissions.css';
 import React, { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
+import { UseTotalContext } from '../hocs/states';
 
 function AddHouseEmissions() {
   const[total, setTotal]= useState("");
@@ -19,6 +20,8 @@ function AddHouseEmissions() {
   const access_token = "00c112e599ff4c85bad0cfdacd3bb795";
   const[countries, setCountries]=useState([]);
   const[country, setCountry]=useState([]);
+
+  const { totals, setTotals} = UseTotalContext();
 
   function fetchCountries() {
     axios
@@ -40,11 +43,11 @@ function AddHouseEmissions() {
   }, []);
 
   const handleClick=(e)=>{
-    const emissions = {recyleMetal, recylePlastic, recyleGlass, recyleMagazines, numberOfPeople, countryIsoCode}
-    console.log(emissions)
+    const householdWaste = {recyleMetal, recylePlastic, recyleGlass, recyleMagazines, numberOfPeople, countryIsoCode}
+    setTotals({...totals, householdWaste})
     axios
         .post('https://api.sustain.life/v1/personal-calculator/household',
-         {emissions},
+         {householdWaste},
           { headers: {
           'Ocp-Apim-Subscription-Key': "00c112e599ff4c85bad0cfdacd3bb795"
          }})
