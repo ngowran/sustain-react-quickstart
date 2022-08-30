@@ -4,9 +4,11 @@ import AddHouseEmissions from './components/AddHouseEmissions';
 import AddCarEmissions from './components/AddCarEmissions';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import EmissionsDropdown from './components/EmissionsDropdowns';
+import { TotalsProvider } from './hocs/states';
 
 function App() {
   return (
+    <TotalsProvider>
     <div className="App">
       <header className="App-header">
         <br></br><br></br>
@@ -20,6 +22,7 @@ function App() {
         </div>
       </header>
     </div>
+    </TotalsProvider>
   );
 }
 

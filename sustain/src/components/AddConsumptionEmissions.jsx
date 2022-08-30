@@ -7,6 +7,7 @@ import './Emissions.css';
 import React, { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
+import { UseTotalContext } from '../hocs/states';
 
 function AddConsumptionEmissions() {
     const[foodDrinkHeavyMeatEaterSpending, setFoodDrinkHeavyMeatEaterSpending]= useState("");
@@ -32,6 +33,8 @@ function AddConsumptionEmissions() {
     const[country, setCountry]=useState([]);
     const[distanceUnits, setDistanceUnits]=useState([]);
     
+    const { totals, setTotals } = UseTotalContext();
+
     function fetchCountries() {
         axios
         .get('https://api.sustain.life/v1/reference/countries',
@@ -52,21 +55,23 @@ function AddConsumptionEmissions() {
       }, []);
 
       const handleClick=(e)=>{
-        const emissions = {foodDrinkHeavyMeatEaterSpending, foodDrinkMediumMeatEaterSpending, foodDrinkLightMeatEaterSpending,
+        const consumption = {foodDrinkHeavyMeatEaterSpending, foodDrinkMediumMeatEaterSpending, foodDrinkLightMeatEaterSpending,
             foodDrinkVegetarianSpending, foodDrinkVeganSpending, pharmaceuticalsSpending, clothesShoesSpending, 
             paperProductsSpending, computersITEquipmentSpending, motorVehiclesExFuelSpending, furnitureSpending, 
             hotelsRestuarantsSpending, cellPhonesSpending, bankingFinanceSpending, insuranceSpending, educationSpending, 
             recreationalAndCultureSpending, countryIsoCode}
-        console.log(emissions)
+        setTotals({...totals, consumption})
         axios
             .post('https://api.sustain.life/v1/personal-calculator/consumption',
-             {emissions},
+             {consumption},
+
               { headers: {
-              'Ocp-Apim-Subscription-Key': "00c112e599ff4c85bad0cfdacd3bb795"
+              'Ocp-Apim-Subscription-Key': "00c112e599ff4c85bad0cfdacd3bb795",
+              'content-type': 'application/json'
              }})
             .then(res => {
-                console.log(res.data)
-                alert(`Your total consumption emissions are: ${res.data}`)
+                console.log(res.data.totalConsumptionEmissionsCO2e)
+                alert(`Your total consumption emissions are: ${res.data.totalConsumptionEmissionsCO2e}`)
             })
             .catch(err => {
                 console.log(err)

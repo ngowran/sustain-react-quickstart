@@ -7,6 +7,7 @@ import './Emissions.css';
 import React, { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
+import { UseTotalContext } from '../hocs/states';
 
 function AddUtilityEmissions() {
     // POST variables
@@ -33,6 +34,8 @@ function AddUtilityEmissions() {
     const[fuelOil, setFuelOil]=useState([]);
     const[propaneUnit, setPropaneUnit]=useState([]);
     const[woodenPellet, setWoodenPellet]=useState([]);
+
+    const { totals, setTotals } = UseTotalContext();
 
     function fetchCountries() {
         axios
@@ -179,15 +182,18 @@ function AddUtilityEmissions() {
 
 
     const handleClick=(e)=>{
-        const emissions = {utilityCompanyId, zipCode, electricalUsage, electricalUsageUnit, naturalGasUsage, 
+        const utilities = {utilityCompanyId, zipCode, electricalUsage, electricalUsageUnit, naturalGasUsage, 
             naturalGasUsageUnit, fuelOilUsage, fuelOilUsageUnit, propaneUsage, propaneUsageUnit, woodPelletUsage,
              woodPelletUsageUnit, countryIsoCode}
-        console.log(emissions)
+        setTotals({...totals, utilities});
         axios
             .post('https://api.sustain.life/v1/personal-calculator/utilities',
-             {emissions},
+            {utilityCompanyId, zipCode, electricalUsage, electricalUsageUnit, naturalGasUsage, 
+                naturalGasUsageUnit, fuelOilUsage, fuelOilUsageUnit, propaneUsage, propaneUsageUnit, woodPelletUsage,
+                 woodPelletUsageUnit, countryIsoCode},
               { headers: {
-              'Ocp-Apim-Subscription-Key': "00c112e599ff4c85bad0cfdacd3bb795"
+              'Ocp-Apim-Subscription-Key': "00c112e599ff4c85bad0cfdacd3bb795",
+              'content-type': 'application/json'
              }})
             .then(res => {
                 console.log(res.data.totalUtilityEmissionsCO2e)
