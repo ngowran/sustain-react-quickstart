@@ -49,7 +49,8 @@ function AddHouseEmissions() {
         .post('https://api.sustain.life/v1/personal-calculator/household',
          {householdWaste},
           { headers: {
-          'Ocp-Apim-Subscription-Key': "00c112e599ff4c85bad0cfdacd3bb795"
+          'Ocp-Apim-Subscription-Key': "00c112e599ff4c85bad0cfdacd3bb795",
+          'content-type': 'application/json'
          }})
         .then(res => {
             console.log(res.data.totalHouseholdWasteEmissionsCO2e)

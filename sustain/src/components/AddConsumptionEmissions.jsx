@@ -66,11 +66,12 @@ function AddConsumptionEmissions() {
              {consumption},
 
               { headers: {
-              'Ocp-Apim-Subscription-Key': "00c112e599ff4c85bad0cfdacd3bb795"
+              'Ocp-Apim-Subscription-Key': "00c112e599ff4c85bad0cfdacd3bb795",
+              'content-type': 'application/json'
              }})
             .then(res => {
-                console.log(res.data)
-                alert(`Your total consumption emissions are: ${res.data}`)
+                console.log(res.data.totalConsumptionEmissionsCO2e)
+                alert(`Your total consumption emissions are: ${res.data.totalConsumptionEmissionsCO2e}`)
             })
             .catch(err => {
                 console.log(err)

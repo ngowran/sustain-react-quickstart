@@ -14,7 +14,7 @@ function AddTotalEmissions() {
   const access_token = "00c112e599ff4c85bad0cfdacd3bb795";
   const[countries, setCountries]=useState([]);
   const[country, setCountry]=useState([]);
-  const[countryIsoCode, setCountryIso]=useState("");
+  const[countryIsoCode1, setCountryIso1]=useState("");
   const[railDistance, setRailDistance]=useState("");
   const[railDistanceUnit, setRailDistanceUnit]=useState("");
   const[distanceUnits, setDistanceUnits]=useState([]);
@@ -62,14 +62,17 @@ useEffect(() => {
   }, []);
 
   const handleClick=(e)=>{
-    const totalEmission = {countryIsoCode, busDistance, busDistanceUnit, railDistance, railDistanceUnit}
-    setTotals({...totals, totalEmission})
-  
+    const bus = {countryIsoCode1, busDistance, busDistanceUnit}
+    const rail = {countryIsoCode1, railDistance, railDistanceUnit}
+    const countryIsoCode = {countryIsoCode1}
+    setTotals({...totals, bus, rail, countryIsoCode})
+    console.log(totals)
     axios
         .post('https://api.sustain.life/v1/personal-calculator/total',
          {totals},
           { headers: {
-          'Ocp-Apim-Subscription-Key': "00c112e599ff4c85bad0cfdacd3bb795"
+          'Ocp-Apim-Subscription-Key': "00c112e599ff4c85bad0cfdacd3bb795",
+          'content-type': 'application/json'
          }})
         .then(res => {
             console.log(res.data.totalEmissionsCO2e)
@@ -86,10 +89,11 @@ useEffect(() => {
     <div class="container">
       <br></br>
       <h4>Calculate your total emissions below</h4>
+      <h6>Takes the emissions from all your other submissions, submit each to add</h6>
       <br></br>
       
       <div className='row'>
-                <div class="col-sm">
+                <div class="col-sm-3">
                     <InputGroup className="mb-3">
                         <DropdownButton
                         variant="outline-warning"
@@ -101,7 +105,7 @@ useEffect(() => {
                     </InputGroup>
                     </div>
 
-                    <div class="col-sm">
+                    <div class="col-sm-3">
                 <InputGroup className="mb-3">
                     <DropdownButton
                     variant="outline-warning"
@@ -120,7 +124,7 @@ useEffect(() => {
       </div>
 
       <div className='row'>
-        <div class="col-sm">
+        <div class="col-sm-3">
                     <InputGroup className="mb-3">
                         <DropdownButton
                         variant="outline-warning"
@@ -132,7 +136,7 @@ useEffect(() => {
                     </InputGroup>
                     </div>
 
-        <div class="col-sm">
+        <div class="col-sm-3">
             <InputGroup className="mb-3">
                  <DropdownButton
                     variant="outline-warning"
@@ -155,7 +159,7 @@ useEffect(() => {
                         variant="outline-warning"
                         title="Country of Residence"
                         id="input-group-dropdown-1"
-                        onSelect={(e)=>setCountryIso(e)}
+                        onSelect={(e)=>setCountryIso1(e)}
                         > 
                         {countries.map((country) => (
                                 <Dropdown.Item  eventKey={`${country.isoCode}`}>{country.name}

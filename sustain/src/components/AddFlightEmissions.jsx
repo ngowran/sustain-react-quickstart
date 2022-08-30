@@ -66,15 +66,17 @@ function AddFlightEmissions() {
   const handleClick=(e)=>{
     const flights = {clientId, sourceAirportCode, destinationAirportCode, passengerCount, isRoundTrip, cabinType}
     setTotals({...totals, flights})
+    console.log(JSON.stringify({ clientId, sourceAirportCode, destinationAirportCode, passengerCount, isRoundTrip, cabinType}))
     axios
         .post('https://api.sustain.life/v1/personal-calculator/flight',
          {flights},
           { headers: {
-          'Ocp-Apim-Subscription-Key': "00c112e599ff4c85bad0cfdacd3bb795"
+          'Ocp-Apim-Subscription-Key': "00c112e599ff4c85bad0cfdacd3bb795",
+          'content-type': 'application/json'
          }})
         .then(res => {
-            console.log(res.data)
-            alert(`Your total household emissions are: ${res.data}`)
+            console.log(res.data.totalFlightEmissionsCO2e)
+            alert(`Your total household emissions are: ${res.data.totalFlightEmissionsCO2e}`)
         })
         .catch(err => {
             console.log(err)
@@ -96,7 +98,7 @@ function AddFlightEmissions() {
           id="input-group-dropdown-1"
           //onSelect={(e)=>setMetal(e)}
         >
-           <Form.Control onChange={(e)=>setClientId(e.target.value)} aria-label="Text input with dropdown button" defaultValue="1" />
+           <Form.Control onChange={(e)=>setClientId(`flight${e.target.value}`)} aria-label="Text input with dropdown button" defaultValue="1" />
         </DropdownButton>
       </InputGroup>
       </div>

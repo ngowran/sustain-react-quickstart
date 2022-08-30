@@ -21,6 +21,7 @@ function AddCarEmissions() {
     const[countries, setCountries]=useState([]);
     const[country, setCountry]=useState([]);
     const[distanceUnits, setDistanceUnits]=useState([]);
+    const[carModel, setCarModel]=useState([]);
 
     const { totals, setTotals } = UseTotalContext();
 
@@ -64,24 +65,47 @@ function AddCarEmissions() {
         fetchDistanceUnits();
       }, []);
 
+    
+      function fetchCarModels() {
+        axios
+        .get('https://api.sustain.life/v1/reference/cars',
+          { headers: {
+          'Ocp-Apim-Subscription-Key': "00c112e599ff4c85bad0cfdacd3bb795",
+            'content-type': 'application/json'
+          
+        }})
+        .then(res => {
+          console.log(res.data)
+          setCarModel(res.data.items)
+        })
+        .catch(err => {
+            console.log(err)
+        })
+      };
+
+    useEffect(() => {
+        fetchCarModels();
+      }, []);
+
       function handleSubmit() {
         const cars = {carId, clientId, totalDistance, totalDistanceUnit, countryIsoCode}
         setTotals({...totals, cars})
         console.log(JSON.stringify({carId, clientId, totalDistance, totalDistanceUnit, countryIsoCode}))
-        fetch("https://api.sustain.life/v1/personal-calculator/car",
-        {
-            method:"POST",
-            headers:{
-              "Ocp-Apim-Subscription-Key": "00c112e599ff4c85bad0cfdacd3bb795",
-              "Content-Type":"application/json"
-            },
-            body:JSON.stringify({carId, clientId, totalDistance, totalDistanceUnit, countryIsoCode})
-        }).then((res) => {
-            console.log(res.data)
-        }).catch((err) => {
-            console.log(err.message)
+        axios
+        .post('https://api.sustain.life/v1/personal-calculator/car',
+         {cars},
+          { headers: {
+          'Ocp-Apim-Subscription-Key': "00c112e599ff4c85bad0cfdacd3bb795",
+          'content-type': 'application/json'
+         }})
+        .then(res => {
+            console.log(res.data.totalCarEmissionsCO2e)
+            alert(`Your total car emissions are: ${res.data.totalEmissionsCO2e}`)
         })
-    };
+        .catch(err => {
+            console.log(err)
+        })
+  };
 
     return (
         <> 
@@ -123,11 +147,15 @@ function AddCarEmissions() {
                     <InputGroup className="mb-3  ">
                         <DropdownButton
                         variant="outline-warning"
-                        title="Car ID?"
+                        title="Make & Model"
                         id="input-group-dropdown-1"
-                        //onSelect={(e)=>setCarId(e)}
+                        onSelect={(e)=>setCarId(e)}
                     >
-                            <Form.Control onChange={(e)=>setCarId(e.target.value)} aria-label="Text input with dropdown button" defaultValue="1" />
+                            {carModel.map((carModel) => (
+                                <Dropdown.Item  eventKey={`${carModel.id}`}>{`${carModel.make} - ${carModel.model}`}
+                                </Dropdown.Item>
+                            )
+                            )}
                         </DropdownButton>
                     </InputGroup>
                 </div>
@@ -139,7 +167,7 @@ function AddCarEmissions() {
                     id="input-group-dropdown-1"
                     //onSelect={(e)=>setClientId(e)}
                 >
-                        <Form.Control onChange={(e)=>setClientId(e.target.value)} aria-label="Text input with dropdown button" defaultValue="1" />
+                        <Form.Control onChange={(e)=>setClientId(`car${e.target.value}`)} aria-label="Text input with dropdown button" defaultValue="1" />
                     </DropdownButton>
                 </InputGroup>
                 </div>
