@@ -1,27 +1,20 @@
-import Dropdown from 'react-bootstrap/Dropdown';
-import DropdownButton from 'react-bootstrap/DropdownButton';
-import Form from 'react-bootstrap/Form';
-import InputGroup from 'react-bootstrap/InputGroup';
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Emissions.css';
-import React, { createContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
 import { UseTotalContext } from '../hocs/states';
 
 function AddCarEmissions() {
-    // POST variables
-    const[total, setTotal]= useState("");
-    const[carId, setCarId]= useState("");
-    const[clientId, setClientId]= useState("") ;
-    const[totalDistance, setTotalDistance]= useState("") ;
-    const[totalDistanceUnit, setTotalDistanceUnit]= useState("");
-    const[countryIsoCode, setCountryIso]= useState("");
-    const access_token = "00c112e599ff4c85bad0cfdacd3bb795";
+    const[carId, setCarId]= useState(0) ;
+    const[totalDistance, setTotalDistance]= useState(0) ;
+    const[distanceUnit, setDistanceUnit]= useState('');
     const[countries, setCountries]=useState([]);
-    const[country, setCountry]=useState([]);
+    const[country, setCountry]=useState();
     const[distanceUnits, setDistanceUnits]=useState([]);
-    const[carModel, setCarModel]=useState([]);
+    const[carModels, setCarModels]=useState([]);
+    const[emissionsValue, setEmissionsValue]=useState(0);
 
     const { totals, setTotals } = UseTotalContext();
 
@@ -32,17 +25,28 @@ function AddCarEmissions() {
           'Ocp-Apim-Subscription-Key': "00c112e599ff4c85bad0cfdacd3bb795"
         }})
         .then(res => {
-          console.log(res.data)
-          setCountries(res.data.items)
+            const locations = res.data.items;
+            const sortedLocations = locations.sort(function(a, b){
+                if(a.isoCode === 'usa') { return -1; }
+                if(a.firstname > b.firstname) { return 1; }
+                return 0;
+            })
+            
+            setCountries(sortedLocations);
         })
         .catch(err => {
             console.log(err)
-        })
-      };
+        })  
+    };
 
     useEffect(() => {
-        fetchCountries();
-      }, []);
+        if(countries.length === 0)
+            fetchCountries();
+        if(distanceUnits.length === 0)
+            fetchDistanceUnits();
+        if(carModels.length === 0)
+            fetchCarModels();
+    }, []);
     
     function fetchDistanceUnits() {
         axios
@@ -53,151 +57,124 @@ function AddCarEmissions() {
           
         }})
         .then(res => {
-          console.log(res.data)
           setDistanceUnits(res.data.items)
         })
         .catch(err => {
             console.log(err)
         })
-      };
-
-    useEffect(() => {
-        fetchDistanceUnits();
-      }, []);
-
-    
-      function fetchCarModels() {
+    }; 
+     
+    function fetchCarModels() {
         axios
         .get('https://api.sustain.life/v1/reference/cars',
-          { headers: {
-          'Ocp-Apim-Subscription-Key': "00c112e599ff4c85bad0cfdacd3bb795",
-            'content-type': 'application/json'
-          
+            { headers: {
+            'Ocp-Apim-Subscription-Key': "00c112e599ff4c85bad0cfdacd3bb795",
+            'content-type': 'application/json'            
         }})
         .then(res => {
-          console.log(res.data)
-          setCarModel(res.data.items)
+            setCarModels(res.data.items)
         })
         .catch(err => {
             console.log(err)
         })
-      };
+    };
 
-    useEffect(() => {
-        fetchCarModels();
-      }, []);
-
-      function handleSubmit() {
+    function handleClick () {
+        const countryIsoCode = country || 'usa';
+        const clientId = carId;
+        const totalDistanceUnit = distanceUnit || 'Miles';
         const car = {carId, clientId, totalDistance, totalDistanceUnit, countryIsoCode}
         setTotals({...totals, car})
-        console.log(JSON.stringify({carId, clientId, totalDistance, totalDistanceUnit, countryIsoCode}))
         axios
-        .post('https://api.sustain.life/v1/personal-calculator/car',
-        car,
-          { headers: {
-          'Ocp-Apim-Subscription-Key': "00c112e599ff4c85bad0cfdacd3bb795",
-          'content-type': 'application/json'
-         }})
+            .post('https://api.sustain.life/v1/personal-calculator/car',
+            car,
+            { headers: {
+                'Ocp-Apim-Subscription-Key': "00c112e599ff4c85bad0cfdacd3bb795",
+                'content-type': 'application/json'
+                }
+            }
+        )
         .then(res => {
-            console.log(res.data.totalCarEmissionsCO2e)
-            alert(`Your total car emissions are: ${res.data.totalEmissionsCO2e}`)
+            setEmissionsValue(res.data.totalCarEmssionsCO2e);
         })
         .catch(err => {
             console.log(err)
         })
-  };
+    };
 
+    const handleCountryChange = (e) => {
+        setCountry(e.target.value);
+    }
+    const handleDistanceUnitChange = (e) => {
+        setDistanceUnit(e.target.value);
+    }
+    const handleCarModelChange = (e) => {
+        setCarId(e.target.value);
+    }
+  
     return (
-        <> 
+        <>  
         <div class="container">
             <br></br>
-            <h4>Add your car emissions below</h4>
+            <h4>Calculate your car trip emissions below</h4>
             <br></br>
-            <div class="row">
-                <div class="col-sm-3">
-                <InputGroup className="mb-3">
-                    <DropdownButton
-                    variant="outline-warning"
-                    title="Distance travelled?"
-                    id="input-group-dropdown-1"
-                >
-                        <Form.Control onChange={(e)=>setTotalDistance(e.target.value)} aria-label="Text input with dropdown button" defaultValue="1" />
-                    </DropdownButton>
-                </InputGroup>
+            <table>
+                <tr>
+                    <td>
+                        <span>Country of Residence</span>
+                    </td>
+                    <td>
+                        <select onChange={(e)=>handleCountryChange(e)} value={country}>
+                            {countries.map((country) => <option key={country.isoCode} value={country.isoCode}>{country.name}</option>)}
+                        </select>
+                    </td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>
+                        <span>Distance travelled</span>
+                    </td>
+                    <td>
+                    <input
+                        type="number"
+                        value={totalDistance}
+                        onChange={event => {
+                            setTotalDistance(+(event.target.value)); 
+                        }}
+                        />                    
+                    </td>
+                    <td>
+                        <select onChange={(e)=>handleDistanceUnitChange(e)}>
+                            {distanceUnits.map((unit) => <option key={unit} value={unit}>{unit}</option>)}
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span>Make & Model</span>
+                    </td>
+                    <td>
+                        <select onChange={(e)=>handleCarModelChange(e)} >
+                            {carModels.map((car) => <option key={car.id} value={car.id}>{car.year} {car.make} {car.model}</option>)}
+                        </select>                 
+                    </td>
+                    <td> </td>
+                </tr>
+            </table>                
+            <div className='row'>
+                <div className='row'>
+                    <Button variant="warning" style={{width: '100px'}} type="submit" onClick={handleClick}>
+                        Submit
+                    </Button>
                 </div>
-
-                <div class="col-sm-2">
-                <InputGroup className="mb-3">
-                    <DropdownButton
-                    variant="outline-warning"
-                    title="Units?"
-                    id="input-group-dropdown-1"
-                    onSelect={(e)=>setTotalDistanceUnit(e)}
-                >
-                        {distanceUnits.map((distanceUnit) => (
-                    <Dropdown.Item  eventKey={`${distanceUnit}`}>{distanceUnit}
-                    </Dropdown.Item>
-                )
-                )}
-                    </DropdownButton>
-                </InputGroup>
-                </div>
-
-                <div class="col-sm-2">
-                    <InputGroup className="mb-3  ">
-                        <DropdownButton
-                        variant="outline-warning"
-                        title="Make & Model"
-                        id="input-group-dropdown-1"
-                        onSelect={(e)=>setCarId(e)}
-                    >
-                            {carModel.map((carModel) => (
-                                <Dropdown.Item  eventKey={`${carModel.id}`}>{`${carModel.make} - ${carModel.model}`}
-                                </Dropdown.Item>
-                            )
-                            )}
-                        </DropdownButton>
-                    </InputGroup>
-                </div>
-                <div class="col-sm-2">
-                <InputGroup className="mb-3">
-                    <DropdownButton
-                    variant="outline-warning"
-                    title="Client ID?"
-                    id="input-group-dropdown-1"
-                    //onSelect={(e)=>setClientId(e)}
-                >
-                        <Form.Control onChange={(e)=>setClientId(`car${e.target.value}`)} aria-label="Text input with dropdown button" defaultValue="1" />
-                    </DropdownButton>
-                </InputGroup>
-                </div>
-
-                <div  className="col-sm-3 overflow-auto" style={{"height": "8.5rem", "position": "relative"}}>
-                    <InputGroup className="mb-3 text-center">
-                        <DropdownButton
-                        variant="outline-warning"
-                        title="Country of Residence"
-                        id="input-group-dropdown-1"
-                        onSelect={(e)=>setCountryIso(e)}
-                        > 
-                        {countries.map((country) => (
-                                <Dropdown.Item  eventKey={`${country.isoCode}`}>{country.name}
-                                </Dropdown.Item>
-                            )
-                            )}
-                        </DropdownButton>
-                    </InputGroup>
+                <div className='row'>
+                    {emissionsValue} MT C02e
                 </div>
             </div>
-
-            <Button variant="warning" type="submit" onClick={handleSubmit}>
-                Submit
-            </Button>
-            
         </div>
         </>
   );
-
 }
+ 
 
 export default AddCarEmissions;
