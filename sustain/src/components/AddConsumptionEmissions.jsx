@@ -65,7 +65,7 @@ function AddConsumptionEmissions() {
         setTotals({...totals, consumption});
         axios
             .post('https://api.sustain.life/v1/personal-calculator/consumption',
-             {consumption},
+             consumption,
 
               { headers: {
               'Ocp-Apim-Subscription-Key': "00c112e599ff4c85bad0cfdacd3bb795",
