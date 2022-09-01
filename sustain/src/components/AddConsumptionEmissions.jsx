@@ -25,7 +25,7 @@ function AddConsumptionEmissions() {
     const[recreationalAndCultureSpending, setRecreationalAndCultureSpending]= useState(0);
     const[emissionsValue, setEmissionsValue]=useState(0);
     
-    const { totals, setTotals, countryIsoCode } = UseTotalContext();
+    const { addCalculationComponent, countryIsoCode } = UseTotalContext();
 
     const handleClick=(e)=>{
         const consumption = {foodDrinkHeavyMeatEaterSpending, foodDrinkMediumMeatEaterSpending, foodDrinkLightMeatEaterSpending,
@@ -33,7 +33,7 @@ function AddConsumptionEmissions() {
             paperProductsSpending, computersITEquipmentSpending, motorVehiclesExFuelSpending, furnitureSpending, 
             hotelsRestuarantsSpending, cellPhonesSpending, bankingFinanceSpending, insuranceSpending, educationSpending, 
             recreationalAndCultureSpending, countryIsoCode};
-        setTotals({...totals, consumption});
+        addCalculationComponent(consumption);
         axios
             .post('https://api.sustain.life/v1/personal-calculator/consumption',
              consumption,

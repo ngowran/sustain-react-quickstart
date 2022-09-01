@@ -23,7 +23,7 @@ function AddFlightEmissions() {
   const[seats, setSeats]=useState([]);
   const[seat, setSeat]=useState([]);
 
-  const { totals, setTotals } = UseTotalContext();
+  const { addCalculationComponent } = UseTotalContext();
 
   function fetchAirport() {
     axios
@@ -65,8 +65,7 @@ function AddFlightEmissions() {
 
   const handleClick=(e)=>{
     const flight = {clientId, sourceAirportCode, destinationAirportCode, passengerCount, isRoundTrip, cabinType}
-    setTotals({...totals, flight})
-    console.log(JSON.stringify({ clientId, sourceAirportCode, destinationAirportCode, passengerCount, isRoundTrip, cabinType}))
+    addCalculationComponent(flight);
     axios
         .post('https://api.sustain.life/v1/personal-calculator/flight',
          flight,

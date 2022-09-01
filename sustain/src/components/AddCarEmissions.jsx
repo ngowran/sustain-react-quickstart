@@ -14,7 +14,7 @@ function AddCarEmissions() {
     const[carModels, setCarModels]=useState([]);
     const[emissionsValue, setEmissionsValue]=useState(0);
 
-    const { totals, setTotals, countryIsoCode } = UseTotalContext();
+    const { addCalculationComponent, countryIsoCode, addcarTotal } = UseTotalContext();
 
     useEffect(() => {
        if(distanceUnits.length === 0)
@@ -58,7 +58,7 @@ function AddCarEmissions() {
         const clientId = carId;
         const totalDistanceUnit = distanceUnit || 'Miles';
         const car = {carId, clientId, totalDistance, totalDistanceUnit, countryIsoCode}
-        setTotals({...totals, car})
+        addCalculationComponent(car);
         axios
             .post('https://api.sustain.life/v1/personal-calculator/car',
             car,
@@ -70,6 +70,7 @@ function AddCarEmissions() {
         )
         .then(res => {
             setEmissionsValue(res.data.totalCarEmssionsCO2e);
+            addcarTotal(res.data.totalCarEmssionsCO2e);
         })
         .catch(err => {
             console.log(err)

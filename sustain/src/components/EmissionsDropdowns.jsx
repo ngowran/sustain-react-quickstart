@@ -4,6 +4,7 @@ import Accordion from 'react-bootstrap/Accordion';
 import AddCarEmissions from './AddCarEmissions';
 import AddHouseEmissions from './AddHouseEmissions';
 import AddConsumptionEmissions from './AddConsumptionEmissions';
+import EmissionsSummary from './EmissionsSummary';
 import AddFlightEmissions from './AddFlightEmissions';
 import AddUtilityEmissions from './AddUtilityEmissions';
 import AddTotalEmissions from './AddTotalEmissions';
@@ -67,7 +68,11 @@ function EmissionsDropdown() {
                       {countries.map((country) => <option key={country.isoCode} value={country.isoCode}>{country.name}</option>)}
                   </select>
               </td>
-              <td></td>
+          </tr>
+          <tr>
+              <td colSpan="2">
+                  <EmissionsSummary/>
+              </td>
           </tr>
         </table>
     <Accordion>
