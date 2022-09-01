@@ -4,6 +4,7 @@ export const TotalsContext = createContext();
 
 export const TotalsProvider = ({ children }) => {
     const [totals, setTotals] = useState({});
+    const [countryIsoCode, setCountryIsoCode] = useState('usa');
 
 
     const addTotal = (total) => {
@@ -11,7 +12,7 @@ export const TotalsProvider = ({ children }) => {
     }
 
 return (
-    <TotalsContext.Provider value = {{totals, addTotal, setTotals}}>
+    <TotalsContext.Provider value = {{totals, addTotal, setTotals, countryIsoCode, setCountryIsoCode}}>
     {children}
     </TotalsContext.Provider>
     )

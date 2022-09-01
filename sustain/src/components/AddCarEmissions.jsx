@@ -10,39 +10,14 @@ function AddCarEmissions() {
     const[carId, setCarId]= useState(0) ;
     const[totalDistance, setTotalDistance]= useState(0) ;
     const[distanceUnit, setDistanceUnit]= useState('');
-    const[countries, setCountries]=useState([]);
-    const[country, setCountry]=useState();
     const[distanceUnits, setDistanceUnits]=useState([]);
     const[carModels, setCarModels]=useState([]);
     const[emissionsValue, setEmissionsValue]=useState(0);
 
-    const { totals, setTotals } = UseTotalContext();
-
-    function fetchCountries() {
-        axios
-        .get('https://api.sustain.life/v1/reference/countries',
-          { headers: {
-          'Ocp-Apim-Subscription-Key': "00c112e599ff4c85bad0cfdacd3bb795"
-        }})
-        .then(res => {
-            const locations = res.data.items;
-            const sortedLocations = locations.sort(function(a, b){
-                if(a.isoCode === 'usa') { return -1; }
-                if(a.firstname > b.firstname) { return 1; }
-                return 0;
-            })
-            
-            setCountries(sortedLocations);
-        })
-        .catch(err => {
-            console.log(err)
-        })  
-    };
+    const { totals, setTotals, countryIsoCode } = UseTotalContext();
 
     useEffect(() => {
-        if(countries.length === 0)
-            fetchCountries();
-        if(distanceUnits.length === 0)
+       if(distanceUnits.length === 0)
             fetchDistanceUnits();
         if(carModels.length === 0)
             fetchCarModels();
@@ -80,7 +55,6 @@ function AddCarEmissions() {
     };
 
     function handleClick () {
-        const countryIsoCode = country || 'usa';
         const clientId = carId;
         const totalDistanceUnit = distanceUnit || 'Miles';
         const car = {carId, clientId, totalDistance, totalDistanceUnit, countryIsoCode}
@@ -102,9 +76,6 @@ function AddCarEmissions() {
         })
     };
 
-    const handleCountryChange = (e) => {
-        setCountry(e.target.value);
-    }
     const handleDistanceUnitChange = (e) => {
         setDistanceUnit(e.target.value);
     }
@@ -119,17 +90,6 @@ function AddCarEmissions() {
             <h4>Calculate your car trip emissions below</h4>
             <br></br>
             <table>
-                <tr>
-                    <td>
-                        <span>Country of Residence</span>
-                    </td>
-                    <td>
-                        <select onChange={(e)=>handleCountryChange(e)} value={country}>
-                            {countries.map((country) => <option key={country.isoCode} value={country.isoCode}>{country.name}</option>)}
-                        </select>
-                    </td>
-                    <td></td>
-                </tr>
                 <tr>
                     <td>
                         <span>Distance travelled</span>
