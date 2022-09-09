@@ -23,46 +23,17 @@ function AddConsumptionEmissions() {
     const[insuranceSpending, setInsuranceSpending]= useState(0);
     const[educationSpending, setEducationSpending]= useState(0);
     const[recreationalAndCultureSpending, setRecreationalAndCultureSpending]= useState(0);
-    const[countries, setCountries]=useState([]);
-    const[country, setCountry]=useState();
     const[emissionsValue, setEmissionsValue]=useState(0);
     
-    const { totals, setTotals } = UseTotalContext();
+    const { addCalculationComponent, countryIsoCode } = UseTotalContext();
 
-    function fetchCountries() {
-        axios
-        .get('https://api.sustain.life/v1/reference/countries',
-          { headers: {
-          'Ocp-Apim-Subscription-Key': "00c112e599ff4c85bad0cfdacd3bb795"
-        }})
-        .then(res => {
-            const locations = res.data.items;
-            const sortedLocations = locations.sort(function(a, b){
-                if(a.isoCode === 'usa') { return -1; }
-                if(a.firstname > b.firstname) { return 1; }
-                return 0;
-            })
-            
-            setCountries(sortedLocations);
-        })
-        .catch(err => {
-            console.log(err)
-        })
-      };
-    
-      useEffect(() => {
-        if(countries.length === 0)
-            fetchCountries();
-      }, []);
-
-      const handleClick=(e)=>{
-       const countryIsoCode = country || 'usa';
+    const handleClick=(e)=>{
         const consumption = {foodDrinkHeavyMeatEaterSpending, foodDrinkMediumMeatEaterSpending, foodDrinkLightMeatEaterSpending,
             foodDrinkVegetarianSpending, foodDrinkVeganSpending, pharmaceuticalsSpending, clothesShoesSpending, 
             paperProductsSpending, computersITEquipmentSpending, motorVehiclesExFuelSpending, furnitureSpending, 
             hotelsRestuarantsSpending, cellPhonesSpending, bankingFinanceSpending, insuranceSpending, educationSpending, 
             recreationalAndCultureSpending, countryIsoCode};
-        setTotals({...totals, consumption});
+        addCalculationComponent(consumption);
         axios
             .post('https://api.sustain.life/v1/personal-calculator/consumption',
              consumption,
@@ -76,12 +47,9 @@ function AddConsumptionEmissions() {
             })
             .catch(err => {
                 console.log(err)
-            })
-      };
+        })
+    };
 
-      const handleCountryChange = (e) => {
-        setCountry(e.target.value);
-    }
   
     return (
         <> 
@@ -90,18 +58,7 @@ function AddConsumptionEmissions() {
             <h4>Add your consumption emissions below</h4>
             <h5>Spending for each category in USD</h5>
             <br></br>
-            <table>
-                <tr>
-                    <td>
-                        <span>Country of Residence</span>
-                    </td>
-                    <td>
-                        <select onChange={(e)=>handleCountryChange(e)} value={country}>
-                            {countries.map((country) => <option key={country.isoCode} value={country.isoCode}>{country.name}</option>)}
-                        </select>
-                    </td>
-                    <td></td>
-                </tr>
+            <table>            
                 <tr>
                     <td>
                         <span>Heavy Meat Diet</span>

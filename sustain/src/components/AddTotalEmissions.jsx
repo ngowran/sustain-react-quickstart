@@ -21,7 +21,7 @@ function AddTotalEmissions() {
   const[busDistance, setBusDistance]=useState("");
   const[busDistanceUnit, setBusDistanceUnit]=useState("");
 
-  const { totals, setTotals} = UseTotalContext();
+  const { addCalculationComponent, getAllCalculationComponen } = UseTotalContext();
 
   function fetchCountries() {
     axios
@@ -64,12 +64,12 @@ useEffect(() => {
   const handleClick=(e)=>{
     const bus = {countryIsoCode1, busDistance, busDistanceUnit}
     const rail = {countryIsoCode1, railDistance, railDistanceUnit}
-    const countryIsoCode = {countryIsoCode1}
-    setTotals({...totals, bus, rail, countryIsoCode})
-    console.log(totals)
+    addCalculationComponent(bus);
+    addCalculationComponent(rail);
+    const allComponents = getAllCalculationComponen();
     axios
         .post('https://api.sustain.life/v1/personal-calculator/total',
-         {totals},
+         {allComponents},
           { headers: {
           'Ocp-Apim-Subscription-Key': "00c112e599ff4c85bad0cfdacd3bb795",
           'content-type': 'application/json'
@@ -81,7 +81,6 @@ useEffect(() => {
         .catch(err => {
             console.log(err)
         })
-    console.log(totals)
   };
 
   return (
