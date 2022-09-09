@@ -92,8 +92,8 @@ function AddCarEmissions() {
         setTotals({...totals, car})
         console.log(JSON.stringify({carId, clientId, totalDistance, totalDistanceUnit, countryIsoCode}))
         axios
-        .post('https://api.sustain.life/v1/personal-calculator/car',
-         car,
+            .post('https://api.sustain.life/v1/personal-calculator/car',
+            car,
           { headers: {
           'Ocp-Apim-Subscription-Key': "00c112e599ff4c85bad0cfdacd3bb795",
           'content-type': 'application/json'

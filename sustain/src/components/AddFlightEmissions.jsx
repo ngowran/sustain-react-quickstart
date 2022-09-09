@@ -64,12 +64,12 @@ function AddFlightEmissions() {
   }, []);
 
   const handleClick=(e)=>{
-    const flights = {clientId, sourceAirportCode, destinationAirportCode, passengerCount, isRoundTrip, cabinType}
-    setTotals({...totals, flights})
+    const flight = {clientId, sourceAirportCode, destinationAirportCode, passengerCount, isRoundTrip, cabinType}
+    setTotals({...totals, flight})
     console.log(JSON.stringify({ clientId, sourceAirportCode, destinationAirportCode, passengerCount, isRoundTrip, cabinType}))
     axios
         .post('https://api.sustain.life/v1/personal-calculator/flight',
-         {flights},
+         flight,
           { headers: {
           'Ocp-Apim-Subscription-Key': "00c112e599ff4c85bad0cfdacd3bb795",
           'content-type': 'application/json'

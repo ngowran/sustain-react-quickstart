@@ -1,8 +1,5 @@
-import Dropdown from 'react-bootstrap/Dropdown';
-import DropdownButton from 'react-bootstrap/DropdownButton';
-import Form from 'react-bootstrap/Form';
-import InputGroup from 'react-bootstrap/InputGroup';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Table from 'react-bootstrap/Table';
 import './Emissions.css';
 import React, { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
@@ -10,28 +7,26 @@ import axios from 'axios';
 import { UseTotalContext } from '../hocs/states';
 
 function AddConsumptionEmissions() {
-    const[foodDrinkHeavyMeatEaterSpending, setFoodDrinkHeavyMeatEaterSpending]= useState("");
-    const[foodDrinkMediumMeatEaterSpending, setFoodDrinkMediumMeatEaterSpending]= useState("");
-    const[foodDrinkLightMeatEaterSpending, setFoodDrinkLightMeatEaterSpending]= useState("") ;
-    const[foodDrinkVegetarianSpending, setFoodDrinkVegetarianSpending]= useState("") ;
-    const[foodDrinkVeganSpending, setFoodDrinkVeganSpending]= useState("");
-    const[pharmaceuticalsSpending, setPharmaceuticalsSpending]= useState("");
-    const[clothesShoesSpending, setClothesShoesSpending]= useState("");
-    const[paperProductsSpending, setPaperProductsSpending]= useState("");
-    const[computersITEquipmentSpending, setComputersITEquipmentSpending]= useState("");
-    const[motorVehiclesExFuelSpending, setMotorVehiclesExFuelSpending]= useState("");
-    const[furnitureSpending, setFurnitureSpending]= useState("");
-    const[hotelsRestuarantsSpending, setHotelsRestuarantsSpending]= useState("");
-    const[cellPhonesSpending, setCellPhonesSpending]= useState("");
-    const[bankingFinanceSpending, setBankingFinanceSpending]= useState("");
-    const[insuranceSpending, setInsuranceSpending]= useState("");
-    const[educationSpending, setEducationSpending]= useState("");
-    const[recreationalAndCultureSpending, setRecreationalAndCultureSpending]= useState("");
-    const[countryIsoCode, setCountryIso]= useState("");
-    const access_token = "00c112e599ff4c85bad0cfdacd3bb795";
+    const[foodDrinkHeavyMeatEaterSpending, setFoodDrinkHeavyMeatEaterSpending]= useState(0);
+    const[foodDrinkMediumMeatEaterSpending, setFoodDrinkMediumMeatEaterSpending]= useState(0);
+    const[foodDrinkLightMeatEaterSpending, setFoodDrinkLightMeatEaterSpending]= useState(0) ;
+    const[foodDrinkVegetarianSpending, setFoodDrinkVegetarianSpending]= useState(0) ;
+    const[foodDrinkVeganSpending, setFoodDrinkVeganSpending]= useState(0);
+    const[pharmaceuticalsSpending, setPharmaceuticalsSpending]= useState(0);
+    const[clothesShoesSpending, setClothesShoesSpending]= useState(0);
+    const[paperProductsSpending, setPaperProductsSpending]= useState(0);
+    const[computersITEquipmentSpending, setComputersITEquipmentSpending]= useState(0);
+    const[motorVehiclesExFuelSpending, setMotorVehiclesExFuelSpending]= useState(0);
+    const[furnitureSpending, setFurnitureSpending]= useState(0);
+    const[hotelsRestuarantsSpending, setHotelsRestuarantsSpending]= useState(0);
+    const[cellPhonesSpending, setCellPhonesSpending]= useState(0);
+    const[bankingFinanceSpending, setBankingFinanceSpending]= useState(0);
+    const[insuranceSpending, setInsuranceSpending]= useState(0);
+    const[educationSpending, setEducationSpending]= useState(0);
+    const[recreationalAndCultureSpending, setRecreationalAndCultureSpending]= useState(0);
     const[countries, setCountries]=useState([]);
-    const[country, setCountry]=useState([]);
-    const[distanceUnits, setDistanceUnits]=useState([]);
+    const[country, setCountry]=useState();
+    const[emissionsValue, setEmissionsValue]=useState(0);
     
     const { totals, setTotals } = UseTotalContext();
 
@@ -42,8 +37,14 @@ function AddConsumptionEmissions() {
           'Ocp-Apim-Subscription-Key': "00c112e599ff4c85bad0cfdacd3bb795"
         }})
         .then(res => {
-          console.log(res.data)
-          setCountries(res.data.items)
+            const locations = res.data.items;
+            const sortedLocations = locations.sort(function(a, b){
+                if(a.isoCode === 'usa') { return -1; }
+                if(a.firstname > b.firstname) { return 1; }
+                return 0;
+            })
+            
+            setCountries(sortedLocations);
         })
         .catch(err => {
             console.log(err)
@@ -51,33 +52,38 @@ function AddConsumptionEmissions() {
       };
     
       useEffect(() => {
-        fetchCountries();
+        if(countries.length === 0)
+            fetchCountries();
       }, []);
 
       const handleClick=(e)=>{
+       const countryIsoCode = country || 'usa';
         const consumption = {foodDrinkHeavyMeatEaterSpending, foodDrinkMediumMeatEaterSpending, foodDrinkLightMeatEaterSpending,
             foodDrinkVegetarianSpending, foodDrinkVeganSpending, pharmaceuticalsSpending, clothesShoesSpending, 
             paperProductsSpending, computersITEquipmentSpending, motorVehiclesExFuelSpending, furnitureSpending, 
             hotelsRestuarantsSpending, cellPhonesSpending, bankingFinanceSpending, insuranceSpending, educationSpending, 
-            recreationalAndCultureSpending, countryIsoCode}
-        setTotals({...totals, consumption})
+            recreationalAndCultureSpending, countryIsoCode};
+        setTotals({...totals, consumption});
         axios
             .post('https://api.sustain.life/v1/personal-calculator/consumption',
-             {consumption},
+             consumption,
 
               { headers: {
               'Ocp-Apim-Subscription-Key': "00c112e599ff4c85bad0cfdacd3bb795",
               'content-type': 'application/json'
              }})
             .then(res => {
-                console.log(res.data.totalConsumptionEmissionsCO2e)
-                alert(`Your total consumption emissions are: ${res.data.totalConsumptionEmissionsCO2e}`)
+                setEmissionsValue(res.data.totalConsumptionEmissionsCO2e);
             })
             .catch(err => {
                 console.log(err)
             })
       };
 
+      const handleCountryChange = (e) => {
+        setCountry(e.target.value);
+    }
+  
     return (
         <> 
         <div class="container">
@@ -85,263 +91,318 @@ function AddConsumptionEmissions() {
             <h4>Add your consumption emissions below</h4>
             <h5>Spending for each category in USD</h5>
             <br></br>
-            <div class="row">
-              <div class="col-sm">
-              <InputGroup className="mb-3">
-                  <DropdownButton
-                  variant="outline-warning"
-                  title="Heavy Meat Diet"
-                  id="input-group-dropdown-1"
-              >
-                      <Form.Control autoFocus value={foodDrinkHeavyMeatEaterSpending} onChange={(e)=>setFoodDrinkHeavyMeatEaterSpending(e.target.value)} aria-label="Text input with dropdown button" defaultValue="1" />
-                  </DropdownButton>
-              </InputGroup>
-              </div>
-
-              <div class="col-sm">
-              <InputGroup className="mb-3">
-                  <DropdownButton
-                  variant="outline-warning"
-                  title="Medium Meat Diet"
-                  id="input-group-dropdown-1"
-              >
-                      <Form.Control onChange={(e)=>setFoodDrinkMediumMeatEaterSpending(e.target.value)} aria-label="Text input with dropdown button" defaultValue="1" />
-                  </DropdownButton>
-              </InputGroup>
-              </div>
-
-              <div class="col-sm">
-                <InputGroup className="mb-3  ">
-                    <DropdownButton
-                    variant="outline-warning"
-                    title="Light meat Diet"
-                    id="input-group-dropdown-1"
-                    //onSelect={(e)=>setCarId(e)}
-                >
-                        <Form.Control onChange={(e)=>setFoodDrinkLightMeatEaterSpending(e.target.value)} aria-label="Text input with dropdown button" defaultValue="1" />
-                    </DropdownButton>
-                </InputGroup>
-            </div>
-
-            <div class="col-sm">
-                <InputGroup className="mb-3  ">
-                    <DropdownButton
-                    variant="outline-warning"
-                    title="Vegetarian Diet"
-                    id="input-group-dropdown-1"
-                    //onSelect={(e)=>setCarId(e)}
-                >
-                        <Form.Control onChange={(e)=>setFoodDrinkVegetarianSpending(e.target.value)} aria-label="Text input with dropdown button" defaultValue="1" />
-                    </DropdownButton>
-                </InputGroup>
-            </div>
-            </div>
-
+            <table responsive="sm" className='text-white'>
+                <tr className='text-white'>
+                    <td>
+                        <span>Country of Residence</span>
+                    </td>
+                    <td >
+                        <select onChange={(e)=>handleCountryChange(e)} value={country}>
+                            {countries.map((country) => <option key={country.isoCode} value={country.isoCode}>{country.name}</option>)}
+                        </select>
+                    </td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>
+                        <span>Heavy Meat Diet</span>
+                    </td>
+                    <td>
+                    <input
+                        type="number"
+                        value={foodDrinkHeavyMeatEaterSpending}
+                        onChange={event => {
+                            setFoodDrinkHeavyMeatEaterSpending(+(event.target.value)); 
+                        }}
+                        />                    
+                    </td>
+                    <td>  </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span>Medium Meat Diet</span>
+                    </td>
+                    <td>
+                    <input
+                        type="number"
+                        value={foodDrinkMediumMeatEaterSpending}
+                        onChange={event => {
+                            setFoodDrinkMediumMeatEaterSpending(+(event.target.value)); 
+                        }}
+                        />                    
+                    </td>
+                    <td>
+                        <span>USD</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span>Light Meat Diet</span>
+                    </td>
+                    <td>
+                    <input
+                        type="number"
+                        value={foodDrinkLightMeatEaterSpending}
+                        onChange={event => {
+                            setFoodDrinkLightMeatEaterSpending(+(event.target.value)); 
+                        }}
+                        />                    
+                    </td>
+                    <td>
+                        <span>USD</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span>Vegetarian Diet</span>
+                    </td>
+                    <td>
+                    <input
+                        type="number"
+                        value={foodDrinkVegetarianSpending}
+                        onChange={event => {
+                            setFoodDrinkVegetarianSpending(+(event.target.value)); 
+                        }}
+                        />                    
+                    </td>
+                    <td>
+                        <span>USD</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span>Vegan Diet</span>
+                    </td>
+                    <td>
+                    <input
+                        type="number"
+                        value={foodDrinkVeganSpending}
+                        onChange={event => {
+                            setFoodDrinkVeganSpending(+(event.target.value)); 
+                        }}
+                        />                    
+                    </td>
+                    <td>
+                        <span>USD</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span>Pharmaceutical</span>
+                    </td>
+                    <td>
+                    <input
+                        type="number"
+                        value={pharmaceuticalsSpending}
+                        onChange={event => {
+                            setPharmaceuticalsSpending(+(event.target.value)); 
+                        }}
+                        />                    
+                    </td>
+                    <td>
+                        <span>USD</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span>Clothes & Shoes</span>
+                    </td>
+                    <td>
+                    <input
+                        type="number"
+                        value={clothesShoesSpending}
+                        onChange={event => {
+                            setClothesShoesSpending(+(event.target.value)); 
+                        }}
+                        />                    
+                    </td>
+                    <td>
+                        <span>USD</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span>Paper products</span>
+                    </td>
+                    <td>
+                    <input
+                        type="number"
+                        value={paperProductsSpending}
+                        onChange={event => {
+                            setPaperProductsSpending(+(event.target.value)); 
+                        }}
+                        />                    
+                    </td>
+                    <td>
+                        <span>USD</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span>Computers & IT</span>
+                    </td>
+                    <td>
+                    <input
+                        type="number"
+                        value={computersITEquipmentSpending}
+                        onChange={event => {
+                            setComputersITEquipmentSpending(+(event.target.value)); 
+                        }}
+                        />                    
+                    </td>
+                    <td>
+                        <span>USD</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span>Motor Vehicles, excluding Fuel</span>
+                    </td>
+                    <td>
+                    <input
+                        type="number"
+                        value={motorVehiclesExFuelSpending}
+                        onChange={event => {
+                            setMotorVehiclesExFuelSpending(+(event.target.value)); 
+                        }}
+                        />                    
+                    </td>
+                    <td>
+                        <span>USD</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span>Furniture</span>
+                    </td>
+                    <td>
+                    <input
+                        type="number"
+                        value={furnitureSpending}
+                        onChange={event => {
+                            setFurnitureSpending(+(event.target.value)); 
+                        }}
+                        />                    
+                    </td>
+                    <td>
+                        <span>USD</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span>Hotels & Restuarant</span>
+                    </td>
+                    <td>
+                    <input
+                        type="number"
+                        value={hotelsRestuarantsSpending}
+                        onChange={event => {
+                            setHotelsRestuarantsSpending(+(event.target.value)); 
+                        }}
+                        />                    
+                    </td>
+                    <td>
+                        <span>USD</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span>Cellphone</span>
+                    </td>
+                    <td>
+                    <input
+                        type="number"
+                        value={cellPhonesSpending}
+                        onChange={event => {
+                            setCellPhonesSpending(+(event.target.value)); 
+                        }}
+                        />                    
+                    </td>
+                    <td>
+                        <span>USD</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span>Banking & Finance</span>
+                    </td>
+                    <td>
+                    <input
+                        type="number"
+                        value={bankingFinanceSpending}
+                        onChange={event => {
+                            setBankingFinanceSpending(+(event.target.value)); 
+                        }}
+                        />                    
+                    </td>
+                    <td>
+                        <span>USD</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span>Insurance</span>
+                    </td>
+                    <td>
+                    <input
+                        type="number"
+                        value={insuranceSpending}
+                        onChange={event => {
+                            setInsuranceSpending(+(event.target.value)); 
+                        }}
+                        />                    
+                    </td>
+                    <td>
+                        <span>USD</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span>Education</span>
+                    </td>
+                    <td>
+                    <input
+                        type="number"
+                        value={educationSpending}
+                        onChange={event => {
+                            setEducationSpending(+(event.target.value)); 
+                        }}
+                        />                    
+                    </td>
+                    <td>
+                        <span>USD</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span>Recreation & Culture</span>
+                    </td>
+                    <td>
+                    <input
+                        type="number"
+                        value={recreationalAndCultureSpending}
+                        onChange={event => {
+                            setRecreationalAndCultureSpending(+(event.target.value)); 
+                        }}
+                        />                    
+                    </td>
+                    <td>
+                        <span>USD</span>
+                    </td>
+                </tr>
+            </table>                    
+        <div className='row'>
             <div className='row'>
-
-           
-            <div class="col-sm">
-            <InputGroup className="mb-3">
-                <DropdownButton
-                variant="outline-warning"
-                title="Vegan Diet"
-                id="input-group-dropdown-1"
-                //onSelect={(e)=>setClientId(e)}
-            >
-                    <Form.Control onChange={(e)=>setFoodDrinkVeganSpending(e.target.value)} aria-label="Text input with dropdown button" defaultValue="1" />
-                </DropdownButton>
-            </InputGroup>
+                <Button variant="warning" style={{width: '100px'}} type="submit" onClick={handleClick}>
+                    Submit
+                </Button>
             </div>
-
-            <div class="col-sm">
-            <InputGroup className="mb-3">
-                <DropdownButton
-                variant="outline-warning"
-                title="Pharmaceutical"
-                id="input-group-dropdown-1"
-                //onSelect={(e)=>setClientId(e)}
-            >
-                    <Form.Control onChange={(e)=>setPharmaceuticalsSpending(e.target.value)} aria-label="Text input with dropdown button" defaultValue="1" />
-                </DropdownButton>
-            </InputGroup>
-            </div>
-
-            <div class="col-sm">
-            <InputGroup className="mb-3">
-                <DropdownButton
-                variant="outline-warning"
-                title="Clothes & Shoes"
-                id="input-group-dropdown-1"
-                //onSelect={(e)=>setClientId(e)}
-            >
-                    <Form.Control onChange={(e)=>setClothesShoesSpending(e.target.value)} aria-label="Text input with dropdown button" defaultValue="1" />
-                </DropdownButton>
-            </InputGroup>
-            </div>
-
-            <div class="col-sm">
-            <InputGroup className="mb-3">
-                <DropdownButton
-                variant="outline-warning"
-                title="Paper products"
-                id="input-group-dropdown-1"
-                //onSelect={(e)=>setClientId(e)}
-            >
-                    <Form.Control onChange={(e)=>setPaperProductsSpending(e.target.value)} aria-label="Text input with dropdown button" defaultValue="1" />
-                </DropdownButton>
-            </InputGroup>
-            </div>
-            </div>
-
             <div className='row'>
-
-              <div class="col-sm">
-              <InputGroup className="mb-3">
-                  <DropdownButton
-                  variant="outline-warning"
-                  title="Computers & IT"
-                  id="input-group-dropdown-1"
-                  //onSelect={(e)=>setClientId(e)}
-              >
-                      <Form.Control onChange={(e)=>setComputersITEquipmentSpending(e.target.value)} aria-label="Text input with dropdown button" defaultValue="1" />
-                  </DropdownButton>
-              </InputGroup>
-              </div>
-
-              <div class="col-sm">
-              <InputGroup className="mb-3">
-                  <DropdownButton
-                  variant="outline-warning"
-                  title="Fuel"
-                  id="input-group-dropdown-1"
-                  //onSelect={(e)=>setClientId(e)}
-              >
-                      <Form.Control onChange={(e)=>setMotorVehiclesExFuelSpending(e.target.value)} aria-label="Text input with dropdown button" defaultValue="1" />
-                  </DropdownButton>
-              </InputGroup>
-              </div>
-
-              <div class="col-sm">
-              <InputGroup className="mb-3">
-                  <DropdownButton
-                  variant="outline-warning"
-                  title="Furniture"
-                  id="input-group-dropdown-1"
-                  //onSelect={(e)=>setClientId(e)}
-              >
-                      <Form.Control onChange={(e)=>setFurnitureSpending(e.target.value)} aria-label="Text input with dropdown button" defaultValue="1" />
-                  </DropdownButton>
-              </InputGroup>
-              </div>
-
-              <div class="col-sm">
-              <InputGroup className="mb-3">
-                  <DropdownButton
-                  variant="outline-warning"
-                  title="Hotels & Restuarant"
-                  id="input-group-dropdown-1"
-                  //onSelect={(e)=>setClientId(e)}
-              >
-                      <Form.Control onChange={(e)=>setHotelsRestuarantsSpending(e.target.value)} aria-label="Text input with dropdown button" defaultValue="1" />
-                  </DropdownButton>
-              </InputGroup>
-              </div>
+                {emissionsValue} MT C02e
             </div>
-
-            <div className='row'>
-              <div class="col-sm">
-                <InputGroup className="mb-3">
-                    <DropdownButton
-                    variant="outline-warning"
-                    title="Phone"
-                    id="input-group-dropdown-1"
-                    //onSelect={(e)=>setClientId(e)}
-                >
-                        <Form.Control onChange={(e)=>setCellPhonesSpending(e.target.value)} aria-label="Text input with dropdown button" defaultValue="1" />
-                    </DropdownButton>
-                </InputGroup>
-              </div>
-
-              <div class="col-sm">
-                <InputGroup className="mb-3">
-                    <DropdownButton
-                    variant="outline-warning"
-                    title="Banking & Finance"
-                    id="input-group-dropdown-1"
-                    //onSelect={(e)=>setClientId(e)}
-                >
-                        <Form.Control onChange={(e)=>setBankingFinanceSpending(e.target.value)} aria-label="Text input with dropdown button" defaultValue="1" />
-                    </DropdownButton>
-                </InputGroup>
-              </div>
-
-              <div class="col-sm">
-                <InputGroup className="mb-3">
-                    <DropdownButton
-                    variant="outline-warning"
-                    title="Insurance"
-                    id="input-group-dropdown-1"
-                    //onSelect={(e)=>setClientId(e)}
-                >
-                        <Form.Control onChange={(e)=>setInsuranceSpending(e.target.value)} aria-label="Text input with dropdown button" defaultValue="1" />
-                    </DropdownButton>
-                </InputGroup>
-              </div>
-
-              <div class="col-sm">
-                <InputGroup className="mb-3">
-                    <DropdownButton
-                    variant="outline-warning"
-                    title="Education"
-                    id="input-group-dropdown-1"
-                    //onSelect={(e)=>setClientId(e)}
-                >
-                        <Form.Control onChange={(e)=>setEducationSpending(e.target.value)} aria-label="Text input with dropdown button" defaultValue="1" />
-                    </DropdownButton>
-                </InputGroup>
-              </div>
-            </div>
-
-            <div className='row'>
-
-            <div class="col-sm">
-                <InputGroup className="mb-3">
-                    <DropdownButton
-                    variant="outline-warning"
-                    title="Recreation & Culture"
-                    id="input-group-dropdown-1"
-                    //onSelect={(e)=>setClientId(e)}
-                >
-                        <Form.Control onChange={(e)=>setRecreationalAndCultureSpending(e.target.value)} aria-label="Text input with dropdown button" defaultValue="1" />
-                    </DropdownButton>
-                </InputGroup>
-              </div>
-
-            <div  className="col-sm overflow-auto" style={{"height": "8.5rem", "position": "relative"}}>
-      <InputGroup className="mb-3 text-center">
-        <DropdownButton
-          variant="outline-warning"
-          title="Country of Residence"
-          id="input-group-dropdown-1"
-          onSelect={(e)=>setCountryIso(e)}
-        > 
-          {countries.map((country) => (
-                <Dropdown.Item  eventKey={`${country.isoCode}`}>{country.name}
-                </Dropdown.Item>
-              )
-            )}
-        </DropdownButton>
-      </InputGroup>
-       </div>
-
-            </div>
-            
-            <Button variant="warning" type="submit" onClick={handleClick}>
-                Submit
-            </Button>
-            
         </div>
-        </>
+    </div>
+    </>
   );
 
 }
