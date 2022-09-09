@@ -21,7 +21,7 @@ function AddHouseEmissions() {
   const[countries, setCountries]=useState([]);
   const[country, setCountry]=useState([]);
 
-  const { totals, setTotals} = UseTotalContext();
+  const { addCalculationComponent} = UseTotalContext();
 
   function fetchCountries() {
     axios
@@ -44,7 +44,7 @@ function AddHouseEmissions() {
 
   const handleClick=(e)=>{
     const householdWaste = {recyleMetal, recylePlastic, recyleGlass, recyleMagazines, numberOfPeople, countryIsoCode}
-    setTotals({...totals, householdWaste})
+    addCalculationComponent(householdWaste);
     axios
         .post('https://api.sustain.life/v1/personal-calculator/household',
          {householdWaste},

@@ -35,7 +35,7 @@ function AddUtilityEmissions() {
     const[propaneUnit, setPropaneUnit]=useState([]);
     const[woodenPellet, setWoodenPellet]=useState([]);
 
-    const { totals, setTotals } = UseTotalContext();
+    const { addCalculationComponent } = UseTotalContext();
 
     function fetchCountries() {
         axios
@@ -185,7 +185,7 @@ function AddUtilityEmissions() {
         const utilities = {utilityCompanyId, zipCode, electricalUsage, electricalUsageUnit, naturalGasUsage, 
             naturalGasUsageUnit, fuelOilUsage, fuelOilUsageUnit, propaneUsage, propaneUsageUnit, woodPelletUsage,
              woodPelletUsageUnit, countryIsoCode}
-        setTotals({...totals, utilities});
+        addCalculationComponent(utilities);
         axios
             .post('https://api.sustain.life/v1/personal-calculator/utilities',
             {utilityCompanyId, zipCode, electricalUsage, electricalUsageUnit, naturalGasUsage, 
