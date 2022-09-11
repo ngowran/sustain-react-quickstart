@@ -1,15 +1,78 @@
+
+import React, { useEffect, useState } from 'react';
 import Accordion from 'react-bootstrap/Accordion';
 import AddCarEmissions from './AddCarEmissions';
 import AddHouseEmissions from './AddHouseEmissions';
 import AddConsumptionEmissions from './AddConsumptionEmissions';
+import EmissionsSummary from './EmissionsSummary';
 import AddFlightEmissions from './AddFlightEmissions';
 import AddUtilityEmissions from './AddUtilityEmissions';
 import AddTotalEmissions from './AddTotalEmissions';
 import './Emissions.css';
+import axios from 'axios';
+import { UseTotalContext } from '../hocs/states';
+
 
 function EmissionsDropdown() {
+
+  const[countries, setCountries]=useState([]);
+  const[country, setCountry]=useState();
+  const { setCountryIsoCode } = UseTotalContext();
+  
+  const handleCountryChange = (e) => {
+    setCountry(e.target.value);
+  }
+  
+
+  function fetchCountries() {
+      axios
+      .get('https://api.sustain.life/v1/reference/countries',
+        { headers: {
+        'Ocp-Apim-Subscription-Key': "00c112e599ff4c85bad0cfdacd3bb795"
+      }})
+      .then(res => {
+          const locations = res.data.items;
+          const sortedLocations = locations.sort(function(a, b){
+              if(a.isoCode === 'usa') { return -1; }
+              if(a.firstname > b.firstname) { return 1; }
+              return 0;
+          })
+          
+          setCountries(sortedLocations);
+      })
+      .catch(err => {
+          console.log(err)
+      })  
+  };
+
+  useEffect(() => {
+      if(countries.length === 0)
+          fetchCountries();
+  }, []);
+
+  useEffect(() => {
+    if(country)
+      setCountryIsoCode(country);
+  }, [country]);
+
   return (
-    <div >
+    <>
+    <div>
+          <div className='row'>
+              <div className='col-md-5 p-0'>
+                  <span>Country of Residence</span>
+              </div>
+              <div className='col-md-7'>
+                  <select onChange={(e)=>handleCountryChange(e)} value={country}>
+                      {countries.map((country) => <option key={country.isoCode} value={country.isoCode}>{country.name}</option>)}
+                  </select>
+              </div>
+          </div>
+          <div className='row'>
+              <EmissionsSummary/>
+          </div>
+
+    <br></br>
     <Accordion>
       <Accordion.Item eventKey="0"  className='dropdown'>
         <Accordion.Header>Car Emissions</Accordion.Header>
@@ -55,6 +118,7 @@ function EmissionsDropdown() {
 
     </Accordion>
     </div>
+    </>
   );
 }
 

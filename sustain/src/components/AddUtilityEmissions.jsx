@@ -1,7 +1,3 @@
-import Dropdown from 'react-bootstrap/Dropdown';
-import DropdownButton from 'react-bootstrap/DropdownButton';
-import Form from 'react-bootstrap/Form';
-import InputGroup from 'react-bootstrap/InputGroup';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Emissions.css';
 import React, { useEffect, useState } from 'react';
@@ -10,52 +6,27 @@ import axios from 'axios';
 import { UseTotalContext } from '../hocs/states';
 
 function AddUtilityEmissions() {
-    // POST variables
-    const[total, setTotal]= useState("");
     const[utilityCompanyId, setUtilityCompanyId]= useState("");
     const[zipCode, setZipCode]= useState("") ;
-    const[electricalUsage, setElectricalUsage]= useState("") ;
+    const[electricalUsage, setElectricalUsage]= useState(0) ;
     const[electricalUsageUnit, setElectricalUsageUnit]= useState("");
-    const[naturalGasUsage, setNaturalGasUsage]= useState("");
+    const[naturalGasUsage, setNaturalGasUsage]= useState(0);
     const[naturalGasUsageUnit, setNaturalGasUsageUnit]= useState("");
-    const[fuelOilUsage, setFuelOilUsage]= useState("");
+    const[fuelOilUsage, setFuelOilUsage]= useState(0);
     const[fuelOilUsageUnit, setFuelOilUsageUnit]= useState("");
-    const[propaneUsage, setPropaneUsage]= useState("");
+    const[propaneUsage, setPropaneUsage]= useState(0);
     const[propaneUsageUnit, setPropaneUsageUnit]= useState("");
-    const[woodPelletUsage, setWoodPelletUsage]= useState("");
+    const[woodPelletUsage, setWoodPelletUsage]= useState(0);
     const[woodPelletUsageUnit, setWoodPelletUsageUnit]= useState("");
-    const[countryIsoCode, setCountryIso]= useState("");
-    const access_token = "00c112e599ff4c85bad0cfdacd3bb795";
-    const[countries, setCountries]=useState([]);
-    const[country, setCountry]=useState([]);
     const[company, setCompany]=useState([]);
     const[electricalUnit, setElectricalUnit]=useState([]);
     const[naturalUnit, setNaturalUnit]=useState([]);
     const[fuelOil, setFuelOil]=useState([]);
     const[propaneUnit, setPropaneUnit]=useState([]);
     const[woodenPellet, setWoodenPellet]=useState([]);
+    const[emissionsValue, setEmissionsValue]=useState(0);
+    const { addCalculationComponent, countryIsoCode } = UseTotalContext();
 
-    const { totals, setTotals } = UseTotalContext();
-
-    function fetchCountries() {
-        axios
-        .get('https://api.sustain.life/v1/reference/countries',
-          { headers: {
-          'Ocp-Apim-Subscription-Key': "00c112e599ff4c85bad0cfdacd3bb795"
-        }})
-        .then(res => {
-          console.log(res.data)
-          setCountries(res.data.items)
-        })
-        .catch(err => {
-            console.log(err)
-        })
-      };
-
-    useEffect(() => {
-        fetchCountries();
-      }, []);
-    
       function fetchCompany() {
         axios
         .get('https://api.sustain.life/v1/reference/utility-companies',
@@ -185,19 +156,18 @@ function AddUtilityEmissions() {
         const utilities = {utilityCompanyId, zipCode, electricalUsage, electricalUsageUnit, naturalGasUsage, 
             naturalGasUsageUnit, fuelOilUsage, fuelOilUsageUnit, propaneUsage, propaneUsageUnit, woodPelletUsage,
              woodPelletUsageUnit, countryIsoCode}
-        setTotals({...totals, utilities});
+        addCalculationComponent(utilities);
+        console.log(utilities)
         axios
             .post('https://api.sustain.life/v1/personal-calculator/utilities',
-            {utilityCompanyId, zipCode, electricalUsage, electricalUsageUnit, naturalGasUsage, 
-                naturalGasUsageUnit, fuelOilUsage, fuelOilUsageUnit, propaneUsage, propaneUsageUnit, woodPelletUsage,
-                 woodPelletUsageUnit, countryIsoCode},
+            utilities,
               { headers: {
               'Ocp-Apim-Subscription-Key': "00c112e599ff4c85bad0cfdacd3bb795",
               'content-type': 'application/json'
              }})
             .then(res => {
-                console.log(res.data.totalUtilityEmissionsCO2e)
-                alert(`Your total household emissions are: ${res.data.totalUtilityEmissionsCO2e}`)
+                setEmissionsValue(res.data.totalUtilityEmissionsCO2e)
+                console.log(emissionsValue)
             })
             .catch(err => {
                 console.log(err)
@@ -208,205 +178,142 @@ function AddUtilityEmissions() {
         <> 
         <div class="container">
             <br></br>
-            <h4>Add your utility emissions below</h4>
+            <h4 className='text-warning'>Add your utility emissions below</h4>
             <br></br>
-            <div class="row">
-                <div class="col-sm-4">
-                <InputGroup className="mb-3">
-                    <DropdownButton
-                    variant="outline-warning"
-                    title="Company Name"
-                    id="input-group-dropdown-1"
-                    onSelect={(e)=>setVars(e)}
-                >
-                        {company.map((company, index) => (
-                    <Dropdown.Item  eventKey={`${index}`}>{company.utilityName}
-                    </Dropdown.Item>
-                )
-                )}
-                    </DropdownButton>
-                </InputGroup>
-                </div>
+            <table className='m-auto'>
+              <tr className='row'>
+              <td className="col-md-4">
+                <p>Company name</p>
+              </td>
+                <td className="col-md-4">
+                  <select onChange={(e)=>setVars(e.target.value)}>
+                     <option value=""> Select an option</option>
+                      {company.map((company, index) => <option key={`${index}`} value={`${index}`}>{company.utilityName}</option>)}
+                  </select>
+                </td>
+              </tr>
 
-                <div class="col-sm-4">
-                <InputGroup className="mb-3">
-                    <DropdownButton
-                    variant="outline-warning"
-                    title="Electrical usage"
-                    id="input-group-dropdown-1"
-                >
-                        <Form.Control onChange={(e)=>setElectricalUsage(e.target.value)} aria-label="Text input with dropdown button" defaultValue="1" />
-                    </DropdownButton>
-                </InputGroup>
-                </div>
+              <tr className='row'>
+                <td className="col-md-4">
+                        <p>Electrical usage</p>
+                </td>
+                    <td className="col-md-4">
+                    <input
+                        className='w-100'
+                        type="number"
+                        value={electricalUsage}
+                        onChange={event => {
+                            setElectricalUsage(+(event.target.value)); 
+                        }}
+                        />                    
+                    </td>
+                    <td className="col-md-4">
+                        <select onChange={(e)=>setElectricalUsageUnit(e.target.value)}>
+                            <option value=""> Select an option</option>
+                            {electricalUnit.map((unit) => <option key={unit} value={unit}>{unit}</option>)}
+                        </select>
+                    </td>
+                </tr>
 
-                <div class="col-sm-4">
-                <InputGroup className="mb-3">
-                    <DropdownButton
-                    variant="outline-warning"
-                    title="Electrical usage unit"
-                    id="input-group-dropdown-1"
-                    onSelect={(e)=>setElectricalUsageUnit(e)}
-                >
-                       {electricalUnit.map((electricalUnit) => (
-                                <Dropdown.Item  eventKey={`${electricalUnit}`}>{electricalUnit}
-                                </Dropdown.Item>
-                                )
-                                )}
-                    </DropdownButton>
-                    
-                </InputGroup>
-                </div>
-                </div>
+                <tr className='row'>
+                <td className="col-md-4">
+                        <p>Natural gas usage</p>
+                </td>
+                    <td className="col-md-4">
+                    <input
+                        className='w-100'
+                        type="number"
+                        value={naturalGasUsage}
+                        onChange={event => {
+                          setNaturalGasUsage(+(event.target.value)); 
+                        }}
+                        />                    
+                    </td>
+                    <td className="col-md-4">
+                        <select onChange={(e)=>setNaturalGasUsageUnit(e.target.value)}>
+                            <option value=""> Select an option</option>
+                            {naturalUnit.map((unit) => <option key={unit} value={unit}>{unit}</option>)}
+                        </select>
+                    </td>
+                </tr>
 
-                <div className='row'>
-                <div class="col-sm-4">
-                <InputGroup className="mb-3">
-                    <DropdownButton
-                    variant="outline-warning"
-                    title="Natural gas usage"
-                    id="input-group-dropdown-1"
-                >
-                        <Form.Control onChange={(e)=>setNaturalGasUsage(e.target.value)} aria-label="Text input with dropdown button" defaultValue="1" />
-                    </DropdownButton>
-                </InputGroup>
-                </div>
+                <tr className='row'>
+                <td className="col-md-4">
+                        <p>Fuel oil usage</p>
+                </td>
+                    <td className="col-md-4">
+                    <input
+                        className='w-100'
+                        type="number"
+                        value={fuelOilUsage}
+                        onChange={event => {
+                          setFuelOilUsage(+(event.target.value)); 
+                        }}
+                        />                    
+                    </td>
+                    <td className="col-md-4">
+                        <select onChange={(e)=>setFuelOilUsageUnit(e.target.value)}>
+                            <option value=""> Select an option</option>
+                            {fuelOil.map((unit) => <option key={unit} value={unit}>{unit}</option>)}
+                        </select>
+                    </td>
+                </tr>
 
-                <div class="col-sm-4">
-                <InputGroup className="mb-3">
-                    <DropdownButton
-                    variant="outline-warning"
-                    title="Natural gas usage unit"
-                    id="input-group-dropdown-1"
-                    onSelect={(e)=>setNaturalGasUsageUnit(e)}
-                >
-                        {naturalUnit.map((naturalUnit) => (
-                                <Dropdown.Item  eventKey={`${naturalUnit}`}>{naturalUnit}
-                                </Dropdown.Item>
-                                )
-                                )}
-                    </DropdownButton>
-                </InputGroup>
-                </div>
+                <tr className='row'>
+                <td className="col-md-4">
+                        <p>Propane usage</p>
+                </td>
+                    <td className="col-md-4">
+                    <input
+                        className='w-100'
+                        type="number"
+                        value={propaneUsage}
+                        onChange={event => {
+                          setPropaneUsage(+(event.target.value)); 
+                        }}
+                        />                    
+                    </td>
+                    <td className="col-md-4">
+                        <select onChange={(e)=>setPropaneUsageUnit(e.target.value)}>
+                            <option value=""> Select an option</option>
+                            {propaneUnit.map((unit) => <option key={unit} value={unit}>{unit}</option>)}
+                        </select>
+                    </td>
+                </tr>
 
-                <div class="col-sm-4">
-                <InputGroup className="mb-3">
-                    <DropdownButton
-                    variant="outline-warning"
-                    title="Fuel oil usage"
-                    id="input-group-dropdown-1"
-                >
-                        <Form.Control onChange={(e)=>setFuelOilUsage(e.target.value)} aria-label="Text input with dropdown button" defaultValue="1" />
-                    </DropdownButton>
-                </InputGroup>
-                </div>
-                </div>
+                <tr className='row'>
+                <td className="col-md-4">
+                        <p>Wooden pellet usage</p>
+                </td>
+                    <td className="col-md-4">
+                    <input
+                        className='w-100'
+                        type="number"
+                        value={woodPelletUsage}
+                        onChange={event => {
+                          setWoodPelletUsage(+(event.target.value)); 
+                        }}
+                        />                    
+                    </td>
+                    <td className="col-md-4">
+                        <select onChange={(e)=>setWoodPelletUsageUnit(e.target.value)}>
+                            <option value=""> Select an option</option>
+                            {woodenPellet.map((unit) => <option key={unit} value={unit}>{unit}</option>)}
+                        </select>
+                    </td>
+                </tr>
 
-                <div className='row'>
-
-                <div class="col-sm-4">
-                <InputGroup className="mb-3">
-                    <DropdownButton
-                    variant="outline-warning"
-                    title="Fuel oil usage unit"
-                    id="input-group-dropdown-1"
-                    onSelect={(e)=>setFuelOilUsageUnit(e)}
-                >
-                        {fuelOil.map((fuelOil) => (
-                                <Dropdown.Item  eventKey={`${fuelOil}`}>{fuelOil}
-                                </Dropdown.Item>
-                                )
-                                )}
-                    </DropdownButton>
-                </InputGroup>
-                </div>
-
-                <div class="col-sm-4">
-                <InputGroup className="mb-3">
-                    <DropdownButton
-                    variant="outline-warning"
-                    title="Propane usage"
-                    id="input-group-dropdown-1"
-                >
-                        <Form.Control onChange={(e)=>setPropaneUsage(e.target.value)} aria-label="Text input with dropdown button" defaultValue="1" />
-                    </DropdownButton>
-                </InputGroup>
-                </div>
-
-                <div class="col-sm-4">
-                <InputGroup className="mb-3">
-                    <DropdownButton
-                    variant="outline-warning"
-                    title="Propane usage unit"
-                    id="input-group-dropdown-1"
-                    onSelect={(e)=>setPropaneUsageUnit(e)}
-                >
-                        {propaneUnit.map((propaneUnit) => (
-                                <Dropdown.Item  eventKey={`${propaneUnit}`}>{propaneUnit}
-                                </Dropdown.Item>
-                                )
-                                )}
-                    </DropdownButton>
-                </InputGroup>
-                </div>
-                </div>
-
-                <div className='row'>
-                <div class="col-sm-4">
-                <InputGroup className="mb-3">
-                    <DropdownButton
-                    variant="outline-warning"
-                    title="Wooden pellet usage"
-                    id="input-group-dropdown-1"
-                >
-                        <Form.Control onChange={(e)=>setWoodPelletUsage(e.target.value)} aria-label="Text input with dropdown button" defaultValue="1" />
-                    </DropdownButton>
-                </InputGroup>
-                </div>
-
-                
-                <div class="col-sm-4">
-                <InputGroup className="mb-3">
-                    <DropdownButton
-                    variant="outline-warning"
-                    title="Wooden Pellet usage unit"
-                    id="input-group-dropdown-1"
-                    onSelect={(e)=>setWoodPelletUsageUnit(e)}
-                >
-                        {woodenPellet.map((woodenPellet) => (
-                                <Dropdown.Item  eventKey={`${woodenPellet}`}>{woodenPellet}
-                                </Dropdown.Item>
-                                )
-                                )}
-                    </DropdownButton>
-                </InputGroup>
-                </div>
-
-                <div  className="col-sm-4 overflow-auto" style={{"height": "8.5rem", "position": "relative"}}>
-                    <InputGroup className="mb-3 text-center">
-                        <DropdownButton
-                        variant="outline-warning"
-                        title="Country of Residence"
-                        id="input-group-dropdown-1"
-                        onSelect={(e)=>setCountryIso(e)}
-                        > 
-                        {countries.map((country) => (
-                                <Dropdown.Item  eventKey={`${country.isoCode}`}>{country.name}
-                                </Dropdown.Item>
-                            )
-                            )}
-                        </DropdownButton>
-                    </InputGroup>
-                </div>
-           
-                </div>
-
-               
-
-            <Button variant="warning" type="submit" onClick={handleClick}>
-                Submit
-            </Button>
-            
+                <tr className='row'>
+                  <td className='col-md-3'>
+                    <Button variant="warning" style={{width: '100px'}} type="submit" onClick={handleClick}>
+                      Submit
+                    </Button>
+                  </td>
+                  <td className='col-md-9'>
+                    {emissionsValue} MT C02e
+                  </td>
+                </tr>
+            </table>
         </div>
         </>
   );
