@@ -29,11 +29,16 @@ Must be signed into the developer portal to access.
 
 #### Home screen
 
-![App Screenshot](https://i.imgur.com/S0wq2Ac.png)
+![App Screenshot](https://i.imgur.com/rl3cufo.png)
 
-#### Emission Field expanded
+#### Emission field expanded
 
-![App Screenshot](https://i.imgur.com/GTqAXJA.png)
+![App Screenshot](https://i.imgur.com/WRLvA2M.png)
+
+#### After emission is submitted
+
+![App Screenshot](https://i.imgur.com/zuJi2B3.png)
+
 
 ##  Errors & Fix
 

@@ -14,14 +14,13 @@ function AddTotalEmissions() {
   const[busDistanceUnit, setBusDistanceUnit]=useState("");
   const { addCalculationComponent, getAllCalculationComponen, countryIsoCode } = UseTotalContext();
 
-  function fetchDistanceUnits() {
+  function fetchDistanceUnits(){
     axios
     .get('https://api.sustain.life/v1/reference/distance-units',
       { headers: {
       'Ocp-Apim-Subscription-Key': "00c112e599ff4c85bad0cfdacd3bb795"
     }})
     .then(res => {
-      console.log(res.data)
       setDistanceUnits(res.data.items)
     })
     .catch(err => {
@@ -48,7 +47,6 @@ useEffect(() => {
           'content-type': 'application/json'
          }})
         .then(res => {
-            console.log(res.data.totalEmissionsCO2e)
             alert(`Your total emissions are: ${res.data.totalEmissionsCO2e}`)
         })
         .catch(err => {
@@ -74,7 +72,7 @@ useEffect(() => {
                 type="number"
                 value={railDistance}
                  onChange={event => {
-                 setRailDistance(+(event.target.value)); 
+                 setRailDistance((event.target.value)); 
                   }}
                 />                    
               </td>
@@ -96,7 +94,7 @@ useEffect(() => {
                 type="number"
                 value={busDistance}
                  onChange={event => {
-                 setBusDistance(+(event.target.value)); 
+                 setBusDistance((event.target.value)); 
                   }}
                 />                    
               </td>

@@ -59,10 +59,10 @@ function EmissionsDropdown() {
     <>
     <div>
           <div className='row'>
-              <div className='col-md-5 p-0'>
+              <div className='col-md-6 p-0'>
                   <span>Country of Residence</span>
               </div>
-              <div className='col-md-7'>
+              <div className='col-md-6'>
                   <select onChange={(e)=>handleCountryChange(e)} value={country}>
                       {countries.map((country) => <option key={country.isoCode} value={country.isoCode}>{country.name}</option>)}
                   </select>
