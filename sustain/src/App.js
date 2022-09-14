@@ -14,7 +14,7 @@ function App() {
         <br></br><br></br>
         <img src={sustainlogo} className="App-logo" alt="logo" />
         <br></br>
-        <h2>Your personal emissions calculator</h2>
+        <h2 className='text-warning'>Your personal emissions calculator</h2>
         <br></br>
         <div class="text-center" >
         <EmissionsDropdown />

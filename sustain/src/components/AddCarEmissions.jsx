@@ -62,12 +62,11 @@ function AddCarEmissions() {
         axios
             .post('https://api.sustain.life/v1/personal-calculator/car',
             car,
-            { headers: {
-                'Ocp-Apim-Subscription-Key': "00c112e599ff4c85bad0cfdacd3bb795",
-                'content-type': 'application/json'
-                }
-            }
-        )
+          { headers: {
+          'Ocp-Apim-Subscription-Key': "00c112e599ff4c85bad0cfdacd3bb795",
+          'content-type': 'application/json'
+         }})
+            
         .then(res => {
             setEmissionsValue(res.data.totalCarEmssionsCO2e);
             addcarTotal(res.data.totalCarEmssionsCO2e);
@@ -86,17 +85,18 @@ function AddCarEmissions() {
   
     return (
         <>  
-        <div class="container">
+        <div>
             <br></br>
-            <h4>Calculate your car trip emissions below</h4>
+            <h4 className='text-warning'>Calculate your car trip emissions below</h4>
             <br></br>
-            <table>
-                <tr>
-                    <td>
+            <table className='m-auto'>
+                <tr className='row'>
+                    <td className="col-md-4">
                         <span>Distance travelled</span>
                     </td>
-                    <td>
+                    <td className="col-md-4">
                     <input
+                        className='w-100'
                         type="number"
                         value={totalDistance}
                         onChange={event => {
@@ -104,34 +104,39 @@ function AddCarEmissions() {
                         }}
                         />                    
                     </td>
-                    <td>
+                    <td className="col-md-4">
                         <select onChange={(e)=>handleDistanceUnitChange(e)}>
+                            <option value=""> Select an option</option>
                             {distanceUnits.map((unit) => <option key={unit} value={unit}>{unit}</option>)}
                         </select>
                     </td>
                 </tr>
-                <tr>
-                    <td>
+                <br></br>
+                <tr className='row'>
+                    <td className="col-md-4">
                         <span>Make & Model</span>
                     </td>
-                    <td>
+                    <td className="col-md-8">
                         <select onChange={(e)=>handleCarModelChange(e)} >
+                            <option value=""> Select an option</option>
                             {carModels.map((car) => <option key={car.id} value={car.id}>{car.year} {car.make} {car.model}</option>)}
                         </select>                 
                     </td>
-                    <td> </td>
                 </tr>
-            </table>                
-            <div className='row'>
-                <div className='row'>
+            
+            <br></br>               
+            <tr className='row'>
+                <td className='col-md-3'>
                     <Button variant="warning" style={{width: '100px'}} type="submit" onClick={handleClick}>
                         Submit
                     </Button>
-                </div>
-                <div className='row'>
+                </td>
+                <td className='col-md-9'>
                     {emissionsValue} MT C02e
-                </div>
-            </div>
+                </td>
+            </tr>
+            </table> 
+            <br></br>
         </div>
         </>
   );

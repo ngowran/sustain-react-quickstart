@@ -56,25 +56,23 @@ function EmissionsDropdown() {
   }, [country]);
 
   return (
-    <div >
-
-        <table>
-          <tr>
-              <td>
+    <>
+    <div>
+          <div className='row'>
+              <div className='col-md-6 p-0'>
                   <span>Country of Residence</span>
-              </td>
-              <td>
+              </div>
+              <div className='col-md-6'>
                   <select onChange={(e)=>handleCountryChange(e)} value={country}>
                       {countries.map((country) => <option key={country.isoCode} value={country.isoCode}>{country.name}</option>)}
                   </select>
-              </td>
-          </tr>
-          <tr>
-              <td colSpan="2">
-                  <EmissionsSummary/>
-              </td>
-          </tr>
-        </table>
+              </div>
+          </div>
+          <div className='row'>
+              <EmissionsSummary/>
+          </div>
+
+    <br></br>
     <Accordion>
       <Accordion.Item eventKey="0"  className='dropdown'>
         <Accordion.Header>Car Emissions</Accordion.Header>
@@ -120,6 +118,7 @@ function EmissionsDropdown() {
 
     </Accordion>
     </div>
+    </>
   );
 }
 

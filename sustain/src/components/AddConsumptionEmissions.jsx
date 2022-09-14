@@ -1,4 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Table from 'react-bootstrap/Table';
 import './Emissions.css';
 import React, { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
@@ -50,21 +51,22 @@ function AddConsumptionEmissions() {
         })
     };
 
+    
   
     return (
         <> 
-        <div class="container">
+        <div>
             <br></br>
-            <h4>Add your consumption emissions below</h4>
-            <h5>Spending for each category in USD</h5>
+            <h4 className="text-warning">Calculate your consumption emissions below</h4>
             <br></br>
-            <table>            
-                <tr>
-                    <td>
-                        <span>Heavy Meat Diet</span>
+            <table className='m-auto'>          
+                <tr className='row'>
+                    <td className='col-md-8'>
+                        <p>Heavy Meat Diet</p>
                     </td>
-                    <td>
+                    <td className='col-md-2'>
                     <input
+                        className='w-100'
                         type="number"
                         value={foodDrinkHeavyMeatEaterSpending}
                         onChange={event => {
@@ -72,14 +74,17 @@ function AddConsumptionEmissions() {
                         }}
                         />                    
                     </td>
-                    <td>  </td>
-                </tr>
-                <tr>
-                    <td>
-                        <span>Medium Meat Diet</span>
+                    <td className='col-md-2'>  
+                        <span>USD</span>
                     </td>
-                    <td>
+                </tr>
+                <tr className='row'>
+                    <td className='col-md-8'>
+                        <p>Medium Meat Diet</p>
+                    </td>
+                    <td className='col-md-2'>
                     <input
+                        className='w-100'
                         type="number"
                         value={foodDrinkMediumMeatEaterSpending}
                         onChange={event => {
@@ -87,16 +92,17 @@ function AddConsumptionEmissions() {
                         }}
                         />                    
                     </td>
-                    <td>
+                    <td className='col-md-2'>
                         <span>USD</span>
                     </td>
                 </tr>
-                <tr>
-                    <td>
-                        <span>Light Meat Diet</span>
+                <tr className='row'>
+                    <td className='col-md-8'>
+                        <p>Light Meat Diet</p>
                     </td>
-                    <td>
+                    <td className='col-md-2'>
                     <input
+                        className='w-100'
                         type="number"
                         value={foodDrinkLightMeatEaterSpending}
                         onChange={event => {
@@ -104,16 +110,17 @@ function AddConsumptionEmissions() {
                         }}
                         />                    
                     </td>
-                    <td>
+                    <td className='col-md-2'>
                         <span>USD</span>
                     </td>
                 </tr>
-                <tr>
-                    <td>
-                        <span>Vegetarian Diet</span>
+                <tr className='row'>
+                    <td className='col-md-8'>
+                        <p>Vegetarian Diet</p>
                     </td>
-                    <td>
+                    <td className='col-md-2'>
                     <input
+                        className='w-100'
                         type="number"
                         value={foodDrinkVegetarianSpending}
                         onChange={event => {
@@ -121,16 +128,17 @@ function AddConsumptionEmissions() {
                         }}
                         />                    
                     </td>
-                    <td>
+                    <td className='col-md-2'>
                         <span>USD</span>
                     </td>
                 </tr>
-                <tr>
-                    <td>
-                        <span>Vegan Diet</span>
+                <tr className='row'>
+                    <td className='col-md-8'>
+                        <p>Vegan Diet</p>
                     </td>
-                    <td>
+                    <td className='col-md-2'>
                     <input
+                        className='w-100'
                         type="number"
                         value={foodDrinkVeganSpending}
                         onChange={event => {
@@ -138,16 +146,17 @@ function AddConsumptionEmissions() {
                         }}
                         />                    
                     </td>
-                    <td>
+                    <td className='col-md-2'>
                         <span>USD</span>
                     </td>
                 </tr>
-                <tr>
-                    <td>
-                        <span>Pharmaceutical</span>
+                <tr className='row'>
+                    <td className='col-md-8'>
+                        <p>Pharmaceutical</p>
                     </td>
-                    <td>
+                    <td className='col-md-2'>
                     <input
+                        className='w-100'
                         type="number"
                         value={pharmaceuticalsSpending}
                         onChange={event => {
@@ -155,16 +164,17 @@ function AddConsumptionEmissions() {
                         }}
                         />                    
                     </td>
-                    <td>
+                    <td className='col-md-2'>
                         <span>USD</span>
                     </td>
                 </tr>
-                <tr>
-                    <td>
-                        <span>Clothes & Shoes</span>
+                <tr className='row'>
+                    <td className='col-md-8'>
+                        <p>Clothes & Shoes</p>
                     </td>
-                    <td>
+                    <td className='col-md-2'>
                     <input
+                        className='w-100'
                         type="number"
                         value={clothesShoesSpending}
                         onChange={event => {
@@ -172,16 +182,17 @@ function AddConsumptionEmissions() {
                         }}
                         />                    
                     </td>
-                    <td>
+                    <td className='col-md-2'>
                         <span>USD</span>
                     </td>
                 </tr>
-                <tr>
-                    <td>
-                        <span>Paper products</span>
+                <tr className='row'>
+                    <td className='col-md-8'>
+                        <p>Paper products</p>
                     </td>
-                    <td>
+                    <td className='col-md-2'>
                     <input
+                        className='w-100'
                         type="number"
                         value={paperProductsSpending}
                         onChange={event => {
@@ -189,16 +200,17 @@ function AddConsumptionEmissions() {
                         }}
                         />                    
                     </td>
-                    <td>
-                        <span>USD</span>
+                    <td className='col-md-2'>
+                        <p>USD</p>
                     </td>
                 </tr>
-                <tr>
-                    <td>
-                        <span>Computers & IT</span>
+                <tr className='row'>
+                    <td className='col-md-8'>
+                        <p>Computers & IT</p>
                     </td>
-                    <td>
+                    <td className='col-md-2'>
                     <input
+                        className='w-100'
                         type="number"
                         value={computersITEquipmentSpending}
                         onChange={event => {
@@ -206,16 +218,17 @@ function AddConsumptionEmissions() {
                         }}
                         />                    
                     </td>
-                    <td>
+                    <td className='col-md-2'>
                         <span>USD</span>
                     </td>
                 </tr>
-                <tr>
-                    <td>
-                        <span>Motor Vehicles, excluding Fuel</span>
+                <tr className='row'>
+                    <td className='col-md-8'>
+                        <p>Motor Vehicles, excluding Fuel</p>
                     </td>
-                    <td>
+                    <td className='col-md-2'>
                     <input
+                        className='w-100'
                         type="number"
                         value={motorVehiclesExFuelSpending}
                         onChange={event => {
@@ -223,16 +236,17 @@ function AddConsumptionEmissions() {
                         }}
                         />                    
                     </td>
-                    <td>
+                    <td className='col-md-2'>
                         <span>USD</span>
                     </td>
                 </tr>
-                <tr>
-                    <td>
-                        <span>Furniture</span>
+                <tr className='row'>
+                    <td className='col-md-8'>
+                        <p>Furniture</p>
                     </td>
-                    <td>
+                    <td className='col-md-2'>
                     <input
+                        className='w-100'
                         type="number"
                         value={furnitureSpending}
                         onChange={event => {
@@ -240,16 +254,17 @@ function AddConsumptionEmissions() {
                         }}
                         />                    
                     </td>
-                    <td>
+                    <td className='col-md-2'>
                         <span>USD</span>
                     </td>
                 </tr>
-                <tr>
-                    <td>
-                        <span>Hotels & Restuarant</span>
+                <tr className='row'>
+                    <td className='col-md-8'>
+                        <p>Hotels & Restuarant</p>
                     </td>
-                    <td>
+                    <td className='col-md-2'>
                     <input
+                        className='w-100'
                         type="number"
                         value={hotelsRestuarantsSpending}
                         onChange={event => {
@@ -257,16 +272,17 @@ function AddConsumptionEmissions() {
                         }}
                         />                    
                     </td>
-                    <td>
+                    <td className='col-md-2'>
                         <span>USD</span>
                     </td>
                 </tr>
-                <tr>
-                    <td>
-                        <span>Cellphone</span>
+                <tr className='row'>
+                    <td className='col-md-8'>
+                        <p>Cellphone</p>
                     </td>
-                    <td>
+                    <td className='col-md-2'>
                     <input
+                        className='w-100'
                         type="number"
                         value={cellPhonesSpending}
                         onChange={event => {
@@ -274,16 +290,17 @@ function AddConsumptionEmissions() {
                         }}
                         />                    
                     </td>
-                    <td>
+                    <td className='col-md-2'>
                         <span>USD</span>
                     </td>
                 </tr>
-                <tr>
-                    <td>
-                        <span>Banking & Finance</span>
+                <tr className='row'>
+                    <td className='col-md-8'>
+                        <p>Banking & Finance</p>
                     </td>
-                    <td>
+                    <td className='col-md-2'>
                     <input
+                        className='w-100'
                         type="number"
                         value={bankingFinanceSpending}
                         onChange={event => {
@@ -291,16 +308,17 @@ function AddConsumptionEmissions() {
                         }}
                         />                    
                     </td>
-                    <td>
+                    <td className='col-md-2'>
                         <span>USD</span>
                     </td>
                 </tr>
-                <tr>
-                    <td>
-                        <span>Insurance</span>
+                <tr className='row'>
+                    <td className='col-md-8'>
+                        <p>Insurance</p>
                     </td>
-                    <td>
+                    <td className='col-md-2'>
                     <input
+                        className='w-100'
                         type="number"
                         value={insuranceSpending}
                         onChange={event => {
@@ -308,16 +326,17 @@ function AddConsumptionEmissions() {
                         }}
                         />                    
                     </td>
-                    <td>
+                    <td className='col-md-2'>
                         <span>USD</span>
                     </td>
                 </tr>
-                <tr>
-                    <td>
-                        <span>Education</span>
+                <tr className='row'>
+                    <td className='col-md-8'>
+                        <p>Education</p>
                     </td>
-                    <td>
+                    <td className='col-md-2'>
                     <input
+                        className='w-100'
                         type="number"
                         value={educationSpending}
                         onChange={event => {
@@ -325,16 +344,17 @@ function AddConsumptionEmissions() {
                         }}
                         />                    
                     </td>
-                    <td>
+                    <td className='col-md-2'>
                         <span>USD</span>
                     </td>
                 </tr>
-                <tr>
-                    <td>
-                        <span>Recreation & Culture</span>
+                <tr className='row'>
+                    <td className='col-md-8'>
+                        <p>Recreation & Culture</p>
                     </td>
-                    <td>
+                    <td className='col-md-2'>
                     <input
+                        className='w-100'
                         type="number"
                         value={recreationalAndCultureSpending}
                         onChange={event => {
@@ -342,21 +362,23 @@ function AddConsumptionEmissions() {
                         }}
                         />                    
                     </td>
-                    <td>
+                    <td className='col-md-2'>
                         <span>USD</span>
                     </td>
                 </tr>
+
+                <br></br>
+                <tr className='row'>
+                    <td className='col-md-3'>
+                        <Button variant="warning" style={{width: '100px'}} type="submit" onClick={handleClick}>
+                            Submit
+                        </Button>
+                    </td>
+                    <td className='col-md-9'>
+                        {emissionsValue} MT C02e
+                    </td>
+                </tr>
             </table>                    
-        <div className='row'>
-            <div className='row'>
-                <Button variant="warning" style={{width: '100px'}} type="submit" onClick={handleClick}>
-                    Submit
-                </Button>
-            </div>
-            <div className='row'>
-                {emissionsValue} MT C02e
-            </div>
-        </div>
     </div>
     </>
   );

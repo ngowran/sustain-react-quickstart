@@ -9,41 +9,41 @@ function EmissionsSummary() {
   
     return (
         <> 
-        <div class="container">
+        <div class="container text-center">
             <br></br>
-            <h4>Add your consumption emissions below</h4>
-            <h5>Spending for each category in USD</h5>
+            <h4 className='text-warning'>Summeray of total emissions</h4>
             <br></br>
-            <table width="600">            
-                <tr>
-                    <td>
+            
+            <table className='text-center m-auto'>            
+                <tr >
+                    <td colSpan="24">
                         <span>Your total</span>
                     </td>
-                    <td> MT C02e  </td>
+                    <td colSpan="24"> MT C02e  </td>
                 </tr>
-                <tr>
-                    <td colSpan="3">
+                <tr >
+                    <td colSpan="48">
                         <hr/>
                     </td>
                 </tr>
                 <tr>
-                    <td>
+                    <td colSpan="24">
                         <span>Car</span>
                     </td>
-                    <td>
+                    <td colSpan="24">
                         <span>{carTotal}</span>
                     </td>
                 </tr>
                 <tr>
-                    <td colSpan="3">
+                    <td colSpan="48">
                         <hr/>
                     </td>
                 </tr>
                 <tr>
-                    <td>
+                    <td colSpan="24">
                         <span>Total</span>
                     </td>
-                    <td>
+                    <td colSpan="24">
                         <span>{total}</span>
                     </td>
                 </tr>
