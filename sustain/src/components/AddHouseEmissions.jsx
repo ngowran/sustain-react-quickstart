@@ -18,7 +18,6 @@ function AddHouseEmissions() {
   const handleClick=(e)=>{
     const householdWaste = {recyleMetal, recylePlastic, recyleGlass, recyleMagazines, numberOfPeople, countryIsoCode}
     addCalculationComponent(householdWaste);
-    console.log(householdWaste)
     axios
         .post('https://api.sustain.life/v1/personal-calculator/household',
          householdWaste,
@@ -112,7 +111,7 @@ function AddHouseEmissions() {
           <tr className='row'>
             <td className='col-md-3'>
               <Button variant="warning" style={{width: '100px'}} type="submit" onClick={handleClick}>
-                Submit
+              Add
               </Button>
             </td>
             <td className='col-md-9'>

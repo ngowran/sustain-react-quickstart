@@ -5,7 +5,7 @@ import { UseTotalContext } from '../hocs/states';
 
 function EmissionsSummary() {
  
-    const { total, carTotal, householdTotal, consumptionTotal, flightTotal } = UseTotalContext();
+    const { total, carTotal, householdTotal, consumptionTotal, flightTotal, utilityTotal } = UseTotalContext();
   
     return (
         <> 
@@ -56,6 +56,14 @@ function EmissionsSummary() {
                     </td>
                     <td colSpan="24">
                         <span>{flightTotal.toFixed(2)}</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td colSpan="24">
+                        <span>Utility</span>
+                    </td>
+                    <td colSpan="24">
+                        <span>{utilityTotal.toFixed(2)}</span>
                     </td>
                 </tr>
                 <tr>

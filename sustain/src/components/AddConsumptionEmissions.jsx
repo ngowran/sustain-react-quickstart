@@ -372,7 +372,7 @@ function AddConsumptionEmissions() {
                 <tr className='row'>
                     <td className='col-md-3'>
                         <Button variant="warning" style={{width: '100px'}} type="submit" onClick={handleClick}>
-                            Submit
+                            Add
                         </Button>
                     </td>
                     <td className='col-md-9'>

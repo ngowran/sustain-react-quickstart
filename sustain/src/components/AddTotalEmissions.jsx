@@ -38,7 +38,6 @@ useEffect(() => {
     addCalculationComponent(bus);
     addCalculationComponent(rail);
     const allComponents = getAllCalculationComponen();
-    console.log(allComponents)
     axios
         .post('https://api.sustain.life/v1/personal-calculator/total',
          {allComponents},
@@ -109,11 +108,11 @@ useEffect(() => {
           <tr className='row'>
             <td className='col-md-3'>
               <Button variant="warning" style={{width: '100px'}} type="submit" onClick={handleClick}>
-                Submit
+              Add
               </Button>
             </td>
             <td className='col-md-9'>
-              {total} MT C02e
+              {total.toFixed(2)} MT C02e
             </td>
           </tr>
 

@@ -57,7 +57,6 @@ function AddFlightEmissions() {
     const clientId = 1;
     const flight = {clientId, sourceAirportCode, destinationAirportCode, passengerCount, isRoundTrip, cabinType}
     addCalculationComponent(flight);
-    console.log(flight)
     axios
         .post('https://api.sustain.life/v1/personal-calculator/flight',
          flight,
