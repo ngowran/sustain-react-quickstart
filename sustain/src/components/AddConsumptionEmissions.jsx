@@ -26,7 +26,7 @@ function AddConsumptionEmissions() {
     const[recreationalAndCultureSpending, setRecreationalAndCultureSpending]= useState(0);
     const[emissionsValue, setEmissionsValue]=useState(0);
     
-    const { addCalculationComponent, countryIsoCode } = UseTotalContext();
+    const { addCalculationComponent, countryIsoCode, addConsumptionTotal } = UseTotalContext();
 
     const handleClick=(e)=>{
         const consumption = {foodDrinkHeavyMeatEaterSpending, foodDrinkMediumMeatEaterSpending, foodDrinkLightMeatEaterSpending,
@@ -45,6 +45,7 @@ function AddConsumptionEmissions() {
              }})
             .then(res => {
                 setEmissionsValue(res.data.totalConsumptionEmissionsCO2e);
+                addConsumptionTotal(res.data.totalConsumptionEmissionsCO2e);
             })
             .catch(err => {
                 console.log(err)
@@ -57,12 +58,12 @@ function AddConsumptionEmissions() {
         <> 
         <div>
             <br></br>
-            <h4 className="text-warning">Calculate your consumption emissions below</h4>
+            <h4 className="text-warning">Calculate your consumption emissions below. You can add how much you spend on each of the following categories.</h4>
             <br></br>
             <table className='m-auto'>          
                 <tr className='row'>
                     <td className='col-md-8'>
-                        <p>Heavy Meat Diet</p>
+                        <p>Amount spent on heavy meat diet?</p>
                     </td>
                     <td className='col-md-2'>
                     <input
@@ -80,7 +81,7 @@ function AddConsumptionEmissions() {
                 </tr>
                 <tr className='row'>
                     <td className='col-md-8'>
-                        <p>Medium Meat Diet</p>
+                        <p>Amount spent on medium meat diet?</p>
                     </td>
                     <td className='col-md-2'>
                     <input
@@ -98,7 +99,7 @@ function AddConsumptionEmissions() {
                 </tr>
                 <tr className='row'>
                     <td className='col-md-8'>
-                        <p>Light Meat Diet</p>
+                        <p>Amount spent on light meat diet?</p>
                     </td>
                     <td className='col-md-2'>
                     <input
@@ -116,7 +117,7 @@ function AddConsumptionEmissions() {
                 </tr>
                 <tr className='row'>
                     <td className='col-md-8'>
-                        <p>Vegetarian Diet</p>
+                        <p>Amount spent on vegetarian diet?</p>
                     </td>
                     <td className='col-md-2'>
                     <input
@@ -134,7 +135,7 @@ function AddConsumptionEmissions() {
                 </tr>
                 <tr className='row'>
                     <td className='col-md-8'>
-                        <p>Vegan Diet</p>
+                        <p>Amount spent on vegan diet?</p>
                     </td>
                     <td className='col-md-2'>
                     <input
@@ -152,7 +153,7 @@ function AddConsumptionEmissions() {
                 </tr>
                 <tr className='row'>
                     <td className='col-md-8'>
-                        <p>Pharmaceutical</p>
+                        <p>Amount spent on pharmaceuticals?</p>
                     </td>
                     <td className='col-md-2'>
                     <input
@@ -170,7 +171,7 @@ function AddConsumptionEmissions() {
                 </tr>
                 <tr className='row'>
                     <td className='col-md-8'>
-                        <p>Clothes & Shoes</p>
+                        <p>Amount spent on clothes & shoes?</p>
                     </td>
                     <td className='col-md-2'>
                     <input
@@ -188,7 +189,7 @@ function AddConsumptionEmissions() {
                 </tr>
                 <tr className='row'>
                     <td className='col-md-8'>
-                        <p>Paper products</p>
+                        <p>Amount spent on paper products?</p>
                     </td>
                     <td className='col-md-2'>
                     <input
@@ -206,7 +207,7 @@ function AddConsumptionEmissions() {
                 </tr>
                 <tr className='row'>
                     <td className='col-md-8'>
-                        <p>Computers & IT</p>
+                        <p>Amount spent on computers & IT?</p>
                     </td>
                     <td className='col-md-2'>
                     <input
@@ -224,7 +225,7 @@ function AddConsumptionEmissions() {
                 </tr>
                 <tr className='row'>
                     <td className='col-md-8'>
-                        <p>Motor Vehicles, excluding Fuel</p>
+                        <p>Amount spent on motor vehicles, excluding fuel?</p>
                     </td>
                     <td className='col-md-2'>
                     <input
@@ -242,7 +243,7 @@ function AddConsumptionEmissions() {
                 </tr>
                 <tr className='row'>
                     <td className='col-md-8'>
-                        <p>Furniture</p>
+                        <p>Amount spent on furniture?</p>
                     </td>
                     <td className='col-md-2'>
                     <input
@@ -260,7 +261,7 @@ function AddConsumptionEmissions() {
                 </tr>
                 <tr className='row'>
                     <td className='col-md-8'>
-                        <p>Hotels & Restuarant</p>
+                        <p>Amount spent on hotels & restuarants?</p>
                     </td>
                     <td className='col-md-2'>
                     <input
@@ -278,7 +279,7 @@ function AddConsumptionEmissions() {
                 </tr>
                 <tr className='row'>
                     <td className='col-md-8'>
-                        <p>Cellphone</p>
+                        <p>Amount spent on cellphones or mobile phones?</p>
                     </td>
                     <td className='col-md-2'>
                     <input
@@ -296,7 +297,7 @@ function AddConsumptionEmissions() {
                 </tr>
                 <tr className='row'>
                     <td className='col-md-8'>
-                        <p>Banking & Finance</p>
+                        <p>Amount spent on banking & finance?</p>
                     </td>
                     <td className='col-md-2'>
                     <input
@@ -314,7 +315,7 @@ function AddConsumptionEmissions() {
                 </tr>
                 <tr className='row'>
                     <td className='col-md-8'>
-                        <p>Insurance</p>
+                        <p>Amount spent on insurance?</p>
                     </td>
                     <td className='col-md-2'>
                     <input
@@ -332,7 +333,7 @@ function AddConsumptionEmissions() {
                 </tr>
                 <tr className='row'>
                     <td className='col-md-8'>
-                        <p>Education</p>
+                        <p>Amount spent on education?</p>
                     </td>
                     <td className='col-md-2'>
                     <input
@@ -350,7 +351,7 @@ function AddConsumptionEmissions() {
                 </tr>
                 <tr className='row'>
                     <td className='col-md-8'>
-                        <p>Recreation & Culture</p>
+                        <p>Amount spent on recreation & culture?</p>
                     </td>
                     <td className='col-md-2'>
                     <input
@@ -375,7 +376,7 @@ function AddConsumptionEmissions() {
                         </Button>
                     </td>
                     <td className='col-md-9'>
-                        {emissionsValue} MT C02e
+                        {emissionsValue.toFixed(2)} MT C02e
                     </td>
                 </tr>
             </table>                    
