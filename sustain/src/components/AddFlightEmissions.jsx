@@ -6,17 +6,16 @@ import axios from 'axios';
 import { UseTotalContext } from '../hocs/states';
 
 function AddFlightEmissions() {
-  const[clientId, setClientId]= useState("");
-  const[sourceAirportCode, setSourceAirportCode]= useState("") ;
-  const[destinationAirportCode, setDestinationAirportCode]= useState("") ;
-  const[passengerCount, setPassengerCount]= useState("");
-  const[isRoundTrip, setIsRoundTrip]= useState("");
-  const[cabinType, setCabinType]= useState("");
+   const[sourceAirportCode, setSourceAirportCode]= useState('') ;
+  const[destinationAirportCode, setDestinationAirportCode]= useState('') ;
+  const[passengerCount, setPassengerCount]= useState('');
+  const[isRoundTrip, setIsRoundTrip]= useState(true);
+  const[cabinType, setCabinType]= useState('');
   const[airports, setAirports]=useState([]);
   const[seats, setSeats]=useState([]);
   const[emissionsValue, setEmissionsValue]=useState(0);
 
-  const { addCalculationComponent } = UseTotalContext();
+  const { addCalculationComponent, addFlightTotal } = UseTotalContext();
 
   function fetchAirport() {
     axios
@@ -24,8 +23,7 @@ function AddFlightEmissions() {
       { headers: {
       'Ocp-Apim-Subscription-Key': "00c112e599ff4c85bad0cfdacd3bb795"
     }})
-    .then(res => {
-      console.log(res.data.items)
+    .then(res => { 
       setAirports(res.data.items)
     })
     .catch(err => {
@@ -43,8 +41,7 @@ function AddFlightEmissions() {
       { headers: {
       'Ocp-Apim-Subscription-Key': "00c112e599ff4c85bad0cfdacd3bb795"
     }})
-    .then(res => {
-      console.log(res.data)
+    .then(res => { 
       setSeats(res.data.items)
     })
     .catch(err => {
@@ -57,6 +54,7 @@ function AddFlightEmissions() {
   }, []);
 
   const handleClick=(e)=>{
+    const clientId = 1;
     const flight = {clientId, sourceAirportCode, destinationAirportCode, passengerCount, isRoundTrip, cabinType}
     addCalculationComponent(flight);
     console.log(flight)
@@ -68,8 +66,8 @@ function AddFlightEmissions() {
           'content-type': 'application/json'
          }})
         .then(res => {
-            setEmissionsValue(res.data.totalFlightEmissionsCO2e)
-            alert(`Your total household emissions are: ${res.data.totalFlightEmissionsCO2e}`)
+            setEmissionsValue(res.data.totalFlightEmissionsCO2e);
+            addFlightTotal(res.data.totalFlightEmissionsCO2e);
         })
         .catch(err => {
             console.log(err)
@@ -80,51 +78,36 @@ function AddFlightEmissions() {
     <>
     <div>
       <br></br>
-      <h4 className='text-warning'>Calculate your flight emissions below</h4>
+      <h4 className='text-warning'>Calculate your flight emissions below. You can add as many trips as you would like.</h4>
       <br></br>
       <table className='m-auto'>
-          <tr className='row'>
+        <tr className='row'>
             <td className="col-md-8">
-                <p>Client id</p>
+                <p>Departed From</p>
             </td>
             <td className="col-md-4">
-              <input
-                className='w-100'
-                type="number"
-                value={clientId}
-                onChange={(e)=>setClientId(e.target.value)} 
-              /> 
-            </td>
-          </tr>
-
-          <tr className='row'>
-            <td className="col-md-8">
-                <p>Cabin Type</p>
-            </td>
-            <td className="col-md-4">
-              <select onChange={(e)=>setCabinType(e.target.value)}>
+              <select onChange={(e)=>setSourceAirportCode(e.target.value)}>
                 <option value=""> Select an option</option>
-                {seats.map((seat) => <option key={seat} value={seat}>{seat}</option>)}
+                {airports.map((airport) => <option key={airport.code} value={airport.code}>{airport.name}</option>)}
               </select>
-            </td>
+            </td> 
           </tr>
 
           <tr className='row'>
             <td className="col-md-8">
-                <p>Is it a round trip?</p>
+                <p>Arrived at</p>
             </td>
             <td className="col-md-4">
-              <select onChange={(e)=>setIsRoundTrip(e.target.value)}>
-              <option value=""> Select an option</option>
-                <option key="true" value="true">Yes</option>
-                <option key="false" value="false">No</option>
+              <select onChange={(e)=>setDestinationAirportCode(e.target.value)}>
+                <option value=""> Select an option</option>
+                {airports.map((airport) => <option key={airport.code} value={airport.code}>{airport.name}</option>)}
               </select>
             </td>
           </tr>
 
           <tr className='row'>
             <td className="col-md-8">
-              <p>Number of People</p>
+              <p>How many passengers?</p>
             </td>
             <td className="col-md-4">
               <input
@@ -134,42 +117,36 @@ function AddFlightEmissions() {
                 onChange={event => {
                 setPassengerCount(+(event.target.value)); 
                 }}/>                    
-            </td>
+            </td>        
           </tr>
 
           <tr className='row'>
             <td className="col-md-8">
-                <p>Fly from</p>
+                <p>What type of seat?</p>
             </td>
-            <td className="col-md-4 w-25">
-              <select onChange={(e)=>setSourceAirportCode(e.target.value)}>
+            <td className="col-md-4">
+              <select onChange={(e)=>setCabinType(e.target.value)}>
                 <option value=""> Select an option</option>
-                {airports.map((airport) => <option key={airport.code} value={airport.code}>{airport.name}</option>)}
+                {seats.map((seat) => <option key={seat} value={seat}>{seat}</option>)}
               </select>
-            </td>
-          </tr>
-
-          <tr className='row'>
+            </td> 
             <td className="col-md-8">
-                <p>Fly to</p>
+                <p>Round trip?</p>
             </td>
-            <td className="col-md-4 w-25">
-              <select onChange={(e)=>setDestinationAirportCode(e.target.value)}>
-                <option value=""> Select an option</option>
-                {airports.map((airport) => <option key={airport.code} value={airport.code}>{airport.name}</option>)}
-              </select>
+            <td className="col-md-4">
+              <input type="checkbox" onChange={(e)=>setIsRoundTrip(e.target.value)}></input>
             </td>
           </tr>
 
           <tr className='row'>
             <td className='col-md-3'>
               <Button variant="warning" style={{width: '100px'}} type="submit" onClick={handleClick}>
-                Submit
+                Add Flight
               </Button>
             </td>
             <td className='col-md-9'>
-              {emissionsValue} MT C02e
-            </td>
+              {emissionsValue.toFixed(2)} MT C02e
+            </td>  
           </tr>
 
       </table>

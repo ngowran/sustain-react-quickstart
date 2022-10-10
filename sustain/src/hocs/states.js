@@ -11,8 +11,8 @@ export const TotalsProvider = ({ children }) => {
     const [carTotal, setCarTotal] = useState(0);
     const [householdTotal, setHouseholdTotal] = useState(0);
     const [consumptionTotal, setConsumptionTotal] = useState(0);
-
-
+    const [flightTotal, setFlightTotal] = useState(0);
+    
     const addCalculationComponent = (component) => {
         setCalculationComponents({...calculationComponents, component});
     }
@@ -43,6 +43,10 @@ export const TotalsProvider = ({ children }) => {
         setConsumptionTotal(consumptionTotal + emissions);
         setTotal(total + emissions);        
     }
+    const addFlightTotal = (emissions) => {
+        setFlightTotal(flightTotal + emissions);
+        setTotal(total + emissions);        
+    }
 
 return (
     <TotalsContext.Provider value = {{ 
@@ -53,11 +57,13 @@ return (
         carTotal,
         householdTotal,
         consumptionTotal,
+        flightTotal,
         addCarTotal,
         addHouseholdTotal,
+        addConsumptionTotal,
+        addFlightTotal,
         addCalculationComponent,
         addHouseholdEmissionTotal,
-        addConsumptionTotal,
         addCarCalculationComponent,
         addFlightCalculationComponent,
         getAllCalculationComponen}}>

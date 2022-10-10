@@ -87,7 +87,7 @@ function AddCarEmissions() {
         <>  
         <div>
             <br></br>
-            <h4 className='text-warning'>Calculate your car trip emissions below</h4>
+            <h4 className='text-warning'>Calculate your car trip emissions below. You can add as many trips as you would like.</h4>
             <br></br>
             <table className='m-auto'>
                 <tr className='row'>
@@ -128,7 +128,7 @@ function AddCarEmissions() {
             <tr className='row'>
                 <td className='col-md-3'>
                     <Button variant="warning" style={{width: '100px'}} type="submit" onClick={handleClick}>
-                        Submit
+                        Add trip
                     </Button>
                 </td>
                 <td className='col-md-9'>

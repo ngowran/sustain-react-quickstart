@@ -1,7 +1,5 @@
 import sustainlogo from './assets/sustainlogo.svg';
 import './App.css';
-import AddHouseEmissions from './components/AddHouseEmissions';
-import AddCarEmissions from './components/AddCarEmissions';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import EmissionsDropdown from './components/EmissionsDropdowns';
 import { TotalsProvider } from './hocs/states';
