@@ -12,7 +12,8 @@ function AddHouseEmissions() {
   const[recyleMagazines, setMagazines]= useState("");
   const[numberOfPeople, setNumPeople]= useState("");
   const[emissionsValue, setEmissionsValue]=useState(0);
-  const { addCalculationComponent, countryIsoCode } = UseTotalContext();
+  
+  const { addCalculationComponent, countryIsoCode, addHouseholdTotal } = UseTotalContext();
 
   const handleClick=(e)=>{
     const householdWaste = {recyleMetal, recylePlastic, recyleGlass, recyleMagazines, numberOfPeople, countryIsoCode}
@@ -27,8 +28,7 @@ function AddHouseEmissions() {
          }})
         .then(res => {
             setEmissionsValue(res.data.totalHouseholdWasteEmissionsCO2e);
-            console.log(emissionsValue)
-          
+            addHouseholdTotal(res.data.totalHouseholdWasteEmissionsCO2e);
         })
         .catch(err => {
             console.log(err)
@@ -44,7 +44,7 @@ function AddHouseEmissions() {
         <table className='m-auto'>
           <tr className='row'>
             <td className="col-md-8">
-                <p>Recyles Metal?</p>
+                <p>Do you recyle metal?</p>
             </td>
             <td className="col-md-4">
               <select onChange={(e)=>setMetal(e.target.value)}>
@@ -57,7 +57,7 @@ function AddHouseEmissions() {
 
           <tr className='row'>
             <td className="col-md-8">
-                <p>Recyles Plastic?</p>
+                <p>Do you recyle plastic?</p>
             </td>
             <td className="col-md-4">
               <select onChange={(e)=>setPlastic(e.target.value)}>
@@ -70,7 +70,7 @@ function AddHouseEmissions() {
 
           <tr className='row'>
             <td className="col-md-8">
-                <p>Recyles Glass?</p>
+                <p>Do you recyle glass?</p>
             </td>
             <td className="col-md-4">
               <select onChange={(e)=>setGlass(e.target.value)}>
@@ -83,7 +83,7 @@ function AddHouseEmissions() {
 
           <tr className='row'>
             <td className="col-md-8">
-                <p>Recyles Magazines?</p>
+                <p>Do you rcyle magazines?</p>
             </td>
             <td className="col-md-4">
               <select name="?" onChange={(e)=>setMagazines(e.target.value)}>
@@ -96,7 +96,7 @@ function AddHouseEmissions() {
 
           <tr className='row'>
             <td className="col-md-8">
-              <p>Number of People</p>
+              <p>How many people are in the household?</p>
             </td>
             <td className="col-md-4">
               <input
@@ -116,7 +116,7 @@ function AddHouseEmissions() {
               </Button>
             </td>
             <td className='col-md-9'>
-              {emissionsValue} MT C02e
+              {emissionsValue.toFixed(2)} MT C02e
             </td>
           </tr>
         </table>

@@ -1,4 +1,4 @@
-import React, {useEffect, useState, createContext, useContext} from 'react';
+import React, {useState, createContext, useContext} from 'react';
 
 export const TotalsContext = createContext();
 
@@ -8,17 +8,21 @@ export const TotalsProvider = ({ children }) => {
     const [carCalculationComponents, setCarCalculationComponents] = useState({});
     const [flightCalculationComponents, setFlightCalculationComponents] = useState({});
     const [total, setTotal] = useState(0);
-    const [carTotal, setCatTotal] = useState(0);
+    const [carTotal, setCarTotal] = useState(0);
+    const [householdTotal, setHouseholdTotal] = useState(0);
 
 
     const addCalculationComponent = (component) => {
         setCalculationComponents({...calculationComponents, component});
     }
+    const addFlightCalculationComponent = (component) => {
+        setFlightCalculationComponents({...flightCalculationComponents, component});
+    }
     const addCarCalculationComponent = (component) => {
         setCarCalculationComponents({...carCalculationComponents, component});
     }
-    const addFlightCalculationComponent = (component) => {
-        setFlightCalculationComponents({...flightCalculationComponents, component});
+    const addHouseholdEmissionTotal = (component) => {
+        setCalculationComponents({...calculationComponents, component});
     }
     const getAllCalculationComponen = () => {
         return {...calculationComponents, ...carCalculationComponents, ...flightCalculationComponents};
@@ -26,10 +30,13 @@ export const TotalsProvider = ({ children }) => {
     const addTotal = (emissions) => {
         setTotal(total + emissions);
     }
-    const addcarTotal = (emissions) => {
-        setCatTotal(carTotal + emissions);
-        setTotal(total + emissions);
-        
+    const addCarTotal = (emissions) => {
+        setCarTotal(carTotal + emissions);
+        setTotal(total + emissions);        
+    }
+    const addHouseholdTotal = (emissions) => {
+        setHouseholdTotal(householdTotal + emissions);
+        setTotal(total + emissions);        
     }
 
 return (
@@ -39,8 +46,11 @@ return (
         countryIsoCode, 
         setCountryIsoCode, 
         carTotal,
-        addcarTotal,
+        householdTotal,
+        addCarTotal,
+        addHouseholdTotal,
         addCalculationComponent,
+        addHouseholdEmissionTotal,
         addCarCalculationComponent,
         addFlightCalculationComponent,
         getAllCalculationComponen}}>

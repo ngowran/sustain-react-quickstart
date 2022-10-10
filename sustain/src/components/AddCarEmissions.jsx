@@ -14,7 +14,7 @@ function AddCarEmissions() {
     const[carModels, setCarModels]=useState([]);
     const[emissionsValue, setEmissionsValue]=useState(0);
 
-    const { addCalculationComponent, countryIsoCode, addcarTotal } = UseTotalContext();
+    const { addCalculationComponent, countryIsoCode, addCarTotal } = UseTotalContext();
 
     useEffect(() => {
        if(distanceUnits.length === 0)
@@ -69,7 +69,7 @@ function AddCarEmissions() {
             
         .then(res => {
             setEmissionsValue(res.data.totalCarEmssionsCO2e);
-            addcarTotal(res.data.totalCarEmssionsCO2e);
+            addCarTotal(res.data.totalCarEmssionsCO2e);
         })
         .catch(err => {
             console.log(err)
@@ -132,7 +132,7 @@ function AddCarEmissions() {
                     </Button>
                 </td>
                 <td className='col-md-9'>
-                    {emissionsValue} MT C02e
+                    {emissionsValue.toFixed(2)} MT C02e
                 </td>
             </tr>
             </table> 
