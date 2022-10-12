@@ -12,12 +12,12 @@ function AddHouseEmissions() {
   const[recyleMagazines, setMagazines]= useState("");
   const[numberOfPeople, setNumPeople]= useState("");
   const[emissionsValue, setEmissionsValue]=useState(0);
-  const { addCalculationComponent, countryIsoCode } = UseTotalContext();
+  
+  const { addHouseholdCalculationComponent, countryIsoCode, addHouseholdTotal } = UseTotalContext();
 
   const handleClick=(e)=>{
     const householdWaste = {recyleMetal, recylePlastic, recyleGlass, recyleMagazines, numberOfPeople, countryIsoCode}
-    addCalculationComponent(householdWaste);
-    console.log(householdWaste)
+    addHouseholdCalculationComponent(householdWaste);
     axios
         .post('https://api.sustain.life/v1/personal-calculator/household',
          householdWaste,
@@ -27,8 +27,7 @@ function AddHouseEmissions() {
          }})
         .then(res => {
             setEmissionsValue(res.data.totalHouseholdWasteEmissionsCO2e);
-            console.log(emissionsValue)
-          
+            addHouseholdTotal(res.data.totalHouseholdWasteEmissionsCO2e);
         })
         .catch(err => {
             console.log(err)
@@ -37,68 +36,72 @@ function AddHouseEmissions() {
 
   return (
     <>
-      <div>
+      <div class="container text-center" style={{width: '1000px', padding:'5px'}}>
         <br></br>
         <h4 className="text-warning">Calculate your household emissions below</h4>
         <br></br>
         <table className='m-auto'>
           <tr className='row'>
-            <td className="col-md-8">
-                <p>Recyles Metal?</p>
+            <td style={{width: '300px', textAlign: 'left'}}>
+                <p>Do you recyle metal?</p>
             </td>
-            <td className="col-md-4">
+            <td style={{width: '300px', textAlign: 'left'}}>
               <select onChange={(e)=>setMetal(e.target.value)}>
                 <option value=""> Select an option</option>
                 <option key="true" value="true">Yes</option>
                 <option key="false" value="false">No</option>
               </select>
             </td>
+            <td style={{width: '300px'}}></td>
           </tr>
 
           <tr className='row'>
-            <td className="col-md-8">
-                <p>Recyles Plastic?</p>
+            <td style={{width: '300px', textAlign: 'left'}}>
+                <p>Do you recyle plastic?</p>
             </td>
-            <td className="col-md-4">
+            <td style={{width: '300px', textAlign: 'left'}}>
               <select onChange={(e)=>setPlastic(e.target.value)}>
                 <option value=""> Select an option</option>
                 <option key="true" value="true">Yes</option>
                 <option key="false" value="false">No</option>
               </select>
             </td>
+            <td style={{width: '300px'}}></td>
           </tr>
 
           <tr className='row'>
-            <td className="col-md-8">
-                <p>Recyles Glass?</p>
+            <td style={{width: '300px', textAlign: 'left'}}>
+                <p>Do you recyle glass?</p>
             </td>
-            <td className="col-md-4">
+            <td style={{width: '300px', textAlign: 'left'}}>
               <select onChange={(e)=>setGlass(e.target.value)}>
                 <option value=""> Select an option</option>
                 <option key="true" value="true">Yes</option>
                 <option key="false" value="false">No</option>
               </select>
             </td>
+            <td style={{width: '300px'}}></td>
           </tr>
 
           <tr className='row'>
-            <td className="col-md-8">
-                <p>Recyles Magazines?</p>
+            <td style={{width: '300px', textAlign: 'left'}}>
+                <p>Do you rcyle magazines?</p>
             </td>
-            <td className="col-md-4">
+            <td style={{width: '300px', textAlign: 'left'}}>
               <select name="?" onChange={(e)=>setMagazines(e.target.value)}>
                 <option value=""> Select an option</option>
                 <option key="true" value="true">Yes</option>
                 <option key="false" value="false">No</option>
               </select>
             </td>
+            <td style={{width: '300px'}}></td>
           </tr>
 
           <tr className='row'>
-            <td className="col-md-8">
-              <p>Number of People</p>
+            <td style={{width: '300px', textAlign: 'left'}}>
+              <p>How many people are in the household?</p>
             </td>
-            <td className="col-md-4">
+            <td style={{width: '300px', textAlign: 'left'}}>
               <input
                 className='w-100'
                 type="number"
@@ -107,17 +110,19 @@ function AddHouseEmissions() {
                 setNumPeople(+(event.target.value)); 
                 }}/>                    
             </td>
+            <td style={{width: '300px'}}></td>
           </tr>
 
           <tr className='row'>
-            <td className='col-md-3'>
-              <Button variant="warning" style={{width: '100px'}} type="submit" onClick={handleClick}>
-                Submit
+            <td style={{width: '300px', textAlign: 'left'}}>
+              <Button variant="warning" style={{width: '200px'}} type="submit" onClick={handleClick}>
+                Set Emissions
               </Button>
             </td>
-            <td className='col-md-9'>
-              {emissionsValue} MT C02e
+            <td style={{width: '300px', textAlign: 'left'}}>
+              {/* {emissionsValue.toFixed(2)} MT C02e */}
             </td>
+            <td style={{width: '300px'}}></td>
           </tr>
         </table>
       </div>   

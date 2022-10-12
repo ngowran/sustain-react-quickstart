@@ -1,9 +1,7 @@
 import sustainlogo from './assets/sustainlogo.svg';
 import './App.css';
-import AddHouseEmissions from './components/AddHouseEmissions';
-import AddCarEmissions from './components/AddCarEmissions';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import EmissionsDropdown from './components/EmissionsDropdowns';
+import PersonalCalculator from './components/PersonalCalculator';
 import { TotalsProvider } from './hocs/states';
 
 function App() {
@@ -17,7 +15,7 @@ function App() {
         <h2 className='text-warning'>Your personal emissions calculator</h2>
         <br></br>
         <div class="text-center" >
-        <EmissionsDropdown />
+        <PersonalCalculator />
 
         </div>
       </header>

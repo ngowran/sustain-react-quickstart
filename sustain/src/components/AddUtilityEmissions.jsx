@@ -6,18 +6,18 @@ import axios from 'axios';
 import { UseTotalContext } from '../hocs/states';
 
 function AddUtilityEmissions() {
-    const[utilityCompanyId, setUtilityCompanyId]= useState("");
-    const[zipCode, setZipCode]= useState("") ;
+    const[utilityCompanyId, setUtilityCompanyId]= useState(0);
+    const[zipCode, setZipCode]= useState('') ;
     const[electricalUsage, setElectricalUsage]= useState(0) ;
-    const[electricalUsageUnit, setElectricalUsageUnit]= useState("");
+    const[electricalUsageUnit, setElectricalUsageUnit]= useState('');
     const[naturalGasUsage, setNaturalGasUsage]= useState(0);
-    const[naturalGasUsageUnit, setNaturalGasUsageUnit]= useState("");
+    const[naturalGasUsageUnit, setNaturalGasUsageUnit]= useState('');
     const[fuelOilUsage, setFuelOilUsage]= useState(0);
-    const[fuelOilUsageUnit, setFuelOilUsageUnit]= useState("");
+    const[fuelOilUsageUnit, setFuelOilUsageUnit]= useState('');
     const[propaneUsage, setPropaneUsage]= useState(0);
-    const[propaneUsageUnit, setPropaneUsageUnit]= useState("");
+    const[propaneUsageUnit, setPropaneUsageUnit]= useState('');
     const[woodPelletUsage, setWoodPelletUsage]= useState(0);
-    const[woodPelletUsageUnit, setWoodPelletUsageUnit]= useState("");
+    const[woodPelletUsageUnit, setWoodPelletUsageUnit]= useState('');
     const[company, setCompany]=useState([]);
     const[electricalUnit, setElectricalUnit]=useState([]);
     const[naturalUnit, setNaturalUnit]=useState([]);
@@ -25,7 +25,8 @@ function AddUtilityEmissions() {
     const[propaneUnit, setPropaneUnit]=useState([]);
     const[woodenPellet, setWoodenPellet]=useState([]);
     const[emissionsValue, setEmissionsValue]=useState(0);
-    const { addCalculationComponent, countryIsoCode } = UseTotalContext();
+
+    const { addUtilityCalculationComponent, countryIsoCode, addUtilityTotal } = UseTotalContext();
 
       function fetchCompany() {
         axios
@@ -33,8 +34,7 @@ function AddUtilityEmissions() {
           { headers: {
           'Ocp-Apim-Subscription-Key': "00c112e599ff4c85bad0cfdacd3bb795"
         }})
-        .then(res => {
-          console.log(res.data)
+        .then(res => { 
           setCompany(res.data.items)
         })
         .catch(err => {
@@ -46,8 +46,7 @@ function AddUtilityEmissions() {
         fetchCompany();
       }, []);
 
-    const setVars = (e) => {
-        console.log(e);
+    const setVars = (e) => { 
         setUtilityCompanyId(company[e].utilityCompanyId)
         setZipCode(company[e].zipCode)
     }
@@ -59,8 +58,7 @@ function AddUtilityEmissions() {
           { headers: {
           'Ocp-Apim-Subscription-Key': "00c112e599ff4c85bad0cfdacd3bb795"
         }})
-        .then(res => {
-          console.log(res.data)
+        .then(res => { 
           setElectricalUnit(res.data.items)
         })
         .catch(err => {
@@ -80,7 +78,6 @@ function AddUtilityEmissions() {
           'Ocp-Apim-Subscription-Key': "00c112e599ff4c85bad0cfdacd3bb795"
         }})
         .then(res => {
-          console.log(res.data)
           setNaturalUnit(res.data.items)
         })
         .catch(err => {
@@ -100,7 +97,6 @@ function AddUtilityEmissions() {
           'Ocp-Apim-Subscription-Key': "00c112e599ff4c85bad0cfdacd3bb795"
         }})
         .then(res => {
-          console.log(res.data)
           setFuelOil(res.data.items)
         })
         .catch(err => {
@@ -119,7 +115,6 @@ function AddUtilityEmissions() {
           'Ocp-Apim-Subscription-Key': "00c112e599ff4c85bad0cfdacd3bb795"
         }})
         .then(res => {
-          console.log(res.data)
           setPropaneUnit(res.data.items)
         })
         .catch(err => {
@@ -138,7 +133,6 @@ function AddUtilityEmissions() {
           'Ocp-Apim-Subscription-Key': "00c112e599ff4c85bad0cfdacd3bb795"
         }})
         .then(res => {
-          console.log(res.data)
           setWoodenPellet(res.data.items)
         })
         .catch(err => {
@@ -155,9 +149,8 @@ function AddUtilityEmissions() {
     const handleClick=(e)=>{
         const utilities = {utilityCompanyId, zipCode, electricalUsage, electricalUsageUnit, naturalGasUsage, 
             naturalGasUsageUnit, fuelOilUsage, fuelOilUsageUnit, propaneUsage, propaneUsageUnit, woodPelletUsage,
-             woodPelletUsageUnit, countryIsoCode}
-        addCalculationComponent(utilities);
-        console.log(utilities)
+             woodPelletUsageUnit, countryIsoCode} 
+        addUtilityCalculationComponent(utilities);
         axios
             .post('https://api.sustain.life/v1/personal-calculator/utilities',
             utilities,
@@ -167,7 +160,7 @@ function AddUtilityEmissions() {
              }})
             .then(res => {
                 setEmissionsValue(res.data.totalUtilityEmissionsCO2e)
-                console.log(emissionsValue)
+                addUtilityTotal(res.data.totalUtilityEmissionsCO2e)
             })
             .catch(err => {
                 console.log(err)
@@ -176,16 +169,16 @@ function AddUtilityEmissions() {
 
     return (
         <> 
-        <div class="container">
-            <br></br>
-            <h4 className='text-warning'>Add your utility emissions below</h4>
+        <div class="container text-center" style={{width: '1000px', padding:'5px'}}>
+            <h4 className='text-warning'>Calculate your utility emissions.</h4>
+            <h6 className="text-warning">You can add how much you spend on each of the following categories.</h6>
             <br></br>
             <table className='m-auto'>
               <tr className='row'>
-              <td className="col-md-4">
-                <p>Company name</p>
+             <td style={{width: '300px', textAlign: 'left'}}>
+                <p>Utility Company name</p>
               </td>
-                <td className="col-md-4">
+               <td style={{width: '300px', textAlign: 'left'}}>
                   <select onChange={(e)=>setVars(e.target.value)}>
                      <option value=""> Select an option</option>
                       {company.map((company, index) => <option key={`${index}`} value={`${index}`}>{company.utilityName}</option>)}
@@ -194,10 +187,10 @@ function AddUtilityEmissions() {
               </tr>
 
               <tr className='row'>
-                <td className="col-md-4">
-                        <p>Electrical usage</p>
-                </td>
-                    <td className="col-md-4">
+                <td style={{width: '300px', textAlign: 'left'}}>
+                    <p>What is your electricity usage?</p>
+                  </td>
+                   <td style={{width: '300px', textAlign: 'left'}}>
                     <input
                         className='w-100'
                         type="number"
@@ -207,7 +200,7 @@ function AddUtilityEmissions() {
                         }}
                         />                    
                     </td>
-                    <td className="col-md-4">
+                   <td style={{width: '300px', textAlign: 'left'}}>
                         <select onChange={(e)=>setElectricalUsageUnit(e.target.value)}>
                             <option value=""> Select an option</option>
                             {electricalUnit.map((unit) => <option key={unit} value={unit}>{unit}</option>)}
@@ -216,10 +209,10 @@ function AddUtilityEmissions() {
                 </tr>
 
                 <tr className='row'>
-                <td className="col-md-4">
-                        <p>Natural gas usage</p>
-                </td>
-                    <td className="col-md-4">
+                  <td style={{width: '300px', textAlign: 'left'}}>
+                    <p>What is your  natural gas usage?</p>
+                  </td>
+                   <td style={{width: '300px', textAlign: 'left'}}>
                     <input
                         className='w-100'
                         type="number"
@@ -229,7 +222,7 @@ function AddUtilityEmissions() {
                         }}
                         />                    
                     </td>
-                    <td className="col-md-4">
+                   <td style={{width: '300px', textAlign: 'left'}}>
                         <select onChange={(e)=>setNaturalGasUsageUnit(e.target.value)}>
                             <option value=""> Select an option</option>
                             {naturalUnit.map((unit) => <option key={unit} value={unit}>{unit}</option>)}
@@ -238,10 +231,10 @@ function AddUtilityEmissions() {
                 </tr>
 
                 <tr className='row'>
-                <td className="col-md-4">
-                        <p>Fuel oil usage</p>
-                </td>
-                    <td className="col-md-4">
+                  <td style={{width: '300px', textAlign: 'left'}}>
+                    <p>What is your fuel oil usage?</p>
+                  </td>
+                   <td style={{width: '300px', textAlign: 'left'}}>
                     <input
                         className='w-100'
                         type="number"
@@ -251,7 +244,7 @@ function AddUtilityEmissions() {
                         }}
                         />                    
                     </td>
-                    <td className="col-md-4">
+                   <td style={{width: '300px', textAlign: 'left'}}>
                         <select onChange={(e)=>setFuelOilUsageUnit(e.target.value)}>
                             <option value=""> Select an option</option>
                             {fuelOil.map((unit) => <option key={unit} value={unit}>{unit}</option>)}
@@ -260,10 +253,10 @@ function AddUtilityEmissions() {
                 </tr>
 
                 <tr className='row'>
-                <td className="col-md-4">
-                        <p>Propane usage</p>
-                </td>
-                    <td className="col-md-4">
+                  <td style={{width: '300px', textAlign: 'left'}}>
+                    <p>What is your propane usage?</p>
+                  </td>
+                   <td style={{width: '300px', textAlign: 'left'}}>
                     <input
                         className='w-100'
                         type="number"
@@ -273,7 +266,7 @@ function AddUtilityEmissions() {
                         }}
                         />                    
                     </td>
-                    <td className="col-md-4">
+                   <td style={{width: '300px', textAlign: 'left'}}>
                         <select onChange={(e)=>setPropaneUsageUnit(e.target.value)}>
                             <option value=""> Select an option</option>
                             {propaneUnit.map((unit) => <option key={unit} value={unit}>{unit}</option>)}
@@ -282,10 +275,10 @@ function AddUtilityEmissions() {
                 </tr>
 
                 <tr className='row'>
-                <td className="col-md-4">
-                        <p>Wooden pellet usage</p>
-                </td>
-                    <td className="col-md-4">
+                  <td style={{width: '300px', textAlign: 'left'}}>
+                            <p>What is your wooden pellet usage?</p>
+                   </td>
+                   <td style={{width: '300px', textAlign: 'left'}}>
                     <input
                         className='w-100'
                         type="number"
@@ -295,7 +288,7 @@ function AddUtilityEmissions() {
                         }}
                         />                    
                     </td>
-                    <td className="col-md-4">
+                   <td style={{width: '300px', textAlign: 'left'}}>
                         <select onChange={(e)=>setWoodPelletUsageUnit(e.target.value)}>
                             <option value=""> Select an option</option>
                             {woodenPellet.map((unit) => <option key={unit} value={unit}>{unit}</option>)}
@@ -305,12 +298,12 @@ function AddUtilityEmissions() {
 
                 <tr className='row'>
                   <td className='col-md-3'>
-                    <Button variant="warning" style={{width: '100px'}} type="submit" onClick={handleClick}>
-                      Submit
+                    <Button variant="warning" style={{width: '200px'}} type="submit" onClick={handleClick}>
+                      Set Emissions
                     </Button>
                   </td>
                   <td className='col-md-9'>
-                    {emissionsValue} MT C02e
+                    {/* {emissionsValue.toFixed(2)} MT C02e */}
                   </td>
                 </tr>
             </table>
