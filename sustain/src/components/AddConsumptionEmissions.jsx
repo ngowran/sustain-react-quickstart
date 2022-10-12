@@ -26,7 +26,7 @@ function AddConsumptionEmissions() {
     const[recreationalAndCultureSpending, setRecreationalAndCultureSpending]= useState(0);
     const[emissionsValue, setEmissionsValue]=useState(0);
     
-    const { addCalculationComponent, countryIsoCode, addConsumptionTotal } = UseTotalContext();
+    const { addConsumptionCalculationComponent, countryIsoCode, addConsumptionTotal } = UseTotalContext();
 
     const handleClick=(e)=>{
         const consumption = {foodDrinkHeavyMeatEaterSpending, foodDrinkMediumMeatEaterSpending, foodDrinkLightMeatEaterSpending,
@@ -34,7 +34,7 @@ function AddConsumptionEmissions() {
             paperProductsSpending, computersITEquipmentSpending, motorVehiclesExFuelSpending, furnitureSpending, 
             hotelsRestuarantsSpending, cellPhonesSpending, bankingFinanceSpending, insuranceSpending, educationSpending, 
             recreationalAndCultureSpending, countryIsoCode};
-        addCalculationComponent(consumption);
+        addConsumptionCalculationComponent(consumption);
         axios
             .post('https://api.sustain.life/v1/personal-calculator/consumption',
              consumption,
@@ -56,16 +56,17 @@ function AddConsumptionEmissions() {
   
     return (
         <> 
-        <div>
+            <div class="container text-center" style={{width: '1000px', padding:'5px'}}>
             <br></br>
-            <h4 className="text-warning">Calculate your consumption emissions below. You can add how much you spend on each of the following categories.</h4>
+            <h4 className="text-warning">Calculate your consumption emissions below.</h4>
+            <h6 className="text-warning">You can add how much you spend on each of the following categories.</h6>
             <br></br>
             <table className='m-auto'>          
                 <tr className='row'>
-                    <td className='col-md-8'>
+                    <td style={{width: '300px', textAlign: 'left'}}>
                         <p>Amount spent on heavy meat diet?</p>
                     </td>
-                    <td className='col-md-2'>
+                    <td style={{width: '300px', textAlign: 'left'}}>
                     <input
                         className='w-100'
                         type="number"
@@ -75,15 +76,15 @@ function AddConsumptionEmissions() {
                         }}
                         />                    
                     </td>
-                    <td className='col-md-2'>  
+                    <td style={{width: '300px', textAlign: 'left'}}>  
                         <span>USD</span>
                     </td>
                 </tr>
                 <tr className='row'>
-                    <td className='col-md-8'>
+                    <td style={{width: '300px', textAlign: 'left'}}>
                         <p>Amount spent on medium meat diet?</p>
                     </td>
-                    <td className='col-md-2'>
+                    <td style={{width: '300px', textAlign: 'left'}}>
                     <input
                         className='w-100'
                         type="number"
@@ -93,15 +94,15 @@ function AddConsumptionEmissions() {
                         }}
                         />                    
                     </td>
-                    <td className='col-md-2'>
+                    <td style={{width: '300px', textAlign: 'left'}}>
                         <span>USD</span>
                     </td>
                 </tr>
                 <tr className='row'>
-                    <td className='col-md-8'>
+                    <td style={{width: '300px', textAlign: 'left'}}>
                         <p>Amount spent on light meat diet?</p>
                     </td>
-                    <td className='col-md-2'>
+                    <td style={{width: '300px', textAlign: 'left'}}>
                     <input
                         className='w-100'
                         type="number"
@@ -111,15 +112,15 @@ function AddConsumptionEmissions() {
                         }}
                         />                    
                     </td>
-                    <td className='col-md-2'>
+                    <td style={{width: '300px', textAlign: 'left'}}>
                         <span>USD</span>
                     </td>
                 </tr>
                 <tr className='row'>
-                    <td className='col-md-8'>
+                    <td style={{width: '300px', textAlign: 'left'}}>
                         <p>Amount spent on vegetarian diet?</p>
                     </td>
-                    <td className='col-md-2'>
+                    <td style={{width: '300px', textAlign: 'left'}}>
                     <input
                         className='w-100'
                         type="number"
@@ -129,15 +130,15 @@ function AddConsumptionEmissions() {
                         }}
                         />                    
                     </td>
-                    <td className='col-md-2'>
+                    <td style={{width: '300px', textAlign: 'left'}}>
                         <span>USD</span>
                     </td>
                 </tr>
                 <tr className='row'>
-                    <td className='col-md-8'>
+                    <td style={{width: '300px', textAlign: 'left'}}>
                         <p>Amount spent on vegan diet?</p>
                     </td>
-                    <td className='col-md-2'>
+                    <td style={{width: '300px', textAlign: 'left'}}>
                     <input
                         className='w-100'
                         type="number"
@@ -147,15 +148,15 @@ function AddConsumptionEmissions() {
                         }}
                         />                    
                     </td>
-                    <td className='col-md-2'>
+                    <td style={{width: '300px', textAlign: 'left'}}>
                         <span>USD</span>
                     </td>
                 </tr>
                 <tr className='row'>
-                    <td className='col-md-8'>
+                    <td style={{width: '300px', textAlign: 'left'}}>
                         <p>Amount spent on pharmaceuticals?</p>
                     </td>
-                    <td className='col-md-2'>
+                    <td style={{width: '300px', textAlign: 'left'}}>
                     <input
                         className='w-100'
                         type="number"
@@ -165,15 +166,15 @@ function AddConsumptionEmissions() {
                         }}
                         />                    
                     </td>
-                    <td className='col-md-2'>
+                    <td style={{width: '300px', textAlign: 'left'}}>
                         <span>USD</span>
                     </td>
                 </tr>
                 <tr className='row'>
-                    <td className='col-md-8'>
+                    <td style={{width: '300px', textAlign: 'left'}}>
                         <p>Amount spent on clothes & shoes?</p>
                     </td>
-                    <td className='col-md-2'>
+                    <td style={{width: '300px', textAlign: 'left'}}>
                     <input
                         className='w-100'
                         type="number"
@@ -183,15 +184,15 @@ function AddConsumptionEmissions() {
                         }}
                         />                    
                     </td>
-                    <td className='col-md-2'>
+                    <td style={{width: '300px', textAlign: 'left'}}>
                         <span>USD</span>
                     </td>
                 </tr>
                 <tr className='row'>
-                    <td className='col-md-8'>
+                    <td style={{width: '300px', textAlign: 'left'}}>
                         <p>Amount spent on paper products?</p>
                     </td>
-                    <td className='col-md-2'>
+                    <td style={{width: '300px', textAlign: 'left'}}>
                     <input
                         className='w-100'
                         type="number"
@@ -201,15 +202,15 @@ function AddConsumptionEmissions() {
                         }}
                         />                    
                     </td>
-                    <td className='col-md-2'>
+                    <td style={{width: '300px', textAlign: 'left'}}>
                         <p>USD</p>
                     </td>
                 </tr>
                 <tr className='row'>
-                    <td className='col-md-8'>
+                    <td style={{width: '300px', textAlign: 'left'}}>
                         <p>Amount spent on computers & IT?</p>
                     </td>
-                    <td className='col-md-2'>
+                    <td style={{width: '300px', textAlign: 'left'}}>
                     <input
                         className='w-100'
                         type="number"
@@ -219,15 +220,15 @@ function AddConsumptionEmissions() {
                         }}
                         />                    
                     </td>
-                    <td className='col-md-2'>
+                    <td style={{width: '300px', textAlign: 'left'}}>
                         <span>USD</span>
                     </td>
                 </tr>
                 <tr className='row'>
-                    <td className='col-md-8'>
+                    <td style={{width: '300px', textAlign: 'left'}}>
                         <p>Amount spent on motor vehicles, excluding fuel?</p>
                     </td>
-                    <td className='col-md-2'>
+                    <td style={{width: '300px', textAlign: 'left'}}>
                     <input
                         className='w-100'
                         type="number"
@@ -237,15 +238,15 @@ function AddConsumptionEmissions() {
                         }}
                         />                    
                     </td>
-                    <td className='col-md-2'>
+                    <td style={{width: '300px', textAlign: 'left'}}>
                         <span>USD</span>
                     </td>
                 </tr>
                 <tr className='row'>
-                    <td className='col-md-8'>
+                    <td style={{width: '300px', textAlign: 'left'}}>
                         <p>Amount spent on furniture?</p>
                     </td>
-                    <td className='col-md-2'>
+                    <td style={{width: '300px', textAlign: 'left'}}>
                     <input
                         className='w-100'
                         type="number"
@@ -255,15 +256,15 @@ function AddConsumptionEmissions() {
                         }}
                         />                    
                     </td>
-                    <td className='col-md-2'>
+                    <td style={{width: '300px', textAlign: 'left'}}>
                         <span>USD</span>
                     </td>
                 </tr>
                 <tr className='row'>
-                    <td className='col-md-8'>
+                    <td style={{width: '300px', textAlign: 'left'}}>
                         <p>Amount spent on hotels & restuarants?</p>
                     </td>
-                    <td className='col-md-2'>
+                    <td style={{width: '300px', textAlign: 'left'}}>
                     <input
                         className='w-100'
                         type="number"
@@ -273,15 +274,15 @@ function AddConsumptionEmissions() {
                         }}
                         />                    
                     </td>
-                    <td className='col-md-2'>
+                    <td style={{width: '300px', textAlign: 'left'}}>
                         <span>USD</span>
                     </td>
                 </tr>
                 <tr className='row'>
-                    <td className='col-md-8'>
+                    <td style={{width: '300px', textAlign: 'left'}}>
                         <p>Amount spent on cellphones or mobile phones?</p>
                     </td>
-                    <td className='col-md-2'>
+                    <td style={{width: '300px', textAlign: 'left'}}>
                     <input
                         className='w-100'
                         type="number"
@@ -291,15 +292,15 @@ function AddConsumptionEmissions() {
                         }}
                         />                    
                     </td>
-                    <td className='col-md-2'>
+                    <td style={{width: '300px', textAlign: 'left'}}>
                         <span>USD</span>
                     </td>
                 </tr>
                 <tr className='row'>
-                    <td className='col-md-8'>
+                    <td style={{width: '300px', textAlign: 'left'}}>
                         <p>Amount spent on banking & finance?</p>
                     </td>
-                    <td className='col-md-2'>
+                    <td style={{width: '300px', textAlign: 'left'}}>
                     <input
                         className='w-100'
                         type="number"
@@ -309,15 +310,15 @@ function AddConsumptionEmissions() {
                         }}
                         />                    
                     </td>
-                    <td className='col-md-2'>
+                    <td style={{width: '300px', textAlign: 'left'}}>
                         <span>USD</span>
                     </td>
                 </tr>
                 <tr className='row'>
-                    <td className='col-md-8'>
+                    <td style={{width: '300px', textAlign: 'left'}}>
                         <p>Amount spent on insurance?</p>
                     </td>
-                    <td className='col-md-2'>
+                    <td style={{width: '300px', textAlign: 'left'}}>
                     <input
                         className='w-100'
                         type="number"
@@ -327,15 +328,15 @@ function AddConsumptionEmissions() {
                         }}
                         />                    
                     </td>
-                    <td className='col-md-2'>
+                    <td style={{width: '300px', textAlign: 'left'}}>
                         <span>USD</span>
                     </td>
                 </tr>
                 <tr className='row'>
-                    <td className='col-md-8'>
+                    <td style={{width: '300px', textAlign: 'left'}}>
                         <p>Amount spent on education?</p>
                     </td>
-                    <td className='col-md-2'>
+                    <td style={{width: '300px', textAlign: 'left'}}>
                     <input
                         className='w-100'
                         type="number"
@@ -345,15 +346,15 @@ function AddConsumptionEmissions() {
                         }}
                         />                    
                     </td>
-                    <td className='col-md-2'>
+                    <td style={{width: '300px', textAlign: 'left'}}>
                         <span>USD</span>
                     </td>
                 </tr>
                 <tr className='row'>
-                    <td className='col-md-8'>
+                    <td style={{width: '300px', textAlign: 'left'}}>
                         <p>Amount spent on recreation & culture?</p>
                     </td>
-                    <td className='col-md-2'>
+                    <td style={{width: '300px', textAlign: 'left'}}>
                     <input
                         className='w-100'
                         type="number"
@@ -363,20 +364,20 @@ function AddConsumptionEmissions() {
                         }}
                         />                    
                     </td>
-                    <td className='col-md-2'>
+                    <td style={{width: '300px', textAlign: 'left'}}>
                         <span>USD</span>
                     </td>
                 </tr>
 
                 <br></br>
                 <tr className='row'>
-                    <td className='col-md-3'>
-                        <Button variant="warning" style={{width: '100px'}} type="submit" onClick={handleClick}>
-                            Add
+                    <td style={{width: '300px', textAlign: 'left'}}>
+                        <Button variant="warning" style={{width: '200px'}} type="submit" onClick={handleClick}>
+                            Set Emissions
                         </Button>
                     </td>
-                    <td className='col-md-9'>
-                        {emissionsValue.toFixed(2)} MT C02e
+                    <td style={{width: '300px', textAlign: 'left'}}>
+                        {/* {emissionsValue.toFixed(2)} MT C02e */}
                     </td>
                 </tr>
             </table>                    

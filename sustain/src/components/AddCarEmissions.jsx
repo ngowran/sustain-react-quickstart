@@ -14,7 +14,7 @@ function AddCarEmissions() {
     const[carModels, setCarModels]=useState([]);
     const[emissionsValue, setEmissionsValue]=useState(0);
 
-    const { addCalculationComponent, countryIsoCode, addCarTotal } = UseTotalContext();
+    const { addCarCalculationComponent, countryIsoCode, addCarTotal } = UseTotalContext();
 
     useEffect(() => {
        if(distanceUnits.length === 0)
@@ -57,8 +57,8 @@ function AddCarEmissions() {
     function handleClick () {
         const clientId = carId;
         const totalDistanceUnit = distanceUnit || 'Miles';
-        const car = {carId, clientId, totalDistance, totalDistanceUnit, countryIsoCode}
-        addCalculationComponent(car);
+        const car = {carId, clientId, totalDistance, totalDistanceUnit, countryIsoCode};
+        addCarCalculationComponent(car);
         axios
             .post('https://api.sustain.life/v1/personal-calculator/car',
             car,
@@ -85,16 +85,15 @@ function AddCarEmissions() {
   
     return (
         <>  
-        <div>
-            <br></br>
-            <h4 className='text-warning'>Calculate your car trip emissions below. You can add as many trips as you would like.</h4>
-            <br></br>
-            <table className='m-auto'>
-                <tr className='row'>
-                    <td className="col-md-4">
-                        <span>Distance travelled</span>
-                    </td>
-                    <td className="col-md-4">
+        <div class="container text-center" style={{width: '1000px', padding:'5px'}}>
+        <h4 className='text-warning'>Calculate your car trip emissions below. You can add as many trips as you would like.</h4>
+        <br></br>
+        <table className='m-auto'>
+            <tr className='row'>
+                <td style={{width: '300px', textAlign: 'left'}}>
+                    <span>Distance travelled</span>
+                </td>
+                <td style={{width: '300px', textAlign: 'left'}}>
                     <input
                         className='w-100'
                         type="number"
@@ -103,40 +102,39 @@ function AddCarEmissions() {
                             setTotalDistance(+(event.target.value)); 
                         }}
                         />                    
-                    </td>
-                    <td className="col-md-4">
-                        <select onChange={(e)=>handleDistanceUnitChange(e)}>
-                            <option value=""> Select an option</option>
-                            {distanceUnits.map((unit) => <option key={unit} value={unit}>{unit}</option>)}
-                        </select>
-                    </td>
-                </tr>
-                <br></br>
-                <tr className='row'>
-                    <td className="col-md-4">
-                        <span>Make & Model</span>
-                    </td>
-                    <td className="col-md-8">
-                        <select onChange={(e)=>handleCarModelChange(e)} >
-                            <option value=""> Select an option</option>
-                            {carModels.map((car) => <option key={car.id} value={car.id}>{car.year} {car.make} {car.model}</option>)}
-                        </select>                 
-                    </td>
-                </tr>
+                </td>
+                <td style={{width: '300px', textAlign: 'left'}}>
+                    <select onChange={(e)=>handleDistanceUnitChange(e)}>
+                        <option value=""> Select an option</option>
+                        {distanceUnits.map((unit) => <option key={unit} value={unit}>{unit}</option>)}
+                    </select>
+                </td>
+            </tr>
+            <br></br>
+            <tr className='row'>
+                <td style={{width: '300px', textAlign: 'left'}}>
+                    <span>Make & Model</span>
+                </td>
+                <td style={{width: '300px', textAlign: 'left'}}>
+                    <select onChange={(e)=>handleCarModelChange(e)} >
+                        <option value=""> Select an option</option>
+                        {carModels.map((car) => <option key={car.id} value={car.id}>{car.year} {car.make} {car.model}</option>)}
+                    </select>                 
+                </td>
+            </tr>
             
             <br></br>               
             <tr className='row'>
-                <td className='col-md-3'>
-                    <Button variant="warning" style={{width: '100px'}} type="submit" onClick={handleClick}>
+                <td style={{width: '300px', textAlign: 'left'}}>
+                    <Button variant="warning" style={{width: '200px'}} type="submit" onClick={handleClick}>
                         Add trip
                     </Button>
                 </td>
-                <td className='col-md-9'>
-                    {emissionsValue.toFixed(2)} MT C02e
+                <td style={{width: '300px', textAlign: 'left'}}>
+                    {/* {emissionsValue.toFixed(2)} MT C02e */}
                 </td>
             </tr>
             </table> 
-            <br></br>
         </div>
         </>
   );

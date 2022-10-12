@@ -15,7 +15,7 @@ function AddFlightEmissions() {
   const[seats, setSeats]=useState([]);
   const[emissionsValue, setEmissionsValue]=useState(0);
 
-  const { addCalculationComponent, addFlightTotal } = UseTotalContext();
+  const { addFlightCalculationComponent, addFlightTotal } = UseTotalContext();
 
   function fetchAirport() {
     axios
@@ -56,7 +56,7 @@ function AddFlightEmissions() {
   const handleClick=(e)=>{
     const clientId = 1;
     const flight = {clientId, sourceAirportCode, destinationAirportCode, passengerCount, isRoundTrip, cabinType}
-    addCalculationComponent(flight);
+    addFlightCalculationComponent(flight);
     axios
         .post('https://api.sustain.life/v1/personal-calculator/flight',
          flight,
@@ -75,40 +75,41 @@ function AddFlightEmissions() {
 
   return (
     <>
-    <div>
-      <br></br>
+   <div class="container text-center" style={{width: '1000px', padding:'5px'}}>
       <h4 className='text-warning'>Calculate your flight emissions below. You can add as many trips as you would like.</h4>
       <br></br>
       <table className='m-auto'>
         <tr className='row'>
-            <td className="col-md-8">
+            <td style={{width: '300px', textAlign: 'left'}}>
                 <p>Departed From</p>
             </td>
-            <td className="col-md-4">
+            <td style={{width: '300px', textAlign: 'left'}}>
               <select onChange={(e)=>setSourceAirportCode(e.target.value)}>
                 <option value=""> Select an option</option>
                 {airports.map((airport) => <option key={airport.code} value={airport.code}>{airport.name}</option>)}
               </select>
             </td> 
+            <td style={{width: '300px'}}></td>
           </tr>
 
           <tr className='row'>
-            <td className="col-md-8">
+            <td style={{width: '300px', textAlign: 'left'}}>
                 <p>Arrived at</p>
             </td>
-            <td className="col-md-4">
+            <td style={{width: '300px', textAlign: 'left'}}>
               <select onChange={(e)=>setDestinationAirportCode(e.target.value)}>
                 <option value=""> Select an option</option>
                 {airports.map((airport) => <option key={airport.code} value={airport.code}>{airport.name}</option>)}
               </select>
             </td>
+            <td style={{width: '300px'}}></td>
           </tr>
 
           <tr className='row'>
-            <td className="col-md-8">
+            <td style={{width: '300px', textAlign: 'left'}}>
               <p>How many passengers?</p>
             </td>
-            <td className="col-md-4">
+            <td style={{width: '300px', textAlign: 'left'}}>
               <input
                 className='w-100'
                 type="number"
@@ -116,36 +117,43 @@ function AddFlightEmissions() {
                 onChange={event => {
                 setPassengerCount(+(event.target.value)); 
                 }}/>                    
-            </td>        
+            </td> 
+            <td style={{width: '300px'}}></td>       
           </tr>
 
           <tr className='row'>
-            <td className="col-md-8">
+            <td style={{width: '300px', textAlign: 'left'}}>
                 <p>What type of seat?</p>
             </td>
-            <td className="col-md-4">
+            <td style={{width: '300px', textAlign: 'left'}}>
               <select onChange={(e)=>setCabinType(e.target.value)}>
                 <option value=""> Select an option</option>
                 {seats.map((seat) => <option key={seat} value={seat}>{seat}</option>)}
               </select>
             </td> 
-            <td className="col-md-8">
-                <p>Round trip?</p>
-            </td>
-            <td className="col-md-4">
-              <input type="checkbox" onChange={(e)=>setIsRoundTrip(e.target.value)}></input>
-            </td>
+            <td style={{width: '300px'}}></td>
           </tr>
 
           <tr className='row'>
-            <td className='col-md-3'>
-              <Button variant="warning" style={{width: '100px'}} type="submit" onClick={handleClick}>
+            <td style={{width: '300px', textAlign: 'left'}}>
+                <p>Round trip?</p>
+            </td>
+            <td style={{width: '300px', textAlign: 'left'}}>
+              <input type="checkbox" onChange={(e)=>setIsRoundTrip(e.target.value)}></input>
+            </td>
+            <td style={{width: '300px'}}></td>
+          </tr>
+
+          <tr className='row'>
+          <td style={{width: '300px', textAlign: 'left'}}>
+              <Button variant="warning" style={{width: '200px'}} type="submit" onClick={handleClick}>
                 Add Flight
               </Button>
             </td>
-            <td className='col-md-9'>
-              {emissionsValue.toFixed(2)} MT C02e
+            <td style={{width: '300px', textAlign: 'left'}}>
+              {/* {emissionsValue.toFixed(2)} MT C02e */}
             </td>  
+            <td style={{width: '300px'}}></td>
           </tr>
 
       </table>
