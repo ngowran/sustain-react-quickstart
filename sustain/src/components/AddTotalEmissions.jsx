@@ -15,7 +15,7 @@ function AddTotalEmissions() {
         .post('https://api.sustain.life/v1/personal-calculator/total',
         request,
           { headers: {
-          'Ocp-Apim-Subscription-Key': "00c112e599ff4c85bad0cfdacd3bb795",
+          'Ocp-Apim-Subscription-Key': "02e8beef6800482e937c9721069f6e40",
           'content-type': 'application/json'
          }})
         .then(res => {

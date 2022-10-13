@@ -32,7 +32,7 @@ function AddUtilityEmissions() {
         axios
         .get('https://api.sustain.life/v1/reference/utility-companies',
           { headers: {
-          'Ocp-Apim-Subscription-Key': "00c112e599ff4c85bad0cfdacd3bb795"
+          'Ocp-Apim-Subscription-Key': "02e8beef6800482e937c9721069f6e40"
         }})
         .then(res => { 
           setCompany(res.data.items)
@@ -56,7 +56,7 @@ function AddUtilityEmissions() {
         axios
         .get('https://api.sustain.life/v1/reference/electrical-units',
           { headers: {
-          'Ocp-Apim-Subscription-Key': "00c112e599ff4c85bad0cfdacd3bb795"
+          'Ocp-Apim-Subscription-Key': "02e8beef6800482e937c9721069f6e40"
         }})
         .then(res => { 
           setElectricalUnit(res.data.items)
@@ -75,7 +75,7 @@ function AddUtilityEmissions() {
         axios
         .get('https://api.sustain.life/v1/reference/natural-gas-units',
           { headers: {
-          'Ocp-Apim-Subscription-Key': "00c112e599ff4c85bad0cfdacd3bb795"
+          'Ocp-Apim-Subscription-Key': "02e8beef6800482e937c9721069f6e40"
         }})
         .then(res => {
           setNaturalUnit(res.data.items)
@@ -94,7 +94,7 @@ function AddUtilityEmissions() {
         axios
         .get('https://api.sustain.life/v1/reference/fuel-oil-units',
           { headers: {
-          'Ocp-Apim-Subscription-Key': "00c112e599ff4c85bad0cfdacd3bb795"
+          'Ocp-Apim-Subscription-Key': "02e8beef6800482e937c9721069f6e40"
         }})
         .then(res => {
           setFuelOil(res.data.items)
@@ -112,7 +112,7 @@ function AddUtilityEmissions() {
         axios
         .get('https://api.sustain.life/v1/reference/propane-units',
           { headers: {
-          'Ocp-Apim-Subscription-Key': "00c112e599ff4c85bad0cfdacd3bb795"
+          'Ocp-Apim-Subscription-Key': "02e8beef6800482e937c9721069f6e40"
         }})
         .then(res => {
           setPropaneUnit(res.data.items)
@@ -130,7 +130,7 @@ function AddUtilityEmissions() {
         axios
         .get('https://api.sustain.life/v1/reference/wood-pellet-units',
           { headers: {
-          'Ocp-Apim-Subscription-Key': "00c112e599ff4c85bad0cfdacd3bb795"
+          'Ocp-Apim-Subscription-Key': "02e8beef6800482e937c9721069f6e40"
         }})
         .then(res => {
           setWoodenPellet(res.data.items)
@@ -155,7 +155,7 @@ function AddUtilityEmissions() {
             .post('https://api.sustain.life/v1/personal-calculator/utilities',
             utilities,
               { headers: {
-              'Ocp-Apim-Subscription-Key': "00c112e599ff4c85bad0cfdacd3bb795",
+              'Ocp-Apim-Subscription-Key': "02e8beef6800482e937c9721069f6e40",
               'content-type': 'application/json'
              }})
             .then(res => {

@@ -27,7 +27,7 @@ function AddCarEmissions() {
         axios
         .get('https://api.sustain.life/v1/reference/distance-units',
           { headers: {
-          'Ocp-Apim-Subscription-Key': "00c112e599ff4c85bad0cfdacd3bb795",
+          'Ocp-Apim-Subscription-Key': "02e8beef6800482e937c9721069f6e40",
             'content-type': 'application/json'
           
         }})
@@ -43,7 +43,7 @@ function AddCarEmissions() {
         axios
         .get('https://api.sustain.life/v1/reference/cars',
             { headers: {
-            'Ocp-Apim-Subscription-Key': "00c112e599ff4c85bad0cfdacd3bb795",
+            'Ocp-Apim-Subscription-Key': "02e8beef6800482e937c9721069f6e40",
             'content-type': 'application/json'            
         }})
         .then(res => {
@@ -63,7 +63,7 @@ function AddCarEmissions() {
             .post('https://api.sustain.life/v1/personal-calculator/car',
             car,
           { headers: {
-          'Ocp-Apim-Subscription-Key': "00c112e599ff4c85bad0cfdacd3bb795",
+          'Ocp-Apim-Subscription-Key': "02e8beef6800482e937c9721069f6e40",
           'content-type': 'application/json'
          }})
             
