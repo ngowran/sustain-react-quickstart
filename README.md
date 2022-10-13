@@ -19,7 +19,10 @@ This Quickstart is a guide on how to interact with our API from a ReactJS fronte
   npm start
 ```
 Opens a server on localhost 3000 by default
-    
+
+```
+  http://localhost:3000/
+``` 
 ## Documentation
 
 **[Documentation](https://developer.sustain.life/api-details#api=sustain-life-personal-calculator-api&operation=get-v1-personal-calculator-defaults):**
@@ -29,16 +32,7 @@ Must be signed into the developer portal to access.
 
 #### Home screen
 
-![App Screenshot](https://i.imgur.com/rl3cufo.png)
-
-#### Emission field expanded
-
-![App Screenshot](https://i.imgur.com/WRLvA2M.png)
-
-#### After emission is submitted
-
-![App Screenshot](https://i.imgur.com/zuJi2B3.png)
-
+![Screenshot](./sustain/src/assets/personal-calculator.png)
 
 ##  Errors & Fix
 
@@ -55,7 +49,13 @@ Must be signed into the developer portal to access.
     }}
   ```
 
-## Author
+## Contributing 
+We accept Pull Requests
+Special thanks to [@ngowran](https://github.com/ngowran)
 
-- [@ngowran](https://github.com/ngowran)
+
+## Licence 
+The sample code is licensed under [MIT](https://www.mit.edu/~amini/LICENSE.md).
+
+© 2022 Sustain.Life
 

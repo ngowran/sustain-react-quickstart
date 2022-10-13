@@ -21,7 +21,7 @@ function AddFlightEmissions() {
     axios
     .get('https://api.sustain.life/v1/reference/airports',
       { headers: {
-      'Ocp-Apim-Subscription-Key': "00c112e599ff4c85bad0cfdacd3bb795"
+      'Ocp-Apim-Subscription-Key': "02e8beef6800482e937c9721069f6e40"
     }})
     .then(res => { 
       setAirports(res.data.items)
@@ -39,7 +39,7 @@ function AddFlightEmissions() {
     axios
     .get('https://api.sustain.life/v1/reference/aircraft-seats',
       { headers: {
-      'Ocp-Apim-Subscription-Key': "00c112e599ff4c85bad0cfdacd3bb795"
+      'Ocp-Apim-Subscription-Key': "02e8beef6800482e937c9721069f6e40"
     }})
     .then(res => { 
       setSeats(res.data.items)
@@ -61,7 +61,7 @@ function AddFlightEmissions() {
         .post('https://api.sustain.life/v1/personal-calculator/flight',
          flight,
           { headers: {
-          'Ocp-Apim-Subscription-Key': "00c112e599ff4c85bad0cfdacd3bb795",
+          'Ocp-Apim-Subscription-Key': "02e8beef6800482e937c9721069f6e40",
           'content-type': 'application/json'
          }})
         .then(res => {
