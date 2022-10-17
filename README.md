@@ -1,14 +1,19 @@
 
 ![Logo](https://i.imgur.com/ZXtVTw8.png)
 
-# Sustain.life Personal Calculator API ReactJS Quickstart
+# Sustain.Life – Personal Emissions Calculator API ReactJS Quickstart
 
-This Quickstart is a guide on how to interact with our API from a ReactJS frontend.
+This quickstart is a guide on how to interact with our API from a ReactJS frontend.
 
 
 ## Features
 
-- Calculates carbon emissions based on different factors.
+- Calculates personal carbon emissions based on: 
+• Utilities
+• Waste
+• Travel
+• Services
+• What you buy, and more
 
 ## Installation
 
