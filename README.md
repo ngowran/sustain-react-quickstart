@@ -8,12 +8,7 @@ This quickstart is a guide on how to interact with our API from a ReactJS fronte
 
 ## Features
 
-- Calculates personal carbon emissions based on: 
-• Utilities
-• Waste
-• Travel
-• Services
-• What you buy, and more
+- Calculates personal carbon emissions based on: utilities, waste, travel, services, what you buy, and more.
 
 ## Installation
 
