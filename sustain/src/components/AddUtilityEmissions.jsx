@@ -30,9 +30,9 @@ function AddUtilityEmissions() {
 
       function fetchCompany() {
         axios
-        .get('https://api.sustain.life/v1/reference/utility-companies',
+        .get('https://api.sustain.life/community/v1/reference/utility-companies',
           { headers: {
-          'Ocp-Apim-Subscription-Key': "02e8beef6800482e937c9721069f6e40"
+          'Ocp-Apim-Subscription-Key': "5da167febbdf4b04aaea80025aff37cc"
         }})
         .then(res => { 
           setCompany(res.data.items)
@@ -54,9 +54,9 @@ function AddUtilityEmissions() {
 
     function fetchElectricUnits() {
         axios
-        .get('https://api.sustain.life/v1/reference/electrical-units',
+        .get('https://api.sustain.life/community/v1/reference/electrical-units',
           { headers: {
-          'Ocp-Apim-Subscription-Key': "02e8beef6800482e937c9721069f6e40"
+          'Ocp-Apim-Subscription-Key': "5da167febbdf4b04aaea80025aff37cc"
         }})
         .then(res => { 
           setElectricalUnit(res.data.items)
@@ -73,9 +73,9 @@ function AddUtilityEmissions() {
     
       function fetchNaturalUnits() {
         axios
-        .get('https://api.sustain.life/v1/reference/natural-gas-units',
+        .get('https://api.sustain.life/community/v1/reference/natural-gas-units',
           { headers: {
-          'Ocp-Apim-Subscription-Key': "02e8beef6800482e937c9721069f6e40"
+          'Ocp-Apim-Subscription-Key': "5da167febbdf4b04aaea80025aff37cc"
         }})
         .then(res => {
           setNaturalUnit(res.data.items)
@@ -92,9 +92,9 @@ function AddUtilityEmissions() {
 
       function fetchFuelOil() {
         axios
-        .get('https://api.sustain.life/v1/reference/fuel-oil-units',
+        .get('https://api.sustain.life/community/v1/reference/fuel-oil-units',
           { headers: {
-          'Ocp-Apim-Subscription-Key': "02e8beef6800482e937c9721069f6e40"
+          'Ocp-Apim-Subscription-Key': "5da167febbdf4b04aaea80025aff37cc"
         }})
         .then(res => {
           setFuelOil(res.data.items)
@@ -110,9 +110,9 @@ function AddUtilityEmissions() {
 
       function fetchPropaneUnit() {
         axios
-        .get('https://api.sustain.life/v1/reference/propane-units',
+        .get('https://api.sustain.life/community/v1/reference/propane-units',
           { headers: {
-          'Ocp-Apim-Subscription-Key': "02e8beef6800482e937c9721069f6e40"
+          'Ocp-Apim-Subscription-Key': "5da167febbdf4b04aaea80025aff37cc"
         }})
         .then(res => {
           setPropaneUnit(res.data.items)
@@ -128,9 +128,9 @@ function AddUtilityEmissions() {
 
       function fetchWoodenPellet() {
         axios
-        .get('https://api.sustain.life/v1/reference/wood-pellet-units',
+        .get('https://api.sustain.life/community/v1/reference/wood-pellet-units',
           { headers: {
-          'Ocp-Apim-Subscription-Key': "02e8beef6800482e937c9721069f6e40"
+          'Ocp-Apim-Subscription-Key': "5da167febbdf4b04aaea80025aff37cc"
         }})
         .then(res => {
           setWoodenPellet(res.data.items)
@@ -152,10 +152,10 @@ function AddUtilityEmissions() {
              woodPelletUsageUnit, countryIsoCode} 
         addUtilityCalculationComponent(utilities);
         axios
-            .post('https://api.sustain.life/v1/personal-calculator/utilities',
+            .post('https://api.sustain.life/community/v1/personal-calculator/utilities',
             utilities,
               { headers: {
-              'Ocp-Apim-Subscription-Key': "02e8beef6800482e937c9721069f6e40",
+              'Ocp-Apim-Subscription-Key': "5da167febbdf4b04aaea80025aff37cc",
               'content-type': 'application/json'
              }})
             .then(res => {

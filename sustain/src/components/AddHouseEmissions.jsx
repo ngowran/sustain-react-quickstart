@@ -19,10 +19,10 @@ function AddHouseEmissions() {
     const householdWaste = {recyleMetal, recylePlastic, recyleGlass, recyleMagazines, numberOfPeople, countryIsoCode}
     addHouseholdCalculationComponent(householdWaste);
     axios
-        .post('https://api.sustain.life/v1/personal-calculator/household',
+        .post('https://api.sustain.life/community/v1/personal-calculator/household',
          householdWaste,
           { headers: {
-          'Ocp-Apim-Subscription-Key': "02e8beef6800482e937c9721069f6e40",
+          'Ocp-Apim-Subscription-Key': "5da167febbdf4b04aaea80025aff37cc",
           'content-type': 'application/json'
          }})
         .then(res => {

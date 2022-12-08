@@ -19,9 +19,9 @@ function AddFlightEmissions() {
 
   function fetchAirport() {
     axios
-    .get('https://api.sustain.life/v1/reference/airports',
+    .get('https://api.sustain.life/community/v1/reference/airports',
       { headers: {
-      'Ocp-Apim-Subscription-Key': "02e8beef6800482e937c9721069f6e40"
+      'Ocp-Apim-Subscription-Key': "5da167febbdf4b04aaea80025aff37cc"
     }})
     .then(res => { 
       setAirports(res.data.items)
@@ -37,9 +37,9 @@ function AddFlightEmissions() {
 
   function fetchSeats() {
     axios
-    .get('https://api.sustain.life/v1/reference/aircraft-seats',
+    .get('https://api.sustain.life/community/v1/reference/aircraft-seats',
       { headers: {
-      'Ocp-Apim-Subscription-Key': "02e8beef6800482e937c9721069f6e40"
+      'Ocp-Apim-Subscription-Key': "5da167febbdf4b04aaea80025aff37cc"
     }})
     .then(res => { 
       setSeats(res.data.items)
@@ -58,10 +58,10 @@ function AddFlightEmissions() {
     const flight = {clientId, sourceAirportCode, destinationAirportCode, passengerCount, isRoundTrip, cabinType}
     addFlightCalculationComponent(flight);
     axios
-        .post('https://api.sustain.life/v1/personal-calculator/flight',
+        .post('https://api.sustain.life/community/v1/personal-calculator/flight',
          flight,
           { headers: {
-          'Ocp-Apim-Subscription-Key': "02e8beef6800482e937c9721069f6e40",
+          'Ocp-Apim-Subscription-Key': "5da167febbdf4b04aaea80025aff37cc",
           'content-type': 'application/json'
          }})
         .then(res => {

@@ -14,9 +14,9 @@ function AddBusEmissions() {
 
   function fetchDistanceUnits(){
     axios
-    .get('https://api.sustain.life/v1/reference/distance-units',
+    .get('https://api.sustain.life/community/v1/reference/distance-units',
       { headers: {
-      'Ocp-Apim-Subscription-Key': "02e8beef6800482e937c9721069f6e40"
+      'Ocp-Apim-Subscription-Key': "5da167febbdf4b04aaea80025aff37cc"
     }})
     .then(res => {
       setDistanceUnits(res.data.items)

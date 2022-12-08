@@ -12,10 +12,10 @@ function AddTotalEmissions() {
   const handleClick=(e)=>{
     const request = getAllCalculationComponent();
     axios
-        .post('https://api.sustain.life/v1/personal-calculator/total',
+        .post('https://api.sustain.life/community/v1/personal-calculator/total',
         request,
           { headers: {
-          'Ocp-Apim-Subscription-Key': "02e8beef6800482e937c9721069f6e40",
+          'Ocp-Apim-Subscription-Key': "5da167febbdf4b04aaea80025aff37cc",
           'content-type': 'application/json'
          }})
         .then(res => {
