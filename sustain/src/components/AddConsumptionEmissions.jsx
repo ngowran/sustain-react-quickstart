@@ -36,11 +36,11 @@ function AddConsumptionEmissions() {
             recreationalAndCultureSpending, countryIsoCode};
         addConsumptionCalculationComponent(consumption);
         axios
-            .post('https://api.sustain.life/v1/personal-calculator/consumption',
+            .post('https://api.sustain.life/community/v1/personal-calculator/consumption',
              consumption,
 
               { headers: {
-              'Ocp-Apim-Subscription-Key': "02e8beef6800482e937c9721069f6e40",
+              'Ocp-Apim-Subscription-Key': "5da167febbdf4b04aaea80025aff37cc",
               'content-type': 'application/json'
              }})
             .then(res => {

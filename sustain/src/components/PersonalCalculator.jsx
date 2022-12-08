@@ -25,9 +25,9 @@ function PersonalCalculator() {
   
   function fetchCountries() {
       axios
-      .get('https://api.sustain.life/v1/reference/countries',
+      .get('https://api.sustain.life/community/v1/reference/countries',
         { headers: {
-        'Ocp-Apim-Subscription-Key': "02e8beef6800482e937c9721069f6e40"
+        'Ocp-Apim-Subscription-Key': "5da167febbdf4b04aaea80025aff37cc"
       }})
       .then(res => {
           const locations = res.data.items;
